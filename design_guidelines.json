@@ -1,0 +1,160 @@
+{
+  "project_name": "Snowkap",
+  "theme": "dark",
+  "art_direction": {
+    "concept": "Swiss Brutalism meets High-End ESG Tech",
+    "description": "Abandoning the traditional dossier look for a premium, award-winning (Awwwards) aesthetic. The design relies on 'The Anti-Default' principles: radical scale contrast, profound negative space, and kinetic typography. It blends the severe authority of regulatory frameworks with the cutting-edge appeal of modern AI platforms. The 'wow' factor comes from flawless motion choreography, high-contrast layouts, and intentional use of real photography inside sharp, unyielding geometric masks."
+  },
+  "typography": {
+    "font_pairings": {
+      "headings": {
+        "family": "Cabinet Grotesk",
+        "fallback": "sans-serif",
+        "weights": ["200", "800"],
+        "usage": "Massive, tracking-tighter headlines. Mix 200 (Light) and 800 (ExtraBold) in the same heading for visual tension."
+      },
+      "body": {
+        "family": "Manrope",
+        "fallback": "sans-serif",
+        "weights": ["400", "500"],
+        "usage": "Clean, highly legible body text. Left-aligned always."
+      },
+      "mono_and_data": {
+        "family": "JetBrains Mono",
+        "fallback": "monospace",
+        "weights": ["400"],
+        "usage": "For data points, overlines, the CBAM calculator numbers, step indicators, and animated counters."
+      }
+    },
+    "hierarchy": {
+      "h1": "text-5xl md:text-7xl lg:text-[7vw] leading-none tracking-tighter",
+      "h2": "text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight",
+      "h3": "text-2xl md:text-3xl leading-snug",
+      "body": "text-base md:text-lg text-white/70 leading-relaxed",
+      "overline": "text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#00E599]"
+    }
+  },
+  "colors": {
+    "background": {
+      "default": "#060608",
+      "surface": "#111216",
+      "surface_elevated": "#1A1B23"
+    },
+    "primary": {
+      "default": "#00E599",
+      "hover": "#33EFA9",
+      "muted": "rgba(0, 229, 153, 0.1)"
+    },
+    "accent": {
+      "terracotta": "#C8481E",
+      "warning": "#FFB020"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A0A2AB",
+      "disabled": "#5A5D6B"
+    },
+    "border": {
+      "subtle": "rgba(255, 255, 255, 0.08)",
+      "strong": "rgba(255, 255, 255, 0.2)"
+    }
+  },
+  "visual_enhancers": {
+    "surfaces": [
+      {
+        "name": "Crystal Glass",
+        "usage": "Sticky Nav, Floating Modals, Calculator Cards",
+        "classes": "bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+      },
+      {
+        "name": "Technical Grid",
+        "usage": "Regulatory Map, Sector Explorer Grid",
+        "classes": "border-collapse border-r border-b border-white/5"
+      },
+      {
+        "name": "Masked Imagery",
+        "usage": "Real product photography",
+        "classes": "rounded-none clip-path-polygon for sharp, editorial image framing"
+      }
+    ],
+    "textures": [
+      "Subtle noise overlay (pointer-events-none, opacity-[0.03]) across the entire background to kill 'digital flatness'."
+    ]
+  },
+  "layouts": {
+    "spacing_scale": "Tailwind standard but scaled up. Use p-8, p-12, p-24, p-32. Avoid p-4 for major containers to ensure generous negative space.",
+    "grid_modes": {
+      "tetris_bento": "For Regulatory Reality & Sectors. grid-cols-1 md:grid-cols-12 gap-8. Mix col-span-8 and col-span-4 to create deliberate asymmetry.",
+      "data_dense": "For Admin Dashboard & Calculator. Tight gap-4, strict alignment, dense utility."
+    },
+    "sections": {
+      "hero": "100vh full bleed. Massive text top-left. Globe/3D canvas absolute positioned behind text or to the right.",
+      "regulatory_reality": "Bento grid (Tetris mode) featuring 5 region cards with sharp borders and mono typography.",
+      "three_pillars": "Sticky stacked cards or horizontal scroll section. Massive typography for 01, 02, 03.",
+      "proof_in_numbers": "Full width, huge JetBrains Mono animated counters (text-[10vw]) separated by 1px vertical borders.",
+      "calculator": "Two-column split layout. Left: Sticky explanatory text. Right: Interactive glassmorphic form elements."
+    }
+  },
+  "motion": {
+    "libraries": ["framer-motion", "lenis"],
+    "choreography": {
+      "hero_onload": "Masked line-by-line reveal. Parent `overflow-hidden`, Child `initial={{ y: '100%' }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], staggerChildren: 0.1 }}`",
+      "scroll_reveals": "Use `whileInView`. Fade in and slight translate-y. Avoid heavy rotations. Keep it sophisticated.",
+      "marquee": "The 'Kinetic Texture'. Massive outline text (text-transparent stroke-white/10) running very slowly (-10px/s) behind sections.",
+      "micro_interactions": "Hover states on cards: subtle border color shift to primary, image scales up 1.05x inside hidden overflow."
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure all body text meets APCA/WCAG standards. Primary text is #FFF on #060608. Secondary text #A0A2AB on #060608.",
+    "motion": "Respect `prefers-reduced-motion` using framer-motion's useReducedMotion hook.",
+    "testing": "All interactive elements MUST include `data-testid` (e.g., `data-testid=\"cbam-calculator-submit\"`)."
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.pexels.com/photos/9716365/pexels-photo-9716365.jpeg",
+        "description": "Aerial supply chain logistics cargo",
+        "category": "Hero / Sector Explorer (Logistics)"
+      },
+      {
+        "url": "https://images.pexels.com/photos/36112907/pexels-photo-36112907.jpeg",
+        "description": "Modern cargo ship in ocean",
+        "category": "Regulatory Reality / Supply Chain"
+      },
+      {
+        "url": "https://images.pexels.com/photos/18602382/pexels-photo-18602382.jpeg",
+        "description": "Sustainable clean energy wind turbines",
+        "category": "Sector Explorer (Energy)"
+      },
+      {
+        "url": "https://images.pexels.com/photos/6950031/pexels-photo-6950031.jpeg",
+        "description": "Diverse professional board meeting",
+        "category": "Advisory Pillar / Team"
+      }
+    ],
+    "treatment": "Images must be wrapped in `overflow-hidden` containers. Apply `mix-blend-luminosity` and `opacity-70` for a sleek B2B look, transitioning to full color and opacity-100 on hover. Never use placeholder URLs."
+  },
+  "3d_libraries": {
+    "hero_moment": {
+      "library": "react-globe.gl",
+      "usage": "Render a dark mode, high-tech glowing globe with connection arcs to represent global supply chains. Background must be transparent (`rgba(0,0,0,0)`). Overlay behind the kinetic text."
+    }
+  },
+  "component_instructions": {
+    "forms_and_calculator": "Use customized Shadcn UI. Strip out the Vercel look. Inputs should have bg-white/5, border-white/10, focus:border-[#00E599], rounded-none (sharp edges).",
+    "buttons": "Sharp edges (rounded-none). Use 'Magnetic' button effect via framer-motion for the primary CTA.",
+    "slide_out_tray": "Use Shadcn Sheet for the Programme Builder cart. Deep black background, 1px white/10 left border.",
+    "dossier_questionnaire": "Use a stepped progress indicator (JetBrains Mono). Only one question visible at a time with smooth crossfade transitions."
+  },
+  "universal_guidelines_for_main_agent": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid 'AI slop'. Make it Awwwards-worthy and distinctive.",
+    "Do NOT apply universal transitions (e.g., `transition: all`). Add transitions for specific interactive elements only.",
+    "DO NOT center align the app container. No `.App { text-align: center; }`.",
+    "DO NOT use pure transparent backgrounds for sticky headers or dropdowns. ALWAYS use Crystal Glass (backdrop-blur + semi-transparent bg) so text doesn't clash with content beneath.",
+    "Use 2-3x more spacing than feels comfortable (e.g., gap-12, py-32) to create luxurious negative space.",
+    "Never use generic AI emojis (🤖🧠💭💡) for icons. Use lucide-react or @phosphor-icons/react.",
+    "Ensure every interaction has micro-animations (hover, focus, active). Static interfaces feel dead.",
+    "Use `sonner` for toast notifications.",
+    "Do NOT use raw HTML `<select>` or `<input type='date'>`. Use Shadcn equivalents."
+  ]
+}
