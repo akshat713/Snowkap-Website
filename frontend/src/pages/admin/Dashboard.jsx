@@ -180,11 +180,11 @@ export default function AdminDashboard() {
                 </label>
                 <label className="text-sm">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Category</span>
-                  <input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
+                  <input data-testid="admin-res-category" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
                 </label>
                 <label className="text-sm md:col-span-2">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Title</span>
-                  <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
+                  <input required data-testid="admin-res-title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
                 </label>
                 <label className="text-sm">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Date label</span>
@@ -196,11 +196,11 @@ export default function AdminDashboard() {
                 </label>
                 <label className="text-sm md:col-span-2">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Excerpt</span>
-                  <input value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
+                  <input data-testid="admin-res-excerpt" value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
                 </label>
                 <label className="text-sm md:col-span-2">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Body</span>
-                  <textarea rows={4} value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal resize-none" />
+                  <textarea rows={4} data-testid="admin-res-body" value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal resize-none" />
                 </label>
                 <div className="md:col-span-2 flex gap-3">
                   <button type="submit" data-testid="admin-resource-save" className="bg-signal text-bg px-6 py-2.5 font-bold text-sm hover:bg-signal-hover transition-colors">Publish</button>
