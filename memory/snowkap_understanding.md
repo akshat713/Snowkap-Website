@@ -104,3 +104,13 @@ CP-1 Regulatory Intelligence · CP-2 Structural Problem Stories · CP-3 Social P
 - **Why Snowkap / About**
 - **Contact / Talk to an Advisor**
 - **Admin** (leads, subscribers, proposals, CMS)
+
+---
+## UPDATE (post-revamp, from Design Refinement Strategy 2 + Corporate Deck + Sales Deck PDFs)
+- Brand route chosen: "The Lens" — black (#050505) European premium feel, orange #F05A22 (the "NOW" in SNOWKAP wordmark + lens indicator on O), thin circular rings, circular duotone nature imagery, mono eyebrows.
+- Narrative ladder: "Data is messy. Sustainability's even messier." → "We are your lens for climate decisions." → "Turn climate complexity into business clarity." → "Clarity is our climate strategy." Vision: remove 1 billion tons CO₂e.
+- Clientele (Corporate Deck p13, logos extracted to /app/frontend/public/assets/logos/): Auto: Daimler, Schaeffler, MAHLE, Ather, NRB · Mfg: JSW Steel, Econovus, Forstar, Kings Infra · Pharma: Himalaya, Anthem, RPG Life, Tagros · Fin/IT: Sutherland, Chiratae, Fireside · Consumer: Senco, Varun Beverages, african+eastern, Chérise · Energy: KNPC.
+- Team (p15, photos /assets/team/): Rajesh P (CEO), Giri K (Co-Founder), Ambalika G (Sustainability), Prachi B (Tech), Siddharth P (Product), Parameswaran R (Delivery). Advisory: Rajesh G (Founder & Chairman, SNG & Partners), Prof. Kaushal (Wisconsin Task Force), Srini S (Jt. MD & CFO, Bosch India).
+- Proof: 1,100+ PCFs · 700+ suppliers · 3,800+ trained · 25+ frameworks · >90% primary data in one quarter · 6+ sectors.
+- Testimonials: Badal Balchandani (VP Sustainability, JSW Steel), Sanjay Banka (CFO, Senco Gold), Abhishek Agarwal (Global Head Compliance, Sutherland).
+- Sign-in: https://login.snowkap.com. Contact: +91 22 4007 9343, sales@snowkap.com, support@snowkap.com. Regions: India · GCC · SE Asia · Europe.

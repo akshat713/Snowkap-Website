@@ -564,6 +564,8 @@ class ChatInput(BaseModel):
 
 def get_chat(session_id: str) -> LlmChat:
     if session_id not in chat_sessions:
+        if len(chat_sessions) > 500:
+            chat_sessions.pop(next(iter(chat_sessions)))
         chat_sessions[session_id] = (
             LlmChat(
                 api_key=os.environ["EMERGENT_LLM_KEY"],
