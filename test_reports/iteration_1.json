@@ -1,0 +1,52 @@
+{
+  "summary": "Full backend + frontend regression for Snowkap ESG intelligence site. 28/28 pytest backend tests passed. All critical UI flows verified end-to-end against the public preview URL: home page (no console errors), lead modal, dossier questionnaire (4 steps -> result), CBAM calculator (sector + tonnes -> savings, email lead sent), Power of Now newsletter, programme builder (package + custom -> proposal modal), navigation, resources page (all 5 tabs + detail), and full admin auth flow (login redirect, JWT, all 4 tabs, resource CRUD, logout). Backend endpoints (auth, leads, newsletter, dossier, proposals, cbam, resources CMS, admin/stats) all return 200 and enforce 401 on protected routes.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_snowkap_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "MINOR (nice-to-have, non-blocking): Add data-testid attributes to admin resource form inputs (title, category, excerpt, body) in /app/frontend/src/pages/admin/Dashboard.jsx to improve testability. Currently only the form container, save button, and delete buttons have testids; individual inputs are located by index which is fragile."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 647 lines — approaching the 700-line threshold; consider splitting into modules (routers/auth.py, routers/leads.py, routers/resources.py, models.py, email.py) before it grows further.",
+    "CORS_ORIGINS is set to '*' with allow_credentials=True — this is a browser-rejected combination in strict mode; if cookie auth is ever added it will fail. Currently OK because auth uses Bearer tokens in localStorage.",
+    "Startup seed logs 'index warn' if unique index conflicts; acceptable for MVP.",
+    "All 14 seed resources load; no MongoDB ObjectId leaks in responses (BaseDocument alias handles it correctly).",
+    "Admin resource form input fields lack data-testid attributes (title/category/excerpt/body) — testability concern only."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_snowkap_api.py (created)"
+  ],
+  "success_rate": {
+    "backend": "100% (28/28 pytest)",
+    "frontend": "100% (all requested UI flows verified with matching API calls)"
+  },
+  "test_credentials": "admin@snowkap.com / Snowkap@2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Backend seeds admin user + 14 resources on startup. Test data (TEST_* / test_*) created during tests was cleaned up post-run.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Run `pytest /app/backend/tests/test_snowkap_api.py -v` for backend regression. Newsletter role testids are LOWERCASE (newsletter-role-cfo, not newsletter-role-CFO). Admin resource form title input has no data-testid — it is the 2nd <input> in the admin-resource-form (index 1 in locator).",
+  "verified_api_flows": [
+    "POST /api/auth/login -> 200 with access_token",
+    "GET /api/auth/me (Bearer) -> 200",
+    "POST /api/leads -> 200 (from lead modal)",
+    "POST /api/dossier -> 200, recommended_package computed correctly (Baseline->Starter, Scaling->Growth, Global->Enterprise)",
+    "POST /api/cbam/calculate -> 200 with all math fields, email variant persists cbam_calcs",
+    "GET /api/cbam/sectors -> 200",
+    "POST /api/newsletter -> 200 (from Power of Now form)",
+    "POST /api/proposals -> 200 (from tray flow)",
+    "GET /api/resources with type filter -> 200 for all 5 types (blog/whitepaper/press/event/webinar)",
+    "GET /api/resources/{slug} -> 200 / 404",
+    "POST/PUT/DELETE /api/resources -> 200 (Bearer required, 401 without)",
+    "GET /api/admin/stats -> 200 (Bearer required)"
+  ]
+}
