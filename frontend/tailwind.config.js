@@ -10,12 +10,12 @@ module.exports = {
         mono: ['"JetBrains Mono"', "monospace"],
       },
       colors: {
-        bg: "#060608",
-        surface: "#111216",
-        surface2: "#1a1b23",
+        bg: "#050505",
+        surface: "#101010",
+        surface2: "#1a1a1a",
         signal: {
-          DEFAULT: "#00e599",
-          hover: "#33efa9",
+          DEFAULT: "#f05a22",
+          hover: "#ff7b47",
         },
         terracotta: "#c8481e",
         warning: "#ffb020",

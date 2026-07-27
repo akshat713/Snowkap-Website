@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --bg: #060608;
-  --surface: #111216;
-  --surface-2: #1a1b23;
-  --primary: #00e599;
-  --primary-hover: #33efa9;
+  --bg: #050505;
+  --surface: #101010;
+  --surface-2: #1a1a1a;
+  --primary: #f05a22;
+  --primary-hover: #ff7b47;
   --terracotta: #c8481e;
   --warning: #ffb020;
   --text: #ffffff;
@@ -39,13 +39,17 @@ body {
 .font-body { font-family: "Manrope", sans-serif; }
 
 /* selection */
-::selection { background: var(--primary); color: #060608; }
+::selection { background: var(--primary); color: #fff; }
 
 /* scrollbar */
 ::-webkit-scrollbar { width: 9px; height: 9px; }
-::-webkit-scrollbar-track { background: #060608; }
+::-webkit-scrollbar-track { background: #050505; }
 ::-webkit-scrollbar-thumb { background: #26272f; border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* hide scrollbar utility */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
 
 /* lenis */
 html.lenis, html.lenis body { height: auto; }
@@ -76,29 +80,29 @@ html.lenis, html.lenis body { height: auto; }
   background-size: 80px 80px;
 }
 
-.reveal-mask { overflow: hidden; display: block; }
+.reveal-mask { overflow: hidden; display: block; padding-bottom: 0.09em; margin-bottom: -0.09em; }
 
 @layer base {
   :root {
-    --background: 240 20% 3%;
+    --background: 0 0% 2%;
     --foreground: 0 0% 100%;
-    --card: 230 12% 8%;
+    --card: 0 0% 6%;
     --card-foreground: 0 0% 100%;
-    --popover: 230 12% 8%;
+    --popover: 0 0% 6%;
     --popover-foreground: 0 0% 100%;
-    --primary: 158 100% 45%;
-    --primary-foreground: 240 20% 3%;
-    --secondary: 230 10% 15%;
+    --primary: 17 87% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 230 10% 15%;
-    --muted-foreground: 230 6% 65%;
-    --accent: 230 10% 15%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 12%;
     --accent-foreground: 0 0% 100%;
     --destructive: 14 76% 45%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 100% / 0.08;
-    --input: 230 10% 15%;
-    --ring: 158 100% 45%;
+    --input: 0 0% 12%;
+    --ring: 17 87% 54%;
     --radius: 0rem;
   }
 }

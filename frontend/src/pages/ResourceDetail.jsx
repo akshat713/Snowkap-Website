@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import { useApp } from "@/context/AppContext";
 import api from "@/lib/api";
@@ -31,8 +31,20 @@ export default function ResourceDetail() {
             <div data-testid="resource-detail">
               <div className="font-mono text-[11px] uppercase tracking-wider text-signal mb-5">{r.category} · {r.date_label} {r.read_time ? `· ${r.read_time}` : ""}</div>
               <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] mb-8">{r.title}</h1>
+              {r.image && (
+                <div className="mb-8 border border-white/10 overflow-hidden">
+                  <img src={r.image} alt={r.title} className="w-full object-cover max-h-[420px]" />
+                </div>
+              )}
               <p className="text-xl text-ink2 leading-relaxed mb-6 border-l-2 border-signal pl-5">{r.excerpt}</p>
               <div className="text-ink2 leading-relaxed whitespace-pre-line text-lg">{r.body}</div>
+              {r.external_url && (
+                <a href={r.external_url} target="_blank" rel="noreferrer" data-testid="resource-external-link"
+                  className="group inline-flex items-center gap-2 mt-8 border border-signal text-signal hover:bg-signal hover:text-white px-6 py-3 font-semibold transition-colors">
+                  Read the full piece on snowkap.com
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              )}
 
               <div className="mt-14 border border-white/10 bg-surface/50 p-8">
                 <h3 className="font-display text-2xl font-bold mb-3">Bring this to your supply chain.</h3>

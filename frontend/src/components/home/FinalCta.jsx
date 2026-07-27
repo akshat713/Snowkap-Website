@@ -1,33 +1,55 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import MagneticButton from "@/components/site/MagneticButton";
 import { useApp } from "@/context/AppContext";
+import { maskLine } from "@/lib/motion";
 
 export default function FinalCta() {
-  const { setLeadModal, setTrayOpen } = useApp();
+  const { setLeadModal } = useApp();
   return (
-    <section className="py-28 md:py-44 border-t border-white/10 relative overflow-hidden grid-lines" data-testid="final-cta">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 text-center relative">
-        <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-6">The only risk is standing still.</div>
-        <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter leading-[0.95] mb-10">
-          Turn compliance<br />into <span className="italic font-light text-signal">advantage.</span>
+    <section className="relative py-28 md:py-44 bg-bg overflow-hidden border-t border-white/10" data-testid="final-cta">
+      {/* lens rings */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full border border-white/[0.05] pointer-events-none" aria-hidden />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[620px] rounded-full border border-white/[0.07] pointer-events-none" aria-hidden />
+      <motion.div
+        animate={{ rotate: 360 }} transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[760px] h-[760px] rounded-full border border-dashed border-signal/15 pointer-events-none" aria-hidden
+      />
+
+      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 text-center">
+        <div className="font-mono text-[12px] uppercase tracking-[0.24em] text-signal mb-8">The close</div>
+        <h2 className="font-display font-extrabold tracking-tighter leading-[0.98] text-5xl md:text-7xl lg:text-8xl">
+          <span className="reveal-mask">
+            <motion.span variants={maskLine} custom={0} initial="hidden" whileInView="show" viewport={{ once: true }} className="block">
+              Clarity is our
+            </motion.span>
+          </span>
+          <span className="reveal-mask">
+            <motion.span variants={maskLine} custom={1} initial="hidden" whileInView="show" viewport={{ once: true }} className="block text-signal">
+              climate strategy.
+            </motion.span>
+          </span>
         </h2>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <MagneticButton
-            onClick={() => setLeadModal({ kind: "advisor", title: "Talk to an Advisor" })}
-            data-testid="final-advisor"
-            className="group bg-signal text-bg px-8 py-4 font-bold flex items-center gap-2 hover:bg-signal-hover transition-colors"
+        <p className="text-ink2 text-lg mt-8 max-w-xl mx-auto">
+          Run your climate strategy like your business strategy. The only risk is standing still.
+        </p>
+        <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <button
+            onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })}
+            data-testid="final-cta-demo"
+            className="group bg-signal text-white px-8 py-4.5 py-4 font-bold flex items-center gap-2.5 hover:bg-signal-hover transition-colors"
           >
-            Talk to an Advisor <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </MagneticButton>
-          <MagneticButton
-            onClick={() => setTrayOpen(true)}
-            data-testid="final-programme"
+            Book a Demo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <Link
+            to="/contact"
+            onClick={() => window.scrollTo(0, 0)}
+            data-testid="final-cta-contact"
             className="border border-white/25 hover:border-white px-8 py-4 font-semibold transition-colors"
           >
-            Review your programme
-          </MagneticButton>
+            Talk to our team
+          </Link>
         </div>
       </div>
     </section>

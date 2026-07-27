@@ -1,14 +1,17 @@
 import React from "react";
 import Layout from "@/components/site/Layout";
 import Hero from "@/components/home/Hero";
-import Dossier from "@/components/home/Dossier";
-import RegulatoryReality from "@/components/home/RegulatoryReality";
-import ThreePillars from "@/components/home/ThreePillars";
-import SectorExplorer from "@/components/home/SectorExplorer";
-import CbamCalculator from "@/components/home/CbamCalculator";
-import ProofNumbers from "@/components/home/ProofNumbers";
-import ProgrammeBuilder from "@/components/home/ProgrammeBuilder";
-import { Testimonials, Standards } from "@/components/home/Social";
+import LogoMarquee from "@/components/home/LogoMarquee";
+import Problem from "@/components/home/Problem";
+import Pillars from "@/components/home/Pillars";
+import PlatformShowcase from "@/components/home/PlatformShowcase";
+import Metrics from "@/components/home/Metrics";
+import Clientele from "@/components/home/Clientele";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import Team from "@/components/home/Team";
+import CbamBand from "@/components/home/CbamBand";
+import Faq from "@/components/home/Faq";
+import ResourcesPreview from "@/components/home/ResourcesPreview";
 import Newsletter from "@/components/home/Newsletter";
 import FinalCta from "@/components/home/FinalCta";
 
@@ -16,15 +19,17 @@ export default function Home() {
   return (
     <Layout>
       <Hero />
-      <Dossier />
-      <RegulatoryReality />
-      <ThreePillars />
-      <SectorExplorer />
-      <CbamCalculator />
-      <ProofNumbers />
-      <ProgrammeBuilder />
-      <Testimonials />
-      <Standards />
+      <LogoMarquee />
+      <Problem />
+      <Pillars />
+      <PlatformShowcase />
+      <Metrics />
+      <Clientele />
+      <TestimonialsSection />
+      <Team />
+      <CbamBand />
+      <Faq />
+      <ResourcesPreview />
       <Newsletter />
       <FinalCta />
     </Layout>

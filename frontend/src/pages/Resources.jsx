@@ -60,7 +60,13 @@ export default function Resources() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="resources-grid">
               {items.map((r, i) => (
                 <Reveal key={r.id} i={i % 3}>
-                  <div className="h-full border border-white/10 bg-surface/40 p-7 flex flex-col hover:border-signal/40 transition-colors">
+                  <div className="h-full border border-white/10 bg-surface/40 flex flex-col hover:border-signal/40 transition-colors overflow-hidden">
+                    {r.image && (
+                      <div className="aspect-[16/8] overflow-hidden bg-white/[0.03] shrink-0">
+                        <img src={r.image} alt={r.title} loading="lazy" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-[filter] duration-500" />
+                      </div>
+                    )}
+                    <div className="p-7 flex flex-col flex-1">
                     <div className="font-mono text-[10px] uppercase tracking-wider text-signal mb-4">{r.category || r.type}</div>
                     <h3 className="font-display text-xl font-semibold leading-snug mb-3">{r.title}</h3>
                     <p className="text-ink2 text-sm leading-relaxed mb-6 flex-1">{r.excerpt}</p>
@@ -92,6 +98,12 @@ export default function Resources() {
                         <PlayCircle className="w-4 h-4" /> {r.status_label === "upcoming" ? "Register" : "Watch"}
                       </button>
                     )}
+                    {tab === "press" && r.external_url && (
+                      <a href={r.external_url} target="_blank" rel="noreferrer" data-testid={`resource-press-${r.slug}`} className="group flex items-center gap-1.5 text-signal text-sm font-semibold">
+                        Read on snowkap.com <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </a>
+                    )}
+                    </div>
                   </div>
                 </Reveal>
               ))}

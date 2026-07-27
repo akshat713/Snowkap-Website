@@ -6,6 +6,11 @@ import SmoothScroll from "@/components/site/SmoothScroll";
 import { AppProvider } from "@/context/AppContext";
 import { AuthProvider } from "@/context/AuthContext";
 import Home from "@/pages/Home";
+import Platform from "@/pages/Platform";
+import Services from "@/pages/Services";
+import About from "@/pages/About";
+import Contact from "@/pages/Contact";
+import CbamTool from "@/pages/CbamTool";
 import Resources from "@/pages/Resources";
 import ResourceDetail from "@/pages/ResourceDetail";
 import Pricing from "@/pages/Pricing";
@@ -21,6 +26,11 @@ function App() {
           <SmoothScroll>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/platform" element={<Platform />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/tools/cbam" element={<CbamTool />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/resources/:slug" element={<ResourceDetail />} />
               <Route path="/pricing" element={<Pricing />} />
@@ -34,7 +44,7 @@ function App() {
           theme="dark"
           position="bottom-right"
           toastOptions={{
-            style: { background: "#111216", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: 0 },
+            style: { background: "#101010", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: 0 },
           }}
         />
       </AppProvider>

@@ -1,0 +1,49 @@
+{
+  "summary": "Iteration 2: full regression on the revamped Snowkap site (cred.club-inspired dark aesthetic, new pages, resources v3 with external_url/image, Ask Snowkap AI chat via Claude Opus 4.7). Backend pytest: 28/28 previous + 7/7 new (chat SSE + resources v3) = 35/35 PASS. Frontend UI verified end-to-end on the public preview URL: home hero + no broken images + Sign In anchor to login.snowkap.com _blank, Book-a-Demo lead modal from hero submits successfully, CBAM band CTA navigates, /tools/cbam calculator updates and email report captures, /contact form submit shows success, /resources all 5 tabs load (blog 8, whitepaper 4, press 3, event 1, webinar 2) with press external anchors and blog detail external link to snowkap.com, all nav links (Platform/Services/Customers/Resources/About) route correctly, Ask Snowkap AI chat streams token-by-token and delivers a contextual multi-turn reply for message 2 (with framework list), footer newsletter POSTs successfully. Admin login page renders with credentials accepted.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_snowkap_api.py",
+    "/app/backend/tests/test_chat_and_resources_v3.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "OPTIONAL: The admin login submit button has no type=\"submit\" attribute (button is styled 'Sign in'); UI login still works via click/Enter, but adding type=submit + data-testid=admin-login-submit would make it testable and enable form-Enter submission cleanly.",
+    "OPTIONAL: /app/backend/server.py is now 794 lines (up from 647). Split into routers/ (auth, leads, resources, chat, cbam) modules to stay under the 700-line guideline and improve maintainability."
+  ],
+  "critical_code_review_comments": [
+    "server.py 794 lines — over the 700-line threshold; needs modularisation (routers/auth.py, routers/chat.py, routers/resources.py, models.py).",
+    "chat_sessions in-memory dict keyed by session_id will leak memory unbounded and lose sessions on backend restart. Consider TTL/LRU eviction and rebuild-from-Mongo on first request. History is persisted in Mongo, so this is a functional-only concern (context is preserved by LlmChat's session_id being stable across calls).",
+    "CORS_ORIGINS still '*' with allow_credentials=True — browsers ignore credentials with wildcard; fine today (Bearer tokens in localStorage) but breaks if switched to cookies.",
+    "CBAM tonnes input onChange updates state but the displayed animated counters take ~1s to catch up — not a bug, just noted for automated assertions.",
+    "External URLs to snowkap.com in resources open in new tab (target=_blank) — good; all have rel=noreferrer.",
+    "No client-side rate limit on /api/chat/stream; a single browser tab could spam LLM calls and burn budget. Add a simple client-side + IP-level debounce for production."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_chat_and_resources_v3.py (new)"
+  ],
+  "success_rate": {
+    "backend": "100% (35/35 pytest: 28 previous + 7 new for chat + resources v3)",
+    "frontend": "100% of requested flows (home, hero lead modal, CBAM tool, contact form, resources tabs + detail + press external, nav routing, chat 2-turn streaming, footer newsletter, admin login)"
+  },
+  "test_credentials": "admin@snowkap.com / Snowkap@2026 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Backend seeds admin + 14 resources v3 (with external_url/image) on startup. Test-created data (TEST_*) leaves harmless records in leads/newsletter/proposals collections.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Run `pytest /app/backend/tests/ -v` for full backend regression (35 tests). For chat, exactly 2 short messages are sent per session_id to conserve EMERGENT_LLM_KEY budget. Contextual multi-turn is verified — msg2 receives an on-topic reply naming BRSR/CSRD/ESRS/GRI/IFRS/CDP/TCFD/SBTi. CBAM counters animate via framer-motion; do not assert equality on section inner_text immediately after slider/input changes — assert on the specific value elements or wait ~2s. Admin login button lacks type=submit; use direct button click via role name 'Sign in' or add data-testid before automating deeper admin flows.",
+  "verified_new_flows_this_iteration": [
+    "POST /api/chat/stream SSE (2-turn, contextual, ~300+ chars per response, delta+[DONE] events)",
+    "GET /api/chat/history/{session_id} persists user+assistant msgs in Mongo (2+2)",
+    "GET /api/resources?type=blog returns 8 items with external_url and image fields",
+    "GET /api/resources?type=whitepaper (4), press (3, with external_url), event (1), webinar (2)",
+    "UI: chat widget opens, sends 2 messages, streams tokens into chat-messages panel",
+    "UI: /resources blog card -> detail page -> resource-external-link href = snowkap.com URL",
+    "UI: /resources press card -> external anchor to snowkap.com with target=_blank",
+    "UI: nav-sign-in is <a href='https://login.snowkap.com' target='_blank'>",
+    "UI: cbam-band-cta on home -> /tools/cbam navigation"
+  ]
+}
