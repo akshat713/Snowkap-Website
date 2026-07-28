@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import { useApp } from "@/context/AppContext";
-import api from "@/lib/api";
+import { resourceBySlug } from "@/data/resources";
 
 export default function ResourceDetail() {
   const { slug } = useParams();
-  const [r, setR] = useState(null);
-  const [notFound, setNotFound] = useState(false);
   const { setLeadModal } = useApp();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    api.get(`/resources/${slug}`).then((res) => setR(res.data)).catch(() => setNotFound(true));
-  }, [slug]);
+  // Resolved from the bundled library, so an unknown slug is known to be
+  // missing immediately rather than after a failed request.
+  const r = useMemo(() => resourceBySlug(slug), [slug]);
+  const notFound = !r;
+
+  useEffect(() => { window.scrollTo(0, 0); }, [slug]);
 
   return (
     <Layout>
@@ -25,8 +25,6 @@ export default function ResourceDetail() {
           </Link>
           {notFound ? (
             <p className="text-ink3">Article not found.</p>
-          ) : !r ? (
-            <p className="text-ink3 font-mono text-sm">Loading…</p>
           ) : (
             <div data-testid="resource-detail">
               <div className="font-mono text-[11px] uppercase tracking-wider text-signal mb-5">{r.category} · {r.date_label} {r.read_time ? `· ${r.read_time}` : ""}</div>

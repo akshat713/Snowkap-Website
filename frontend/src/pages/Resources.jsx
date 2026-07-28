@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Download, Calendar, PlayCircle, Clock } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import { Reveal } from "@/components/site/Reveal";
 import { useApp } from "@/context/AppContext";
-import api from "@/lib/api";
+import { resourcesByType } from "@/data/resources";
 
 const TABS = [
   { key: "blog", label: "Blog" },
@@ -17,22 +17,11 @@ const TABS = [
 
 export default function Resources() {
   const [tab, setTab] = useState("blog");
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
   const { setLeadModal } = useApp();
 
-  useEffect(() => {
-    setLoading(true);
-    setFailed(false);
-    api
-      .get(`/resources?type=${tab}`)
-      .then((r) => setItems(r.data))
-      // Without this the request rejects unhandled and the page shows the
-      // same "nothing here" copy it shows for a genuinely empty list.
-      .catch(() => { setItems([]); setFailed(true); })
-      .finally(() => setLoading(false));
-  }, [tab]);
+  // The library ships with the build, so there is nothing to fetch and no
+  // loading or failure state to represent.
+  const items = useMemo(() => resourcesByType(tab), [tab]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -60,18 +49,7 @@ export default function Resources() {
             ))}
           </div>
 
-          {loading ? (
-            <div className="text-ink3 font-mono text-sm py-20">Loading…</div>
-          ) : failed ? (
-            <div className="py-20" data-testid="resources-error">
-              <p className="font-display text-2xl font-bold mb-3">We couldn't load this just now.</p>
-              <p className="text-ink2 text-sm max-w-lg leading-relaxed">
-                Our resource library isn't reachable from here. Try again in a moment — or email{" "}
-                <a href="mailto:sales@snowkap.com" className="text-signal hover:underline">sales@snowkap.com</a>{" "}
-                and we'll send what you're looking for directly.
-              </p>
-            </div>
-          ) : items.length === 0 ? (
+          {items.length === 0 ? (
             <div className="text-ink3 font-mono text-sm py-20">Nothing here yet.</div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="resources-grid">

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import SectionHeader from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
-import api from "@/lib/api";
+import { resourcesByType } from "@/data/resources";
+
+// The three most recent posts, straight from the bundled library.
+const items = resourcesByType("blog").slice(0, 3);
 
 export default function ResourcesPreview() {
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    api.get("/resources?type=blog").then(({ data }) => setItems(data.slice(0, 3))).catch(() => {});
-  }, []);
   if (!items.length) return null;
 
   return (
