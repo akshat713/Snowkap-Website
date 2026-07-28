@@ -23,17 +23,17 @@ export const PROBLEMS = [
 
 export const PILLARS3 = [
   {
-    n: "01", title: "Advisory", tag: "Strategy · Clarity · Ratings",
+    n: "01", title: "Advisory", image: "https://images.pexels.com/photos/7433847/pexels-photo-7433847.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1200", tag: "Strategy · Clarity · Ratings",
     desc: "Expert-led ESG strategy, double-materiality assessments, SBTi-aligned roadmaps, and capacity building by sector specialists.",
     items: ["ESG first steps & onboarding", "ESG strategy & ratings optimisation", "Capacity building programmes"],
   },
   {
-    n: "02", title: "ESG Platform", tag: "Data · Intelligence · Compliance",
+    n: "02", title: "ESG Platform", image: "https://images.pexels.com/photos/10726228/pexels-photo-10726228.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1200", tag: "Data · Intelligence · Compliance",
     desc: "An AI-powered ESG command centre integrating ERP, IoT, and supply-chain data into GHG accounting and multi-framework reporting.",
     items: ["Carbon accounting & GHG reporting", "One-click multi-framework reporting", "Intelligent data capture & audit trail"],
   },
   {
-    n: "03", title: "Managed Support", tag: "Embedded · Scalable · People-led",
+    n: "03", title: "Managed Support", image: "https://images.pexels.com/photos/6572534/pexels-photo-6572534.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1200", tag: "Embedded · Scalable · People-led",
     desc: "Embedded compliance and operational support across your entire supplier network — without scaling your headcount.",
     items: ["Supplier evidence collection", "Regulatory change monitoring", "Third-party audit coordination"],
   },

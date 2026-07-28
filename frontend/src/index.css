@@ -82,6 +82,34 @@ html.lenis, html.lenis body { height: auto; }
 
 .reveal-mask { overflow: hidden; display: block; padding-bottom: 0.09em; margin-bottom: -0.09em; }
 
+/* Keyboard focus. The previous ring was tuned for a near-black ground and is
+   close to invisible on white, so it is restated in the accent with an offset
+   that survives against both the white and off-white bands. */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* Cards rise slightly toward the pointer. 3px and a soft warm shadow — enough to
+   read as interactive on a light ground, not enough to feel springy. */
+.lift {
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease, border-color 0.2s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px -18px rgba(34, 24, 12, 0.28);
+}
+
+/* Photographs fade up as they decode instead of popping in. */
+img { background-color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lift { transition: border-color 0.2s ease; }
+  .lift:hover { transform: none; box-shadow: none; }
+}
+
 /* Dossier side-panel infographic: scattered evidence resolves into a
    structured grid, then gets verified. Mirrors what the dossier itself does. */
 .dq-scatter { animation: dq-scatter 8s ease-in-out infinite; }

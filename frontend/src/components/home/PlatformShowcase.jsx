@@ -35,7 +35,7 @@ export default function PlatformShowcase() {
             to="/platform"
             onClick={() => window.scrollTo(0, 0)}
             data-testid={`module-card-${i}`}
-            className="group snap-start shrink-0 w-[300px] md:w-[380px] bg-surface border border-ink/10 hover:border-ink/30 transition-colors"
+            className="group lift snap-start shrink-0 w-[300px] md:w-[380px] bg-surface border border-ink/10 hover:border-signal/40"
           >
             <div className="overflow-hidden aspect-[4/3.4] bg-ink/[0.03]">
               <img src={m.img} alt={m.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />

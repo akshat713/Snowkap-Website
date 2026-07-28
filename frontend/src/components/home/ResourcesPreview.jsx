@@ -25,7 +25,7 @@ export default function ResourcesPreview() {
           {items.map((r, i) => (
             <Reveal key={r.slug} i={i} className="h-full">
               <Link to={`/resources/${r.slug}`} onClick={() => window.scrollTo(0, 0)} data-testid={`resource-preview-${i}`}
-                className="group block bg-bg border border-ink/10 hover:border-ink/30 transition-colors h-full">
+                className="group lift block bg-bg border border-ink/10 hover:border-signal/40 h-full">
                 {r.image && (
                   <div className="aspect-[16/9] overflow-hidden bg-ink/[0.03]">
                     <img src={r.image} alt={r.title} loading="lazy"

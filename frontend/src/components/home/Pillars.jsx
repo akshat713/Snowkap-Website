@@ -28,10 +28,24 @@ export default function Pillars() {
         <div className="flex flex-col gap-8">
           {PILLARS3.map((p, i) => (
             <div key={p.n} className="lg:sticky" style={{ top: `${104 + i * 28}px` }}>
-              <div className="bg-bg border border-ink/10 p-8 md:p-10 hover:border-ink/25 transition-colors" data-testid={`pillar-card-${i}`}>
+              <div className="group lift bg-bg border border-ink/10 hover:border-signal/40" data-testid={`pillar-card-${i}`}>
+                {p.image && (
+                  <div className="relative aspect-[16/7] overflow-hidden bg-surface2">
+                    <img
+                      src={p.image}
+                      alt=""
+                      loading="lazy"
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-[1.02] group-hover:scale-[1.06] transition-all duration-[900ms] ease-out"
+                    />
+                    {/* keeps the number legible whatever the photograph does */}
+                    <span className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/55 to-transparent" />
+                    <span className="absolute bottom-4 left-6 font-mono text-white text-sm">{p.n}</span>
+                  </div>
+                )}
+                <div className="p-8 md:p-10">
                 <div className="flex items-baseline justify-between mb-6">
-                  <span className="font-mono text-signal text-sm">{p.n}</span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink3">{p.tag}</span>
+                  {!p.image && <span className="font-mono text-signal text-sm">{p.n}</span>}
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 ml-auto">{p.tag}</span>
                 </div>
                 <h3 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">{p.title}</h3>
                 <p className="text-ink2 leading-relaxed mb-7 max-w-lg">{p.desc}</p>
@@ -41,7 +55,8 @@ export default function Pillars() {
                       <Check className="w-4 h-4 text-signal shrink-0" /> {it}
                     </li>
                   ))}
-                </ul>
+                  </ul>
+                </div>
               </div>
             </div>
           ))}
