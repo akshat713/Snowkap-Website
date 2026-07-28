@@ -23,7 +23,7 @@ function App() {
   return (
     <AuthProvider>
       <AppProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <SeoManager />
           <SmoothScroll>
             <Routes>

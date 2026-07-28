@@ -1,0 +1,79 @@
+name: Deploy site to GitHub Pages
+
+# The site is a Create React App SPA under frontend/, so it has to be compiled
+# before it can be served. Pages' default "deploy from a branch" mode runs
+# Jekyll over the repo root instead, which just renders README.md — this
+# workflow replaces that with a real build.
+#
+# Requires Settings -> Pages -> Source to be set to "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+
+      # Exposes steps.pages.outputs.base_path (e.g. /Snowkap-Website) so the
+      # repo name isn't hardcoded here.
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        env:
+          # Project sites are served from a subpath, so asset URLs and the
+          # router basename both need the prefix.
+          PUBLIC_URL: ${{ steps.pages.outputs.base_path }}
+          # CRA promotes warnings to errors when CI=true; a lint warning
+          # shouldn't take the site down.
+          CI: false
+        run: yarn build
+
+      - name: Add SPA fallback and disable Jekyll
+        # Pages serves 404.html for unknown paths. Handing it the app shell
+        # lets client-side routes like /pricing survive a direct visit or
+        # refresh. .nojekyll stops Jekyll stripping files it dislikes.
+        run: |
+          cp build/index.html build/404.html
+          touch build/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
