@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, FileText } from "lucide-react";
 import { DOSSIER_QUESTIONS } from "@/data/site";
@@ -10,6 +11,7 @@ export default function Dossier() {
   const [answers, setAnswers] = useState({});
   const [done, setDone] = useState(null); // recommended package
   const { setDossier } = useApp();
+  const navigate = useNavigate();
 
   const q = DOSSIER_QUESTIONS[step];
   const progress = Math.round(((step + (answers[q?.key] ? 1 : 0)) / DOSSIER_QUESTIONS.length) * 100);
@@ -31,7 +33,11 @@ export default function Dossier() {
   };
 
   const reset = () => { setStep(0); setAnswers({}); setDone(null); };
-  const goProgramme = () => { document.getElementById("programme")?.scrollIntoView({ behavior: "smooth" }); };
+  const goProgramme = () => {
+    const el = document.getElementById("programme");
+    if (el) { el.scrollIntoView({ behavior: "smooth" }); }
+    else { navigate("/pricing#programme"); }
+  };
 
   return (
     <section id="dossier" className="py-24 md:py-36 border-t border-white/10" data-testid="dossier-section">

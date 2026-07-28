@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/components/site/Layout";
 import Hero from "@/components/home/Hero";
 import LogoMarquee from "@/components/home/LogoMarquee";
+import Dossier from "@/components/home/Dossier";
 import Problem from "@/components/home/Problem";
 import Pillars from "@/components/home/Pillars";
 import PlatformShowcase from "@/components/home/PlatformShowcase";
@@ -20,6 +21,7 @@ export default function Home() {
     <Layout>
       <Hero />
       <LogoMarquee />
+      <Dossier />
       <Problem />
       <Pillars />
       <PlatformShowcase />
