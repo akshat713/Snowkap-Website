@@ -30,7 +30,7 @@ export default function Contact() {
     } finally { setBusy(false); }
   };
 
-  const inputCls = "w-full bg-white/5 border border-white/10 focus:border-signal px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-ink3";
+  const inputCls = "w-full bg-ink/5 border border-ink/10 focus:border-signal px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-ink3";
 
   return (
     <Layout>
@@ -43,8 +43,8 @@ export default function Contact() {
         <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-14">
           <div>
             {INFO.map(({ icon: Icon, label, value, href, note }) => (
-              <a key={label} href={href} className="group flex items-start gap-5 py-7 border-b border-white/10" data-testid={`contact-${label.split(" ")[0].toLowerCase()}`}>
-                <span className="border border-white/15 p-3 group-hover:border-signal transition-colors">
+              <a key={label} href={href} className="group flex items-start gap-5 py-7 border-b border-ink/10" data-testid={`contact-${label.split(" ")[0].toLowerCase()}`}>
+                <span className="border border-ink/15 p-3 group-hover:border-signal transition-colors">
                   <Icon className="w-5 h-5 text-signal" />
                 </span>
                 <div>
@@ -69,7 +69,7 @@ export default function Contact() {
                 <p className="text-ink2">A member of our team will come back to you shortly. A confirmation is on its way to your inbox.</p>
               </div>
             ) : (
-              <form onSubmit={submit} className="bg-surface border border-white/10 p-8 md:p-10 space-y-4">
+              <form onSubmit={submit} className="bg-surface border border-ink/10 p-8 md:p-10 space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input required placeholder="Full name" value={form.name} onChange={change("name")} data-testid="contact-name" className={inputCls} />
                   <input type="email" required placeholder="Work email" value={form.email} onChange={change("email")} data-testid="contact-email" className={inputCls} />

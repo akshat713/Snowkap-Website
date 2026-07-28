@@ -12,7 +12,7 @@ export default function ResourcesPreview() {
   if (!items.length) return null;
 
   return (
-    <section className="py-24 md:py-36 bg-surface border-t border-white/10" data-testid="resources-preview">
+    <section className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="resources-preview">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="flex items-end justify-between flex-wrap gap-6">
           <SectionHeader eyebrow="Stay ahead" title="Latest intelligence." />
@@ -25,9 +25,9 @@ export default function ResourcesPreview() {
           {items.map((r, i) => (
             <Reveal key={r.slug} i={i} className="h-full">
               <Link to={`/resources/${r.slug}`} onClick={() => window.scrollTo(0, 0)} data-testid={`resource-preview-${i}`}
-                className="group block bg-bg border border-white/10 hover:border-white/30 transition-colors h-full">
+                className="group block bg-bg border border-ink/10 hover:border-ink/30 transition-colors h-full">
                 {r.image && (
-                  <div className="aspect-[16/9] overflow-hidden bg-white/[0.03]">
+                  <div className="aspect-[16/9] overflow-hidden bg-ink/[0.03]">
                     <img src={r.image} alt={r.title} loading="lazy"
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-700" />
                   </div>

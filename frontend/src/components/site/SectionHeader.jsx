@@ -13,7 +13,7 @@ export default function SectionHeader({ eyebrow, title, lede, align = "left", li
         </Reveal>
       )}
       <Reveal i={1}>
-        <h2 className={`font-display font-bold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl ${light ? "text-bg" : "text-white"}`}>
+        <h2 className={`font-display font-bold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl ${light ? "text-bg" : "text-ink"}`}>
           {title}
         </h2>
       </Reveal>

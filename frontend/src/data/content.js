@@ -57,7 +57,8 @@ export const METRICS = [
   { value: 6, suffix: "+", label: "Industries served" },
 ];
 
-const L = (name) => asset(`/assets/logos/white/${name}.png`);
+// Colour cuts, not the white ones: the page ground is now Clarity white.
+const L = (name) => asset(`/assets/logos/${name}.png`);
 export const CLIENT_SECTORS = [
   { sector: "Automotive & Transportation", logos: [["Daimler", L("daimler")], ["Schaeffler", L("schaeffler")], ["MAHLE", L("mahle")], ["Ather", L("ather")], ["NRB Bearings", L("nrb")]] },
   { sector: "Manufacturing & Industrial", logos: [["JSW Steel", L("jsw")], ["Econovus", L("econovus")], ["Forstar", L("forstar")], ["Kings Infra", L("kingsinfra")]] },
@@ -81,10 +82,10 @@ export const TEAM = [
   { name: "Ambalika G", role: "Head of Sustainability", img: T("ambalika-g") },
   { name: "Prachi B", role: "Head of Technology", img: T("prachi-b") },
   { name: "Siddharth P", role: "Head of Product", img: T("siddharth-p") },
-  { name: "Parameswaran R", role: "Head of Project Delivery", img: T("parameswaran-r") },
+  { name: "Parameswaran R", role: "Head of Project Delivery", img: T("rajesh-g") },
 ];
 export const ADVISORS = [
-  { name: "Rajesh G", role: "Founder & Chairman, SNG & Partners", img: T("rajesh-g") },
+  { name: "Rajesh G", role: "Founder & Chairman, SNG & Partners", img: T("parameswaran-r") },
   { name: "Prof. Kaushal", role: "Governor's Task Force, Wisconsin", img: T("prof-kaushal") },
   { name: "Srini S", role: "Jt. MD & CFO, Bosch India", img: T("srini-s") },
 ];

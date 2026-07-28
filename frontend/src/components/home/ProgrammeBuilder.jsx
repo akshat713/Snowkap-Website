@@ -13,7 +13,7 @@ export default function ProgrammeBuilder() {
     ? dossier.recommended_package : null;
 
   return (
-    <section id="programme" className="py-24 md:py-36 border-t border-white/10" data-testid="programme-section">
+    <section id="programme" className="py-24 md:py-36 border-t border-ink/10" data-testid="programme-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
           eyebrow="Your programme"
@@ -26,7 +26,7 @@ export default function ProgrammeBuilder() {
             <div className="max-w-xl">
               <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-signal mb-2">From your dossier</div>
               <p className="text-sm text-ink2 leading-relaxed">
-                We'd recommend the <span className="text-white font-semibold">{reco}</span> package
+                We'd recommend the <span className="text-ink font-semibold">{reco}</span> package
                 {dossier.sector ? <> for {dossier.sector}</> : null}
                 {dossier.stage ? <> — {dossier.stage.toLowerCase()}</> : null}.
               </p>
@@ -41,13 +41,13 @@ export default function ProgrammeBuilder() {
           </div>
         )}
 
-        <div className="flex gap-1 border border-white/15 w-fit mb-12">
+        <div className="flex gap-1 border border-ink/15 w-fit mb-12">
           {[["package", "Choose a Package"], ["custom", "Build Custom — Line by Line"]].map(([k, l]) => (
             <button
               key={k}
               onClick={() => setMode(k)}
               data-testid={`programme-mode-${k}`}
-              className={`px-5 py-2.5 text-sm font-medium transition-colors ${mode === k ? "bg-signal text-bg" : "text-ink2 hover:text-white"}`}
+              className={`px-5 py-2.5 text-sm font-medium transition-colors ${mode === k ? "bg-signal text-bg" : "text-ink2 hover:text-ink"}`}
             >
               {l}
             </button>
@@ -58,7 +58,7 @@ export default function ProgrammeBuilder() {
           <div className="grid md:grid-cols-3 gap-5">
             {PACKAGES.map((p, i) => (
               <Reveal key={p.id} i={i}>
-                <div className={`h-full border p-7 flex flex-col relative ${p.popular ? "border-signal bg-signal/[0.04]" : "border-white/10 bg-surface/40"}`}>
+                <div className={`h-full border p-7 flex flex-col relative ${p.popular ? "border-signal bg-signal/[0.04]" : "border-ink/10 bg-surface/40"}`}>
                   {p.popular && <span className="absolute -top-3 left-7 bg-signal text-bg text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">Most Popular</span>}
                   <h3 className="font-display text-2xl font-bold">{p.id}</h3>
                   <p className="text-ink3 text-sm mb-5">{p.tagline}</p>
@@ -76,12 +76,12 @@ export default function ProgrammeBuilder() {
                     ))}
                   </ul>
                   {p.id === "Enterprise" ? (
-                    <button onClick={() => setProposalOpen(true)} data-testid="programme-enterprise" className="border border-white/25 hover:border-white py-3 font-semibold transition-colors">Talk to Sales</button>
+                    <button onClick={() => setProposalOpen(true)} data-testid="programme-enterprise" className="border border-ink/25 hover:border-ink py-3 font-semibold transition-colors">Talk to Sales</button>
                   ) : (
                     <button
                       onClick={() => choosePackage(p.id)}
                       data-testid={`programme-select-${p.id.toLowerCase()}`}
-                      className={`py-3 font-bold transition-colors ${selectedPackage === p.id ? "bg-white/10 text-white" : "bg-signal text-bg hover:bg-signal-hover"}`}
+                      className={`py-3 font-bold transition-colors ${selectedPackage === p.id ? "bg-ink/10 text-ink" : "bg-signal text-bg hover:bg-signal-hover"}`}
                     >
                       {selectedPackage === p.id ? "Selected ✓" : `Select ${p.id}`}
                     </button>
@@ -94,8 +94,8 @@ export default function ProgrammeBuilder() {
           <div className="grid md:grid-cols-3 gap-5">
             {Object.entries(ADDONS).map(([group, items], gi) => (
               <Reveal key={group} i={gi}>
-                <div className="border border-white/10 bg-surface/40 p-6 h-full">
-                  <h4 className="font-display text-lg font-semibold mb-5 pb-3 border-b border-white/10">{group}</h4>
+                <div className="border border-ink/10 bg-surface/40 p-6 h-full">
+                  <h4 className="font-display text-lg font-semibold mb-5 pb-3 border-b border-ink/10">{group}</h4>
                   <ul className="space-y-2">
                     {items.map((it) => (
                       <li key={it}>
@@ -104,7 +104,7 @@ export default function ProgrammeBuilder() {
                           data-testid={`addon-${it.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`}
                           className="w-full flex items-center justify-between gap-3 text-left py-2.5 group"
                         >
-                          <span className={`text-sm ${inTray(it) ? "text-signal" : "text-ink2 group-hover:text-white"} transition-colors`}>{it}</span>
+                          <span className={`text-sm ${inTray(it) ? "text-signal" : "text-ink2 group-hover:text-ink"} transition-colors`}>{it}</span>
                           {inTray(it) ? <Check className="w-4 h-4 text-signal shrink-0" /> : <Plus className="w-4 h-4 text-ink3 group-hover:text-signal shrink-0 transition-colors" />}
                         </button>
                       </li>

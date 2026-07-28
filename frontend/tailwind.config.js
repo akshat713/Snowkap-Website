@@ -10,17 +10,25 @@ module.exports = {
         mono: ['"JetBrains Mono"', "monospace"],
       },
       colors: {
-        bg: "#050505",
-        surface: "#101010",
-        surface2: "#1a1a1a",
+        // Brand palette. The percentages are delivered structurally: `bg` is the
+        // page and most sections (Clarity white, ~55%), `surface` carries the
+        // alternating bands and cards (Signal off-white, ~20%), `signal` is
+        // reserved for accents and calls to action (Now Orange, ~15%), and `ink`
+        // covers type plus the few deliberately dark blocks (Dark grey, ~10%).
+        bg: "#FFFFFF",
+        surface: "#FFF4E0",
+        surface2: "#F6E8CE",
+        ink: "#222222",
         signal: {
-          DEFAULT: "#f05a22",
-          hover: "#ff7b47",
+          DEFAULT: "#DF5900",
+          hover: "#B44700",
         },
         terracotta: "#c8481e",
-        warning: "#ffb020",
-        ink3: "#5a5d6b",
-        ink2: "#a0a2ab",
+        warning: "#B26A00",
+        // Neutrals biased warm so they sit with the off-white rather than
+        // fighting it — a cool grey next to #FFF4E0 reads as a mistake.
+        ink3: "#8A8177",
+        ink2: "#5B554D",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
@@ -30,7 +38,7 @@ module.exports = {
         muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
         accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
         destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
-        border: "rgba(255,255,255,0.08)",
+        border: "rgba(34,34,34,0.12)",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
       },

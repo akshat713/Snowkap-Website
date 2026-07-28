@@ -26,7 +26,7 @@ export default function Hero() {
         className="absolute top-[10vh] right-[-12vw] md:right-[-4vw] w-[68vw] md:w-[46vw] max-w-[720px] aspect-square pointer-events-none"
         aria-hidden
       >
-        <div className="absolute inset-0 rounded-full overflow-hidden border border-white/15">
+        <div className="absolute inset-0 rounded-full overflow-hidden border border-ink/15">
           <img src={IMAGES.heroLens} alt="" className="w-full h-full object-cover opacity-70" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/30 to-transparent" />
         </div>
@@ -34,13 +34,13 @@ export default function Hero() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          className="absolute -inset-8 rounded-full border border-dashed border-white/10"
+          className="absolute -inset-8 rounded-full border border-dashed border-ink/10"
         />
-        <div className="absolute -inset-20 rounded-full border border-white/[0.06]" />
+        <div className="absolute -inset-20 rounded-full border border-ink/[0.06]" />
         <span className="absolute top-[7%] right-[22%] w-3 h-3 rounded-full bg-signal" />
       </motion.div>
 
-      <motion.div style={{ y: ringY }} className="absolute -left-40 top-1/3 w-[420px] h-[420px] rounded-full border border-white/[0.05] pointer-events-none" aria-hidden />
+      <motion.div style={{ y: ringY }} className="absolute -left-40 top-1/3 w-[420px] h-[420px] rounded-full border border-ink/[0.05] pointer-events-none" aria-hidden />
 
       <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 w-full pt-40 pb-16 md:pb-24">
         <motion.div
@@ -91,7 +91,7 @@ export default function Hero() {
             to="/platform"
             onClick={() => window.scrollTo(0, 0)}
             data-testid="hero-explore-platform"
-            className="group border border-white/25 hover:border-white px-7 py-4 font-semibold flex items-center gap-2.5 transition-colors"
+            className="group border border-ink/25 hover:border-ink px-7 py-4 font-semibold flex items-center gap-2.5 transition-colors"
           >
             Explore the Platform
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -100,7 +100,7 @@ export default function Hero() {
       </div>
 
       {/* proof ticker */}
-      <div className="relative border-t border-white/10 py-4 overflow-hidden" data-testid="hero-ticker">
+      <div className="relative border-t border-ink/10 py-4 overflow-hidden" data-testid="hero-ticker">
         <div className="flex w-max animate-marquee gap-0">
           {[...TICKER, ...TICKER].map((t, i) => (
             <span key={i} className="flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 px-6 whitespace-nowrap">

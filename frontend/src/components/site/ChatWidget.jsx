@@ -103,10 +103,10 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.97 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-24 right-4 md:right-6 z-[900] w-[calc(100vw-2rem)] max-w-[400px] h-[540px] max-h-[70vh] bg-surface border border-white/15 flex flex-col shadow-2xl shadow-black/60"
+            className="fixed bottom-24 right-4 md:right-6 z-[900] w-[calc(100vw-2rem)] max-w-[400px] h-[540px] max-h-[70vh] bg-surface border border-ink/15 flex flex-col shadow-2xl shadow-black/60"
             data-testid="chat-panel"
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-bg">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-ink/10 bg-bg">
               <div className="flex items-center gap-2.5">
                 <span className="relative flex w-2.5 h-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-60" />
@@ -114,7 +114,7 @@ export default function ChatWidget() {
                 </span>
                 <span className="font-display font-bold">Ask Snowkap AI</span>
               </div>
-              <button onClick={() => setOpen(false)} data-testid="chat-close" aria-label="Close chat" className="text-ink2 hover:text-white p-1">
+              <button onClick={() => setOpen(false)} data-testid="chat-close" aria-label="Close chat" className="text-ink2 hover:text-ink p-1">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -131,7 +131,7 @@ export default function ChatWidget() {
                   <div className="space-y-2">
                     {SUGGESTIONS.map((s, i) => (
                       <button key={s} onClick={() => send(s)} data-testid={`chat-suggestion-${i}`}
-                        className="block w-full text-left border border-white/15 hover:border-signal px-4 py-3 text-sm text-ink2 hover:text-white transition-colors">
+                        className="block w-full text-left border border-ink/15 hover:border-signal px-4 py-3 text-sm text-ink2 hover:text-ink transition-colors">
                         {s}
                       </button>
                     ))}
@@ -141,7 +141,7 @@ export default function ChatWidget() {
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div className={`max-w-[85%] px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
-                    m.role === "user" ? "bg-signal text-white" : "bg-white/5 border border-white/10 text-ink2"
+                    m.role === "user" ? "bg-signal text-white" : "bg-ink/5 border border-ink/10 text-ink2"
                   }`}>
                     {m.content || (busy && i === messages.length - 1 ? <span className="inline-flex gap-1"><span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" /><span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse [animation-delay:150ms]" /><span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse [animation-delay:300ms]" /></span> : "")}
                   </div>
@@ -149,7 +149,7 @@ export default function ChatWidget() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 border-t border-white/10 px-3 pt-2.5 bg-bg">
+            <div className="flex items-center gap-2 border-t border-ink/10 px-3 pt-2.5 bg-bg">
               <button
                 onClick={() => { setOpen(false); setLeadModal({ kind: "demo", title: "Book a Demo" }); }}
                 data-testid="chat-book-demo"

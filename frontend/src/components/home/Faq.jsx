@@ -16,9 +16,9 @@ export default function Faq() {
           />
         </div>
         <Reveal>
-          <Accordion type="single" collapsible className="border-t border-white/10">
+          <Accordion type="single" collapsible className="border-t border-ink/10">
             {FAQS.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-b border-white/10">
+              <AccordionItem key={i} value={`faq-${i}`} className="border-b border-ink/10">
                 <AccordionTrigger
                   data-testid={`faq-trigger-${i}`}
                   className="text-left font-display text-lg md:text-xl font-bold py-6 hover:no-underline hover:text-signal transition-colors [&[data-state=open]]:text-signal"

@@ -18,10 +18,10 @@ export default function PlatformShowcase() {
             lede="Built for ESG leads, compliance heads, and sustainability officers who need clarity across carbon, compliance, and supply-chain sustainability."
           />
           <div className="hidden md:flex gap-3 mb-20">
-            <button onClick={() => scrollBy(-1)} data-testid="showcase-prev" aria-label="Previous" className="border border-white/20 hover:border-signal p-3.5 transition-colors">
+            <button onClick={() => scrollBy(-1)} data-testid="showcase-prev" aria-label="Previous" className="border border-ink/20 hover:border-signal p-3.5 transition-colors">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <button onClick={() => scrollBy(1)} data-testid="showcase-next" aria-label="Next" className="border border-white/20 hover:border-signal p-3.5 transition-colors">
+            <button onClick={() => scrollBy(1)} data-testid="showcase-next" aria-label="Next" className="border border-ink/20 hover:border-signal p-3.5 transition-colors">
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -35,9 +35,9 @@ export default function PlatformShowcase() {
             to="/platform"
             onClick={() => window.scrollTo(0, 0)}
             data-testid={`module-card-${i}`}
-            className="group snap-start shrink-0 w-[300px] md:w-[380px] bg-surface border border-white/10 hover:border-white/30 transition-colors"
+            className="group snap-start shrink-0 w-[300px] md:w-[380px] bg-surface border border-ink/10 hover:border-ink/30 transition-colors"
           >
-            <div className="overflow-hidden aspect-[4/3.4] bg-white/[0.03]">
+            <div className="overflow-hidden aspect-[4/3.4] bg-ink/[0.03]">
               <img src={m.img} alt={m.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
             </div>
             <div className="p-6 md:p-7">

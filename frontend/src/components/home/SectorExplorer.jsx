@@ -8,7 +8,7 @@ export default function SectorExplorer() {
   const current = SECTORS.find((s) => s.id === active);
 
   return (
-    <section id="sectors" className="py-24 md:py-36 border-t border-white/10" data-testid="sectors-section">
+    <section id="sectors" className="py-24 md:py-36 border-t border-ink/10" data-testid="sectors-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
           eyebrow="Sector explorer"
@@ -17,17 +17,17 @@ export default function SectorExplorer() {
         />
 
         <div className="grid lg:grid-cols-[1fr_1fr] gap-10 items-start">
-          <div className="border-t border-white/10">
+          <div className="border-t border-ink/10">
             {SECTORS.map((s) => (
               <button
                 key={s.id}
                 onMouseEnter={() => setActive(s.id)}
                 onClick={() => setActive(s.id)}
                 data-testid={`sector-${s.id}`}
-                className={`w-full text-left border-b border-white/10 py-6 group flex items-center justify-between gap-4 transition-colors ${active === s.id ? "" : "opacity-55 hover:opacity-100"}`}
+                className={`w-full text-left border-b border-ink/10 py-6 group flex items-center justify-between gap-4 transition-colors ${active === s.id ? "" : "opacity-55 hover:opacity-100"}`}
               >
                 <div>
-                  <h3 className={`font-display text-2xl md:text-3xl font-semibold transition-colors ${active === s.id ? "text-signal" : "text-white"}`}>
+                  <h3 className={`font-display text-2xl md:text-3xl font-semibold transition-colors ${active === s.id ? "text-signal" : "text-ink"}`}>
                     {s.name}
                   </h3>
                   <AnimatePresence>

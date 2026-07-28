@@ -22,20 +22,20 @@ export default function Tray() {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setTrayOpen(false)}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[790]"
+            className="fixed inset-0 bg-ink/45 backdrop-blur-sm z-[790]"
           />
           <motion.aside
             initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed top-0 right-0 h-full w-full max-w-[440px] bg-bg border-l border-white/10 z-[800] flex flex-col"
+            className="fixed top-0 right-0 h-full w-full max-w-[440px] bg-bg border-l border-ink/10 z-[800] flex flex-col"
             data-testid="programme-tray"
           >
-            <div className="p-7 border-b border-white/10 flex justify-between items-start">
+            <div className="p-7 border-b border-ink/10 flex justify-between items-start">
               <div>
                 <h3 className="font-display text-2xl font-bold">Your Programme</h3>
                 <p className="font-mono text-[11px] text-ink3 mt-1 uppercase tracking-wider">A scoped brief — not a bill</p>
               </div>
-              <button onClick={() => setTrayOpen(false)} data-testid="tray-close" className="p-1 text-ink2 hover:text-white"><X className="w-5 h-5" /></button>
+              <button onClick={() => setTrayOpen(false)} data-testid="tray-close" className="p-1 text-ink2 hover:text-ink"><X className="w-5 h-5" /></button>
             </div>
 
             <div className="flex-1 overflow-y-auto p-7">
@@ -47,21 +47,21 @@ export default function Tray() {
               ) : (
                 <div className="space-y-1">
                   {selectedPackage && (
-                    <div className="flex justify-between items-center py-4 border-b border-white/10" data-testid="tray-package">
+                    <div className="flex justify-between items-center py-4 border-b border-ink/10" data-testid="tray-package">
                       <div>
                         <div className="font-semibold">{selectedPackage} package</div>
                         <div className="font-mono text-[10px] text-signal uppercase tracking-wider mt-1">Base plan</div>
                       </div>
-                      <button onClick={() => setSelectedPackage(null)} className="text-ink3 hover:text-white text-xs underline">Remove</button>
+                      <button onClick={() => setSelectedPackage(null)} className="text-ink3 hover:text-ink text-xs underline">Remove</button>
                     </div>
                   )}
                   {tray.map((item) => (
-                    <div key={item.name} className="flex justify-between items-start gap-3 py-4 border-b border-white/10">
+                    <div key={item.name} className="flex justify-between items-start gap-3 py-4 border-b border-ink/10">
                       <div>
                         <div className="font-medium text-sm leading-snug">{item.name}</div>
                         <div className="font-mono text-[10px] text-ink3 uppercase tracking-wider mt-1">{item.type}</div>
                       </div>
-                      <button onClick={() => removeItem(item.name)} className="text-ink3 hover:text-white text-xs underline shrink-0">Remove</button>
+                      <button onClick={() => removeItem(item.name)} className="text-ink3 hover:text-ink text-xs underline shrink-0">Remove</button>
                     </div>
                   ))}
                 </div>
@@ -97,7 +97,7 @@ export default function Tray() {
               )}
             </div>
 
-            <div className="p-7 border-t border-white/10">
+            <div className="p-7 border-t border-ink/10">
               <button
                 disabled={empty}
                 onClick={() => { setProposalOpen(true); setTrayOpen(false); }}

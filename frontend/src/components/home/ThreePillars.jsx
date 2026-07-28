@@ -7,7 +7,7 @@ import { PILLARS } from "@/data/site";
 
 export default function ThreePillars() {
   return (
-    <section id="pillars" className="py-24 md:py-36 bg-surface border-t border-white/10" data-testid="pillars-section">
+    <section id="pillars" className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="pillars-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
           eyebrow="How we solve it"
@@ -18,8 +18,8 @@ export default function ThreePillars() {
         <div className="space-y-5">
           {PILLARS.map((p, idx) => (
             <Reveal key={p.n} i={idx}>
-              <div className="group grid md:grid-cols-[auto_1fr_auto] gap-8 items-center border border-white/10 hover:border-signal/40 bg-bg/60 p-7 md:p-9 transition-colors">
-                <div className="font-display text-6xl md:text-8xl font-extrabold text-white/10 group-hover:text-signal/70 transition-colors leading-none">
+              <div className="group grid md:grid-cols-[auto_1fr_auto] gap-8 items-center border border-ink/10 hover:border-signal/40 bg-bg/60 p-7 md:p-9 transition-colors">
+                <div className="font-display text-6xl md:text-8xl font-extrabold text-ink/10 group-hover:text-signal/70 transition-colors leading-none">
                   {p.n}
                 </div>
                 <div>

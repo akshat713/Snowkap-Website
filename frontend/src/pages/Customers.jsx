@@ -41,7 +41,7 @@ const CASE_STUDIES = [
 
 function CaseStudy({ s, i }) {
   return (
-    <section className={`py-24 md:py-32 ${i % 2 ? "bg-surface border-y border-white/10" : "bg-bg"}`} data-testid={`case-study-${i}`}>
+    <section className={`py-24 md:py-32 ${i % 2 ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={`case-study-${i}`}>
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
         <div className="lg:sticky lg:top-28 h-fit">
           <div className="flex items-baseline gap-4 mb-6">
@@ -53,22 +53,22 @@ function CaseStudy({ s, i }) {
           <figure className="mt-10 border-l-2 border-signal pl-5 max-w-md">
             <blockquote className="text-ink2 leading-relaxed text-sm">&ldquo;{s.quote}&rdquo;</blockquote>
             <figcaption className="mt-4">
-              <div className="font-semibold text-white text-sm">{s.author}</div>
+              <div className="font-semibold text-ink text-sm">{s.author}</div>
               <div className="text-ink3 text-xs mt-0.5">{s.role}</div>
             </figcaption>
           </figure>
         </div>
 
         <div>
-          <div className="border-t border-white/10">
+          <div className="border-t border-ink/10">
             {[["The challenge", s.challenge], ["The Snowkap approach", s.approach], ["The outcome", s.outcome]].map(([t, b]) => (
-              <div key={t} className="grid md:grid-cols-[200px_1fr] gap-4 md:gap-8 py-8 border-b border-white/10">
+              <div key={t} className="grid md:grid-cols-[200px_1fr] gap-4 md:gap-8 py-8 border-b border-ink/10">
                 <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-signal pt-1">{t}</div>
                 <p className="text-ink2 leading-relaxed">{b}</p>
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-px bg-white/10 border border-white/10 mt-10">
+          <div className="grid grid-cols-3 gap-px bg-ink/10 border border-ink/10 mt-10">
             {s.stats.map(([n, l]) => (
               <div key={l} className={`${i % 2 ? "bg-surface" : "bg-bg"} p-5 md:p-7`}>
                 <div className="font-mono text-2xl md:text-3xl font-semibold text-signal tracking-tight">{n}</div>
@@ -94,7 +94,7 @@ export default function Customers() {
       />
 
       {/* logo strip */}
-      <section className="border-b border-white/10 py-10 overflow-hidden" data-testid="customers-logo-strip">
+      <section className="border-b border-ink/10 py-10 overflow-hidden" data-testid="customers-logo-strip">
         <div className="flex w-max animate-marquee items-center">
           {[...ALL_LOGOS, ...ALL_LOGOS].map(([name, src], i) => (
             <div key={i} className="px-9 shrink-0">
@@ -106,7 +106,7 @@ export default function Customers() {
 
       {CASE_STUDIES.map((s, i) => <CaseStudy key={s.client} s={s} i={i} />)}
 
-      <section className="py-24 md:py-32 bg-bg text-center border-t border-white/10" data-testid="customers-cta">
+      <section className="py-24 md:py-32 bg-bg text-center border-t border-ink/10" data-testid="customers-cta">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.24em] text-signal mb-6">Your turn</div>
           <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-tighter leading-[0.98]">

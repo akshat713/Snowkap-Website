@@ -38,12 +38,12 @@ export default function Nav() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-[500] transition-[background,border-color,backdrop-filter] duration-300 ${
-          scrolled ? "bg-black/70 backdrop-blur-2xl border-b border-white/10" : "bg-transparent border-b border-transparent"
+          scrolled ? "bg-bg/85 backdrop-blur-2xl border-b border-ink/10 shadow-[0_1px_0_rgba(34,34,34,0.04)]" : "bg-transparent border-b border-transparent"
         }`}
       >
         <div className="max-w-[1320px] mx-auto px-6 md:px-10 h-[76px] flex items-center justify-between gap-6">
           <button onClick={() => go("/")} data-testid="nav-logo" className="flex items-center">
-            <Wordmark className="text-[22px]" />
+            <Wordmark height={26} />
           </button>
 
           <nav className="hidden lg:flex items-center gap-8">
@@ -52,7 +52,7 @@ export default function Nav() {
                 key={n.label}
                 onClick={() => go(n.to)}
                 data-testid={`nav-${n.label.toLowerCase()}`}
-                className="font-mono text-[12px] uppercase tracking-[0.14em] text-ink2 hover:text-white transition-colors"
+                className="font-mono text-[12px] uppercase tracking-[0.14em] text-ink2 hover:text-ink transition-colors"
               >
                 {n.label}
               </button>
@@ -63,7 +63,7 @@ export default function Nav() {
             <button
               onClick={() => setTrayOpen(true)}
               data-testid="nav-tray-toggle"
-              className="hidden sm:flex items-center gap-2 border border-white/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
+              className="hidden sm:flex items-center gap-2 border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
             >
               <FileText className="w-3.5 h-3.5" /> Your Programme
               <span
@@ -78,7 +78,7 @@ export default function Nav() {
               target="_blank"
               rel="noreferrer"
               data-testid="nav-sign-in"
-              className="hidden sm:flex items-center gap-1.5 border border-white/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
+              className="hidden sm:flex items-center gap-1.5 border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
             >
               Sign In <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
@@ -104,26 +104,26 @@ export default function Nav() {
             className="fixed inset-0 z-[600] bg-bg p-6 flex flex-col lg:hidden"
           >
             <div className="flex justify-between items-center mb-10">
-              <Wordmark className="text-2xl" />
+              <Wordmark height={28} />
               <button onClick={() => setMobile(false)} data-testid="nav-mobile-close"><X className="w-7 h-7" /></button>
             </div>
             <div className="flex flex-col">
               {NAV.map((n) => (
-                <button key={n.label} onClick={() => go(n.to)} className="font-display text-3xl py-3 text-left border-b border-white/10">
+                <button key={n.label} onClick={() => go(n.to)} className="font-display text-3xl py-3 text-left border-b border-ink/10">
                   {n.label}
                 </button>
               ))}
               <button
                 onClick={() => { setMobile(false); setTrayOpen(true); }}
                 data-testid="nav-mobile-tray-toggle"
-                className="font-display text-3xl py-3 text-left border-b border-white/10 flex items-center gap-3"
+                className="font-display text-3xl py-3 text-left border-b border-ink/10 flex items-center gap-3"
               >
                 Your Programme
                 <span className={`min-w-[24px] h-6 rounded-full bg-signal text-white text-sm font-sans font-bold flex items-center justify-center px-1.5 ${trayCount === 0 ? "hidden" : ""}`}>
                   {trayCount}
                 </span>
               </button>
-              <a href={SIGNIN_URL} target="_blank" rel="noreferrer" className="font-display text-3xl py-3 text-left border-b border-white/10 flex items-center gap-2">
+              <a href={SIGNIN_URL} target="_blank" rel="noreferrer" className="font-display text-3xl py-3 text-left border-b border-ink/10 flex items-center gap-2">
                 Sign In <ArrowUpRight className="w-6 h-6 text-signal" />
               </a>
             </div>

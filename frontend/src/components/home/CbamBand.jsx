@@ -24,7 +24,7 @@ export default function CbamBand() {
               to="/tools/cbam"
               onClick={() => window.scrollTo(0, 0)}
               data-testid="cbam-band-cta"
-              className="group shrink-0 bg-black text-white px-8 py-5 font-bold flex items-center gap-3 hover:bg-neutral-900 transition-colors"
+              className="group shrink-0 bg-black text-ink px-8 py-5 font-bold flex items-center gap-3 hover:bg-neutral-900 transition-colors"
             >
               Calculate your exposure
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

@@ -3,7 +3,7 @@ import { ALL_LOGOS } from "@/data/content";
 
 export default function LogoMarquee() {
   return (
-    <section className="py-16 md:py-20 border-b border-white/10 bg-bg overflow-hidden" data-testid="logo-marquee">
+    <section className="py-16 md:py-20 border-b border-ink/10 bg-bg overflow-hidden" data-testid="logo-marquee">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 mb-10">
         <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-ink3 text-center">
           Trusted by the people who decide
