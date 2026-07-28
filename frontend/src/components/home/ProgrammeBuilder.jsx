@@ -22,10 +22,15 @@ export default function ProgrammeBuilder() {
         />
 
         {reco && (
-          <div className="border border-signal/40 bg-signal/[0.06] px-6 py-4 mb-10 flex flex-wrap items-center justify-between gap-4" data-testid="programme-dossier-reco">
-            <p className="text-sm text-ink2">
-              Based on your dossier, we'd recommend the <span className="text-white font-semibold">{reco}</span> package.
-            </p>
+          <div className="border border-signal/40 bg-signal/[0.06] px-6 py-5 mb-10 flex flex-wrap items-center justify-between gap-4" data-testid="programme-dossier-reco">
+            <div className="max-w-xl">
+              <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-signal mb-2">From your dossier</div>
+              <p className="text-sm text-ink2 leading-relaxed">
+                We'd recommend the <span className="text-white font-semibold">{reco}</span> package
+                {dossier.sector ? <> for {dossier.sector}</> : null}
+                {dossier.stage ? <> — {dossier.stage.toLowerCase()}</> : null}.
+              </p>
+            </div>
             <button
               onClick={() => choosePackage(reco)}
               data-testid="programme-dossier-reco-select"

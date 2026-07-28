@@ -82,6 +82,33 @@ html.lenis, html.lenis body { height: auto; }
 
 .reveal-mask { overflow: hidden; display: block; padding-bottom: 0.09em; margin-bottom: -0.09em; }
 
+/* Dossier side-panel infographic: scattered evidence resolves into a
+   structured grid, then gets verified. Mirrors what the dossier itself does. */
+.dq-scatter { animation: dq-scatter 8s ease-in-out infinite; }
+.dq-grid rect { opacity: 0; animation: dq-grid 8s ease-in-out infinite; }
+.dq-scan { animation: dq-scan 8s ease-in-out infinite; }
+.dq-seal { opacity: 0; transform-origin: 100px 148px; animation: dq-seal 8s ease-in-out infinite; }
+
+@keyframes dq-scatter { 0%, 10% { opacity: 1; } 28%, 100% { opacity: 0; } }
+@keyframes dq-scan {
+  0% { transform: translateY(-14px); opacity: 0; }
+  8% { opacity: 1; }
+  26% { transform: translateY(58px); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes dq-grid { 0%, 26% { opacity: 0; } 40%, 76% { opacity: 1; } 92%, 100% { opacity: 0; } }
+@keyframes dq-seal {
+  0%, 70% { opacity: 0; transform: scale(1.6) rotate(-12deg); }
+  80%, 94% { opacity: 1; transform: scale(1) rotate(-7deg); }
+  100% { opacity: 0; transform: scale(1) rotate(-7deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dq-scatter, .dq-scan { display: none; }
+  .dq-grid rect, .dq-seal { animation: none; opacity: 1; }
+  .dq-seal { transform: rotate(-7deg); }
+}
+
 @layer base {
   :root {
     --background: 0 0% 2%;

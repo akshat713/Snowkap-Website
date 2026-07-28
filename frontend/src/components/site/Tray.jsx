@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Sparkles } from "lucide-react";
 import { useApp } from "@/context/AppContext";
+import { recommendFor, pillarOf } from "@/data/recommendations";
 
 export default function Tray() {
-  const { trayOpen, setTrayOpen, tray, removeItem, selectedPackage, setSelectedPackage, setProposalOpen } = useApp();
+  const { trayOpen, setTrayOpen, tray, addItem, removeItem, selectedPackage, setSelectedPackage, setProposalOpen, dossier } = useApp();
   const empty = tray.length === 0 && !selectedPackage;
+
+  // Suggestions follow from what's actually in the tray, the package chosen,
+  // and the dossier — recomputed on every change so they never go stale.
+  const suggestions = useMemo(
+    () => recommendFor({ tray, selectedPackage, dossier }),
+    [tray, selectedPackage, dossier]
+  );
 
   return (
     <AnimatePresence>
@@ -56,6 +64,35 @@ export default function Tray() {
                       <button onClick={() => removeItem(item.name)} className="text-ink3 hover:text-white text-xs underline shrink-0">Remove</button>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {suggestions.length > 0 && (
+                <div className="mt-7 border border-signal/30 bg-signal/[0.05] p-5" data-testid="tray-recommendations">
+                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-signal mb-4">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    {empty ? "Where your sector starts" : "Goes with what you've chosen"}
+                  </div>
+                  <div className="space-y-4">
+                    {suggestions.map((s) => (
+                      <div key={s.name} className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="text-sm font-medium leading-snug">{s.name}</div>
+                          <p className="text-ink3 text-[12.5px] leading-relaxed mt-1">{s.why}</p>
+                          <div className="font-mono text-[9.5px] uppercase tracking-wider text-ink3/70 mt-1.5">
+                            Because of {s.source}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => addItem(s.name, pillarOf(s.name))}
+                          data-testid={`tray-add-${s.name.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`}
+                          className="shrink-0 inline-flex items-center gap-1.5 border border-signal/50 text-signal hover:bg-signal hover:text-bg px-3 py-1.5 text-xs font-bold transition-colors"
+                        >
+                          <Plus className="w-3 h-3" /> Add
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

@@ -375,19 +375,60 @@ async def list_subscribers(admin: dict = Depends(get_current_admin)):
 
 
 # ---- Dossier ----
-PACKAGE_MAP = {
-    ("baseline",): "Starter",
-    ("scaling",): "Growth",
-    ("global",): "Enterprise",
+# Mirror of the scoring model in frontend/src/data/recommendations.js. Stage
+# dominates because it describes scope of work most directly; headcount proxies
+# supplier-network size; sector and region add weight where several regimes bind
+# at once. Range 0-13, banded <=3 Starter / <=8 Growth / else Enterprise.
+_STAGE_SCORE = {
+    "First baseline — just starting": 0,
+    "Scaling compliance & suppliers": 3,
+    "Global, multi-framework operations": 6,
 }
+_SIZE_SCORE = {"Under 25": 0, "26–99": 1, "100–999": 2, "1000+": 3}
+_SECTOR_SCORE = {
+    "Healthcare & Pharma": 2,
+    "Energy & Utilities": 2,
+    "Automotive & Transportation": 1,
+    "Manufacturing & Industrial": 1,
+    "Financial, IT & Investment": 1,
+    "Beverages & Consumer Goods": 1,
+}
+_REGION_SCORE = {
+    "European Union": 2,
+    "Other / Global": 2,
+    "United Kingdom": 1,
+    "Singapore & SEA": 1,
+    "Gulf Region": 1,
+    "India": 1,
+}
+
+
+def recommend_package(
+    sector: Optional[str] = None,
+    region: Optional[str] = None,
+    stage: Optional[str] = None,
+    company_size: Optional[str] = None,
+) -> str:
+    score = (
+        _STAGE_SCORE.get(stage or "", 0)
+        + _SIZE_SCORE.get(company_size or "", 0)
+        + _SECTOR_SCORE.get(sector or "", 1)
+        + _REGION_SCORE.get(region or "", 1)
+    )
+    if score <= 3:
+        return "Starter"
+    return "Growth" if score <= 8 else "Enterprise"
 
 
 @api.post("/dossier")
 async def save_dossier(data: DossierCreate):
-    rec = data.recommended_package
-    if not rec:
-        stage = (data.stage or "").lower()
-        rec = "Enterprise" if "global" in stage else ("Growth" if "scal" in stage else "Starter")
+    # The client computes and displays the recommendation (see
+    # frontend/src/data/recommendations.js) and sends it along, so it is trusted
+    # when present. recommend_package() below mirrors that model exactly and is
+    # the fallback for direct API callers — keep the two in step if either moves.
+    rec = data.recommended_package or recommend_package(
+        sector=data.sector, region=data.region, stage=data.stage, company_size=data.company_size
+    )
     doc = Dossier(**{**data.model_dump(), "recommended_package": rec})
     res = await db.dossiers.insert_one(doc.to_mongo())
     doc.id = str(res.inserted_id)
