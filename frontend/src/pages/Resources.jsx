@@ -19,11 +19,19 @@ export default function Resources() {
   const [tab, setTab] = useState("blog");
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
   const { setLeadModal } = useApp();
 
   useEffect(() => {
     setLoading(true);
-    api.get(`/resources?type=${tab}`).then((r) => setItems(r.data)).finally(() => setLoading(false));
+    setFailed(false);
+    api
+      .get(`/resources?type=${tab}`)
+      .then((r) => setItems(r.data))
+      // Without this the request rejects unhandled and the page shows the
+      // same "nothing here" copy it shows for a genuinely empty list.
+      .catch(() => { setItems([]); setFailed(true); })
+      .finally(() => setLoading(false));
   }, [tab]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -54,6 +62,15 @@ export default function Resources() {
 
           {loading ? (
             <div className="text-ink3 font-mono text-sm py-20">Loading…</div>
+          ) : failed ? (
+            <div className="py-20" data-testid="resources-error">
+              <p className="font-display text-2xl font-bold mb-3">We couldn't load this just now.</p>
+              <p className="text-ink2 text-sm max-w-lg leading-relaxed">
+                Our resource library isn't reachable from here. Try again in a moment — or email{" "}
+                <a href="mailto:sales@snowkap.com" className="text-signal hover:underline">sales@snowkap.com</a>{" "}
+                and we'll send what you're looking for directly.
+              </p>
+            </div>
           ) : items.length === 0 ? (
             <div className="text-ink3 font-mono text-sm py-20">Nothing here yet.</div>
           ) : (
