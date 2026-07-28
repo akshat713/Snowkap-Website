@@ -21,10 +21,12 @@ export default function Home() {
     <Layout>
       <Hero />
       <LogoMarquee />
-      <Dossier />
       <Problem />
       <Pillars />
       <PlatformShowcase />
+      {/* Sits below the product and services blocks: by this point the visitor
+          knows what's on offer, so routing them to their slice of it lands. */}
+      <Dossier />
       <Metrics />
       <Clientele />
       <TestimonialsSection />
