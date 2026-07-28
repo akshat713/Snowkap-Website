@@ -5,12 +5,13 @@ import PageHero from "@/components/site/PageHero";
 import { Reveal } from "@/components/site/Reveal";
 import { useApp } from "@/context/AppContext";
 import { SIGNIN_URL } from "@/data/content";
+import { asset } from "@/lib/asset";
 
 const DEEP_MODULES = [
   {
     tag: "Snowkap AI", title: "Predict. Plan. Perform.",
     body: "Tired of juggling spreadsheets, PDFs, and frameworks? Snowkap AI automates your entire emissions workflow — quick, accurate, and audit-ready.",
-    img: "/assets/product/capture.jpg",
+    img: asset("/assets/product/capture.jpg"),
     points: [
       ["AI-OCR Extraction", "Parse invoices, utility bills, and documents in seconds. Auto-extract activity data and calculate Scope 1–3 with precision."],
       ["Conversational ESG Copilot", "Ask questions, identify data gaps, and navigate complex sustainability tasks with a dedicated AI assistant."],
@@ -21,7 +22,7 @@ const DEEP_MODULES = [
   {
     tag: "Carbon Accounting", title: "Pinpoint your carbon impact.",
     body: "Measure your enterprise footprint with scientific rigour and automation. Every number verified, traceable, and actionable.",
-    img: "/assets/product/calculate.jpg",
+    img: asset("/assets/product/calculate.jpg"),
     points: [
       ["Unified Data Fabric", "Integrate meters, purchase orders, proxies, and suppliers into one normalised, tagged system — ERP, IoT, and API connectors included."],
       ["60,000+ Emission Factors", "Global and India/SEA/GCC-specific factors with IPCC-aligned precision mapping across Scope 1–3."],
@@ -32,7 +33,7 @@ const DEEP_MODULES = [
   {
     tag: "Scope 3 & Supplier Engagement", title: "Turn supplier blind spots into Scope 3 progress.",
     body: "From onboarding to real-time dashboards — manage your entire value-chain emissions in one place.",
-    img: "/assets/product/suppliers.jpg",
+    img: asset("/assets/product/suppliers.jpg"),
     points: [
       ["Tiered Assessments", "Tailored workflows per supplier tier collect the right GHG, energy, and PCF data without confusion."],
       ["AI Verification", "Every file scanned for completeness, consistency, and audit-readiness with machine-learning checks."],
@@ -43,7 +44,7 @@ const DEEP_MODULES = [
   {
     tag: "ESG Reporting", title: "Report once. Comply everywhere.",
     body: "One data entry auto-populates 25+ frameworks — with audit logs, framework mapping, and AI-assist built in.",
-    img: "/assets/product/reporting.jpg",
+    img: asset("/assets/product/reporting.jpg"),
     points: [
       ["Public Data Auto-Pull", "Auto-populate 70–80% of a report from your own data and verified public sources."],
       ["Unified Reporting Hub", "BRSR & BRSR Core, CSRD/ESRS, GRI, IFRS S1/S2, CDP, TCFD, DJSI — from one dataset."],

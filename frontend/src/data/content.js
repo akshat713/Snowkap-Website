@@ -1,5 +1,7 @@
 // Snowkap content — sourced from Corporate Deck, Sales Deck, Design Refinement Strategy & snowkap.com
 
+import { asset } from "@/lib/asset";
+
 export const SIGNIN_URL = "https://login.snowkap.com";
 
 export const TICKER = [
@@ -38,12 +40,12 @@ export const PILLARS3 = [
 ];
 
 export const MODULES = [
-  { img: "/assets/product/capture.jpg", title: "Capture carbon from every corner", body: "Collect Scope 1, 2 and 3 emissions via bulk uploads, supplier templates, API integrations, and AI-based document parsing. No source left behind." },
-  { img: "/assets/product/quality.jpg", title: "Strengthen data at the source", body: "Built-in validation, quality scoring, and auto-tagging. Surface anomalies before they surface in an audit." },
-  { img: "/assets/product/suppliers.jpg", title: "Engage your value chain seamlessly", body: "Equip suppliers with easy templates and dashboards. Get primary data, track submissions, and close gaps faster." },
-  { img: "/assets/product/calculate.jpg", title: "Calculate carbon with confidence", body: "Hybrid and primary-data PCF estimation across parts, suppliers, and categories — aligned with ISO 14064, ISO 14067 and the GHG Protocol." },
-  { img: "/assets/product/reporting.jpg", title: "Report once, comply everywhere", body: "Auto-generate disclosures for BRSR, CDP, TCFD, and ESRS with audit logs, framework mapping, and AI-assist built in." },
-  { img: "/assets/product/monitor.jpg", title: "Monitor what matters, live", body: "Track emissions by site, supplier, or material. Compare trends, evaluate hotspots, and inform targets." },
+  { img: asset("/assets/product/capture.jpg"), title: "Capture carbon from every corner", body: "Collect Scope 1, 2 and 3 emissions via bulk uploads, supplier templates, API integrations, and AI-based document parsing. No source left behind." },
+  { img: asset("/assets/product/quality.jpg"), title: "Strengthen data at the source", body: "Built-in validation, quality scoring, and auto-tagging. Surface anomalies before they surface in an audit." },
+  { img: asset("/assets/product/suppliers.jpg"), title: "Engage your value chain seamlessly", body: "Equip suppliers with easy templates and dashboards. Get primary data, track submissions, and close gaps faster." },
+  { img: asset("/assets/product/calculate.jpg"), title: "Calculate carbon with confidence", body: "Hybrid and primary-data PCF estimation across parts, suppliers, and categories — aligned with ISO 14064, ISO 14067 and the GHG Protocol." },
+  { img: asset("/assets/product/reporting.jpg"), title: "Report once, comply everywhere", body: "Auto-generate disclosures for BRSR, CDP, TCFD, and ESRS with audit logs, framework mapping, and AI-assist built in." },
+  { img: asset("/assets/product/monitor.jpg"), title: "Monitor what matters, live", body: "Track emissions by site, supplier, or material. Compare trends, evaluate hotspots, and inform targets." },
 ];
 
 export const METRICS = [
@@ -55,7 +57,7 @@ export const METRICS = [
   { value: 6, suffix: "+", label: "Industries served" },
 ];
 
-const L = (name) => `/assets/logos/white/${name}.png`;
+const L = (name) => asset(`/assets/logos/white/${name}.png`);
 export const CLIENT_SECTORS = [
   { sector: "Automotive & Transportation", logos: [["Daimler", L("daimler")], ["Schaeffler", L("schaeffler")], ["MAHLE", L("mahle")], ["Ather", L("ather")], ["NRB Bearings", L("nrb")]] },
   { sector: "Manufacturing & Industrial", logos: [["JSW Steel", L("jsw")], ["Econovus", L("econovus")], ["Forstar", L("forstar")], ["Kings Infra", L("kingsinfra")]] },
@@ -72,7 +74,7 @@ export const TESTIMONIALS = [
   { quote: "Snowkap delivered a well-structured, insightful review that validated our SBTi target-setting approach and provided clear, practical recommendations. A strong foundation for our Net Zero pathway.", name: "Abhishek Agarwal", role: "Global Head Compliance", company: "Sutherland" },
 ];
 
-const T = (name) => `/assets/team/${name}.png`;
+const T = (name) => asset(`/assets/team/${name}.png`);
 export const TEAM = [
   { name: "Rajesh P", role: "Chief Executive Officer", img: T("rajesh-p") },
   { name: "Giri K", role: "Co-Founder", img: T("giri-k") },
