@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles, CalendarPlus } from "lucide-react";
 import { API } from "@/lib/api";
+import { useApp } from "@/context/AppContext";
 
 const SUGGESTIONS = [
   "What does the Snowkap platform do?",
@@ -25,6 +26,7 @@ export default function ChatWidget() {
   const [busy, setBusy] = useState(false);
   const scrollRef = useRef(null);
   const sessionId = useRef(getSessionId());
+  const { setLeadModal } = useApp();
 
   useEffect(() => {
     if (!open) return;
@@ -147,9 +149,19 @@ export default function ChatWidget() {
               ))}
             </div>
 
+            <div className="flex items-center gap-2 border-t border-white/10 px-3 pt-2.5 bg-bg">
+              <button
+                onClick={() => { setOpen(false); setLeadModal({ kind: "demo", title: "Book a Demo" }); }}
+                data-testid="chat-book-demo"
+                className="flex items-center gap-1.5 border border-signal/50 text-signal hover:bg-signal hover:text-white px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider transition-colors"
+              >
+                <CalendarPlus className="w-3.5 h-3.5" /> Book a Demo
+              </button>
+              <span className="text-ink3 text-[10px] font-mono">or drop your email in the chat</span>
+            </div>
             <form
               onSubmit={(e) => { e.preventDefault(); send(); }}
-              className="flex items-center gap-2 border-t border-white/10 p-3 bg-bg"
+              className="flex items-center gap-2 p-3 bg-bg"
             >
               <input
                 value={input}

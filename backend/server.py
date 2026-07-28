@@ -6,6 +6,7 @@ load_dotenv(ROOT_DIR / '.env')
 import os
 import logging
 import asyncio
+import re
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Annotated, Any
 
@@ -552,9 +553,12 @@ PROOF: 1,100+ product carbon footprints calculated · 700+ suppliers onboarded �
 
 USEFUL LINKS on this site: Book a demo / contact → /contact · Platform details → /platform · Services → /services · CBAM exposure calculator (free tool) → /tools/cbam · Customer stories → /customers · Resources → /resources · Product sign-in → https://login.snowkap.com. Contact: sales@snowkap.com, +91 22 4007 9343.
 
-RULES: Be concise (2-4 short sentences unless asked for depth), confident, financially specific, and helpful. Never frame ESG as cost or punishment — it is investment with quantifiable returns. Never invent clients, prices, or features. For pricing, explain engagements are scoped individually and suggest booking a demo. When relevant, point the visitor to a link above. If asked something unrelated to ESG/Snowkap, politely steer back."""
+RULES: Be concise (2-4 short sentences unless asked for depth), confident, financially specific, and helpful. Never frame ESG as cost or punishment — it is investment with quantifiable returns. Never invent clients, prices, or features. For pricing, explain engagements are scoped individually and suggest booking a demo. When relevant, point the visitor to a link above. If asked something unrelated to ESG/Snowkap, politely steer back.
+
+LEAD CAPTURE: When the visitor shows buying interest (asks about pricing, demos, implementation, onboarding, or their specific compliance situation), offer to have the Snowkap team reach out and ask for their work email — naturally, not pushy, and never more than twice per conversation. If the visitor shares an email address, thank them, confirm the Snowkap team will contact them within one business day, and keep helping. They can also use the "Book a Demo" button below this chat."""
 
 chat_sessions: dict = {}
+CHAT_EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 
 class ChatInput(BaseModel):
@@ -587,6 +591,14 @@ async def chat_stream(data: ChatInput):
     chat = get_chat(data.session_id)
     await db.chat_messages.insert_one({
         "session_id": data.session_id, "role": "user", "content": data.message, "created_at": now_iso()})
+
+    email_match = CHAT_EMAIL_RE.search(data.message)
+    if email_match:
+        email = email_match.group(0).lower()
+        if not await db.leads.find_one({"kind": "chat", "email": email}):
+            lead = Lead(kind="chat", email=email, message=data.message[:500], reference="Ask Snowkap AI")
+            await db.leads.insert_one(lead.to_mongo())
+            logger.info(f"Chat lead captured: {email}")
 
     async def gen():
         parts = []

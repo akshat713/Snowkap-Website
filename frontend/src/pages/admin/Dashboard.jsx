@@ -46,7 +46,7 @@ export default function AdminDashboard() {
   const [subs, setSubs] = useState([]);
   const [resources, setResources] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ type: "blog", title: "", category: "", excerpt: "", body: "", date_label: "", read_time: "" });
+  const [form, setForm] = useState({ type: "blog", title: "", category: "", excerpt: "", body: "", date_label: "", read_time: "", image: "", external_url: "" });
 
   useEffect(() => {
     if (!loading && (!user || !user.role)) navigate("/admin/login");
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
       await api.post("/resources", { ...form, tags: [] });
       toast.success("Content published.");
       setShowForm(false);
-      setForm({ type: "blog", title: "", category: "", excerpt: "", body: "", date_label: "", read_time: "" });
+      setForm({ type: "blog", title: "", category: "", excerpt: "", body: "", date_label: "", read_time: "", image: "", external_url: "" });
       loadAll();
     } catch { toast.error("Could not save."); }
   };
@@ -193,6 +193,14 @@ export default function AdminDashboard() {
                 <label className="text-sm">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Read time</span>
                   <input value={form.read_time} onChange={(e) => setForm({ ...form, read_time: e.target.value })} placeholder="6 min read" className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
+                </label>
+                <label className="text-sm">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Thumbnail image URL</span>
+                  <input data-testid="admin-res-image" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="https://…/image.jpg" className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
+                </label>
+                <label className="text-sm">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">External link (opens on snowkap.com)</span>
+                  <input data-testid="admin-res-external" value={form.external_url} onChange={(e) => setForm({ ...form, external_url: e.target.value })} placeholder="https://snowkap.com/…" className="w-full bg-white/5 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-signal" />
                 </label>
                 <label className="text-sm md:col-span-2">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Excerpt</span>

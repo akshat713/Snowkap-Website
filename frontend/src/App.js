@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import "@/App.css";
 import SmoothScroll from "@/components/site/SmoothScroll";
+import SeoManager from "@/components/site/SeoManager";
 import { AppProvider } from "@/context/AppContext";
 import { AuthProvider } from "@/context/AuthContext";
 import Home from "@/pages/Home";
@@ -23,6 +24,7 @@ function App() {
     <AuthProvider>
       <AppProvider>
         <BrowserRouter>
+          <SeoManager />
           <SmoothScroll>
             <Routes>
               <Route path="/" element={<Home />} />

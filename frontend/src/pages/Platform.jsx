@@ -10,7 +10,7 @@ const DEEP_MODULES = [
   {
     tag: "Snowkap AI", title: "Predict. Plan. Perform.",
     body: "Tired of juggling spreadsheets, PDFs, and frameworks? Snowkap AI automates your entire emissions workflow — quick, accurate, and audit-ready.",
-    img: "/assets/product/home-1.png",
+    img: "/assets/product/capture.jpg",
     points: [
       ["AI-OCR Extraction", "Parse invoices, utility bills, and documents in seconds. Auto-extract activity data and calculate Scope 1–3 with precision."],
       ["Conversational ESG Copilot", "Ask questions, identify data gaps, and navigate complex sustainability tasks with a dedicated AI assistant."],
@@ -21,7 +21,7 @@ const DEEP_MODULES = [
   {
     tag: "Carbon Accounting", title: "Pinpoint your carbon impact.",
     body: "Measure your enterprise footprint with scientific rigour and automation. Every number verified, traceable, and actionable.",
-    img: "/assets/product/home-41.png",
+    img: "/assets/product/calculate.jpg",
     points: [
       ["Unified Data Fabric", "Integrate meters, purchase orders, proxies, and suppliers into one normalised, tagged system — ERP, IoT, and API connectors included."],
       ["60,000+ Emission Factors", "Global and India/SEA/GCC-specific factors with IPCC-aligned precision mapping across Scope 1–3."],
@@ -32,7 +32,7 @@ const DEEP_MODULES = [
   {
     tag: "Scope 3 & Supplier Engagement", title: "Turn supplier blind spots into Scope 3 progress.",
     body: "From onboarding to real-time dashboards — manage your entire value-chain emissions in one place.",
-    img: "/assets/product/home-3.png",
+    img: "/assets/product/suppliers.jpg",
     points: [
       ["Tiered Assessments", "Tailored workflows per supplier tier collect the right GHG, energy, and PCF data without confusion."],
       ["AI Verification", "Every file scanned for completeness, consistency, and audit-readiness with machine-learning checks."],
@@ -43,7 +43,7 @@ const DEEP_MODULES = [
   {
     tag: "ESG Reporting", title: "Report once. Comply everywhere.",
     body: "One data entry auto-populates 25+ frameworks — with audit logs, framework mapping, and AI-assist built in.",
-    img: "/assets/product/home-51.png",
+    img: "/assets/product/reporting.jpg",
     points: [
       ["Public Data Auto-Pull", "Auto-populate 70–80% of a report from your own data and verified public sources."],
       ["Unified Reporting Hub", "BRSR & BRSR Core, CSRD/ESRS, GRI, IFRS S1/S2, CDP, TCFD, DJSI — from one dataset."],
@@ -115,9 +115,9 @@ export default function Platform() {
               </div>
             </div>
             <Reveal className={mi % 2 ? "lg:order-1" : ""}>
-              <div className="relative rounded-full overflow-hidden border border-white/15 aspect-square max-w-[520px] mx-auto">
-                <img src={m.img} alt={m.tag} loading="lazy" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg/60 to-transparent" />
+              <div className="relative overflow-hidden border border-white/12 bg-black aspect-square max-w-[520px] mx-auto group">
+                <img src={m.img} alt={m.tag} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
+                <div className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 bg-black/50 backdrop-blur px-3 py-1.5 border border-white/10">{m.tag}</div>
               </div>
             </Reveal>
           </div>

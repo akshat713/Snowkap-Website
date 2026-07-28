@@ -38,12 +38,12 @@ export const PILLARS3 = [
 ];
 
 export const MODULES = [
-  { img: "/assets/product/home-1.png", title: "Capture carbon from every corner", body: "Collect Scope 1, 2 and 3 emissions via bulk uploads, supplier templates, API integrations, and AI-based document parsing. No source left behind." },
-  { img: "/assets/product/home-2.png", title: "Strengthen data at the source", body: "Built-in validation, quality scoring, and auto-tagging. Surface anomalies before they surface in an audit." },
-  { img: "/assets/product/home-3.png", title: "Engage your value chain seamlessly", body: "Equip suppliers with easy templates and dashboards. Get primary data, track submissions, and close gaps faster." },
-  { img: "/assets/product/home-41.png", title: "Calculate carbon with confidence", body: "Hybrid and primary-data PCF estimation across parts, suppliers, and categories — aligned with ISO 14064, ISO 14067 and the GHG Protocol." },
-  { img: "/assets/product/home-51.png", title: "Report once, comply everywhere", body: "Auto-generate disclosures for BRSR, CDP, TCFD, and ESRS with audit logs, framework mapping, and AI-assist built in." },
-  { img: "/assets/product/home-6-1.png", title: "Monitor what matters, live", body: "Track emissions by site, supplier, or material. Compare trends, evaluate hotspots, and inform targets." },
+  { img: "/assets/product/capture.jpg", title: "Capture carbon from every corner", body: "Collect Scope 1, 2 and 3 emissions via bulk uploads, supplier templates, API integrations, and AI-based document parsing. No source left behind." },
+  { img: "/assets/product/quality.jpg", title: "Strengthen data at the source", body: "Built-in validation, quality scoring, and auto-tagging. Surface anomalies before they surface in an audit." },
+  { img: "/assets/product/suppliers.jpg", title: "Engage your value chain seamlessly", body: "Equip suppliers with easy templates and dashboards. Get primary data, track submissions, and close gaps faster." },
+  { img: "/assets/product/calculate.jpg", title: "Calculate carbon with confidence", body: "Hybrid and primary-data PCF estimation across parts, suppliers, and categories — aligned with ISO 14064, ISO 14067 and the GHG Protocol." },
+  { img: "/assets/product/reporting.jpg", title: "Report once, comply everywhere", body: "Auto-generate disclosures for BRSR, CDP, TCFD, and ESRS with audit logs, framework mapping, and AI-assist built in." },
+  { img: "/assets/product/monitor.jpg", title: "Monitor what matters, live", body: "Track emissions by site, supplier, or material. Compare trends, evaluate hotspots, and inform targets." },
 ];
 
 export const METRICS = [
