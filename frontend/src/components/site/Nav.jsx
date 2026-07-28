@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, FileText } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import Wordmark from "@/components/site/Wordmark";
 import { SIGNIN_URL } from "@/data/content";
@@ -17,8 +17,9 @@ const NAV = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobile, setMobile] = useState(false);
-  const { setLeadModal } = useApp();
+  const { setLeadModal, tray, selectedPackage, setTrayOpen } = useApp();
   const navigate = useNavigate();
+  const trayCount = tray.length + (selectedPackage ? 1 : 0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -59,6 +60,19 @@ export default function Nav() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setTrayOpen(true)}
+              data-testid="nav-tray-toggle"
+              className="hidden sm:flex items-center gap-2 border border-white/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
+            >
+              <FileText className="w-3.5 h-3.5" /> Your Programme
+              <span
+                data-testid="nav-tray-count"
+                className={`ml-0.5 min-w-[18px] h-[18px] rounded-full bg-signal text-white text-[10px] font-sans font-bold flex items-center justify-center px-1 ${trayCount === 0 ? "hidden" : ""}`}
+              >
+                {trayCount}
+              </span>
+            </button>
             <a
               href={SIGNIN_URL}
               target="_blank"
@@ -99,6 +113,16 @@ export default function Nav() {
                   {n.label}
                 </button>
               ))}
+              <button
+                onClick={() => { setMobile(false); setTrayOpen(true); }}
+                data-testid="nav-mobile-tray-toggle"
+                className="font-display text-3xl py-3 text-left border-b border-white/10 flex items-center gap-3"
+              >
+                Your Programme
+                <span className={`min-w-[24px] h-6 rounded-full bg-signal text-white text-sm font-sans font-bold flex items-center justify-center px-1.5 ${trayCount === 0 ? "hidden" : ""}`}>
+                  {trayCount}
+                </span>
+              </button>
               <a href={SIGNIN_URL} target="_blank" rel="noreferrer" className="font-display text-3xl py-3 text-left border-b border-white/10 flex items-center gap-2">
                 Sign In <ArrowUpRight className="w-6 h-6 text-signal" />
               </a>

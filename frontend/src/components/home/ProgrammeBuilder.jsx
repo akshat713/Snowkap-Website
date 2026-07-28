@@ -7,8 +7,10 @@ import { useApp } from "@/context/AppContext";
 
 export default function ProgrammeBuilder() {
   const [mode, setMode] = useState("package"); // package | custom
-  const { choosePackage, selectedPackage, addItem, tray, setProposalOpen } = useApp();
+  const { choosePackage, selectedPackage, addItem, tray, setProposalOpen, dossier } = useApp();
   const inTray = (name) => tray.find((t) => t.name === name);
+  const reco = dossier?.recommended_package && dossier.recommended_package !== selectedPackage
+    ? dossier.recommended_package : null;
 
   return (
     <section id="programme" className="py-24 md:py-36 border-t border-white/10" data-testid="programme-section">
@@ -18,6 +20,21 @@ export default function ProgrammeBuilder() {
           title="Build your programme."
           lede="Take a package built to grow with you, or assemble exactly what you need — line by line — from Advisory, the Platform, and Managed Support. Either way, this builds a scoped brief, not a bill."
         />
+
+        {reco && (
+          <div className="border border-signal/40 bg-signal/[0.06] px-6 py-4 mb-10 flex flex-wrap items-center justify-between gap-4" data-testid="programme-dossier-reco">
+            <p className="text-sm text-ink2">
+              Based on your dossier, we'd recommend the <span className="text-white font-semibold">{reco}</span> package.
+            </p>
+            <button
+              onClick={() => choosePackage(reco)}
+              data-testid="programme-dossier-reco-select"
+              className="bg-signal text-bg px-4 py-2 text-sm font-bold hover:bg-signal-hover transition-colors shrink-0"
+            >
+              Select {reco}
+            </button>
+          </div>
+        )}
 
         <div className="flex gap-1 border border-white/15 w-fit mb-12">
           {[["package", "Choose a Package"], ["custom", "Build Custom — Line by Line"]].map(([k, l]) => (

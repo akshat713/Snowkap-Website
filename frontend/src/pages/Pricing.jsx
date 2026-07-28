@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Layout from "@/components/site/Layout";
 import ProgrammeBuilder from "@/components/home/ProgrammeBuilder";
 import { Reveal } from "@/components/site/Reveal";
@@ -11,7 +12,14 @@ const FAQ = [
 ];
 
 export default function Pricing() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) { el.scrollIntoView({ behavior: "smooth" }); return; }
+    }
+    window.scrollTo(0, 0);
+  }, [hash]);
   return (
     <Layout>
       <section className="pt-40 pb-16 border-b border-white/10 grid-lines">
