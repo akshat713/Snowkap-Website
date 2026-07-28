@@ -47,9 +47,9 @@ export default function Dossier() {
   const takePackage = () => { choosePackage(result.tier); };
 
   return (
-    <section id="dossier" className="py-24 md:py-36 border-t border-white/10" data-testid="dossier-section">
+    <section id="dossier" className="py-24 md:py-36 border-t border-ink/10" data-testid="dossier-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-        <div className="grid lg:grid-cols-[0.8fr_1.2fr] border border-white/10 overflow-hidden">
+        <div className="grid lg:grid-cols-[0.8fr_1.2fr] border border-ink/10 overflow-hidden">
           <div className="bg-signal text-bg p-8 md:p-12 flex flex-col justify-between gap-10">
             <div>
               <div className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-wider mb-6">
@@ -96,7 +96,7 @@ export default function Dossier() {
                       </div>
                       <ol className="relative">
                         {/* the spine connecting the phases */}
-                        <span aria-hidden="true" className="absolute left-[13px] top-3 bottom-3 w-px bg-white/12" />
+                        <span aria-hidden="true" className="absolute left-[13px] top-3 bottom-3 w-px bg-ink/12" />
                         {result.journey.map((j, i) => (
                           <li key={j.phase} className="relative flex gap-4 pb-5 last:pb-0">
                             <span className="relative z-[1] w-[27px] h-[27px] shrink-0 rounded-full bg-surface border border-signal/60 text-signal font-mono text-[11px] flex items-center justify-center">
@@ -129,7 +129,7 @@ export default function Dossier() {
                               className={`inline-flex items-center gap-2 border px-3 py-2 text-[13px] transition-colors ${
                                 added
                                   ? "border-signal/40 text-signal cursor-default"
-                                  : "border-white/15 text-ink2 hover:border-signal hover:text-white"
+                                  : "border-ink/15 text-ink2 hover:border-signal hover:text-ink"
                               }`}
                             >
                               {added ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
@@ -150,13 +150,13 @@ export default function Dossier() {
                     >
                       {selectedPackage === result.tier ? `${result.tier} selected ✓` : `Add ${result.tier} to my programme`}
                     </button>
-                    <button onClick={goProgramme} data-testid="dossier-see-programme" className="group border border-white/20 hover:border-white px-6 py-3 font-semibold flex items-center gap-2 transition-colors">
+                    <button onClick={goProgramme} data-testid="dossier-see-programme" className="group border border-ink/20 hover:border-ink px-6 py-3 font-semibold flex items-center gap-2 transition-colors">
                       See the full programme <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
                   {/* Tertiary, and kept off the primary row so it never lands
                       under the floating chat widget on a short viewport. */}
-                  <button onClick={reset} data-testid="dossier-restart" className="mt-5 text-ink3 hover:text-white text-sm underline transition-colors">
+                  <button onClick={reset} data-testid="dossier-restart" className="mt-5 text-ink3 hover:text-ink text-sm underline transition-colors">
                     Start over
                   </button>
                 </motion.div>
@@ -166,7 +166,7 @@ export default function Dossier() {
                     <span>Question {step + 1} of {DOSSIER_QUESTIONS.length}</span>
                     <span className="text-signal">{progress}%</span>
                   </div>
-                  <div className="h-px bg-white/10 mb-8 relative">
+                  <div className="h-px bg-ink/10 mb-8 relative">
                     <motion.div className="absolute left-0 top-0 h-px bg-signal" animate={{ width: `${progress}%` }} />
                   </div>
                   <h4 className="font-display text-2xl md:text-3xl font-bold mb-8">{q.q}</h4>
@@ -175,7 +175,7 @@ export default function Dossier() {
                       <button
                         key={opt} onClick={() => pick(opt)}
                         data-testid={`dossier-option-${opt.split(" ")[0].toLowerCase()}`}
-                        className={`text-left px-4 py-3.5 border text-sm transition-colors ${answers[q.key] === opt ? "border-signal bg-signal/10 text-white" : "border-white/12 text-ink2 hover:border-white/40"}`}
+                        className={`text-left px-4 py-3.5 border text-sm transition-colors ${answers[q.key] === opt ? "border-signal bg-signal/10 text-ink" : "border-ink/12 text-ink2 hover:border-ink/40"}`}
                       >
                         {opt}
                       </button>
@@ -185,7 +185,7 @@ export default function Dossier() {
                     <button
                       onClick={() => setStep((s) => Math.max(0, s - 1))}
                       disabled={step === 0}
-                      className="flex items-center gap-2 text-ink2 hover:text-white text-sm disabled:opacity-30 transition-colors"
+                      className="flex items-center gap-2 text-ink2 hover:text-ink text-sm disabled:opacity-30 transition-colors"
                     >
                       <ArrowLeft className="w-4 h-4" /> Back
                     </button>

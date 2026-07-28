@@ -30,12 +30,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-bg border-t border-white/10 pt-20 pb-10" data-testid="site-footer">
+    <footer className="bg-ink text-white/80 border-t border-ink pt-20 pb-10" data-testid="site-footer">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-white/12">
           <div className="md:col-span-4">
-            <Wordmark className="text-2xl" />
-            <p className="text-ink2 max-w-sm leading-relaxed mt-5">
+            <Wordmark variant="light" height={30} />
+            <p className="text-white/70 max-w-sm leading-relaxed mt-5">
               We turn climate complexity into business clarity. Expert advisory, an AI-powered ESG platform,
               and embedded managed support — one partner, the full ESG journey.
             </p>
@@ -46,7 +46,7 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Work email"
-                className="bg-transparent px-4 py-3 flex-1 text-sm outline-none placeholder:text-ink3"
+                className="bg-transparent px-4 py-3 flex-1 text-sm outline-none placeholder:text-white/45"
               />
               <button data-testid="footer-newsletter-submit" className="bg-signal text-white px-5 font-bold text-sm">Join</button>
             </form>
@@ -54,27 +54,27 @@ export default function Footer() {
 
           {COLS.map((c) => (
             <div key={c.h} className="md:col-span-2">
-              <h6 className="font-mono text-[11px] uppercase tracking-wider text-ink3 mb-4">{c.h}</h6>
+              <h6 className="font-mono text-[11px] uppercase tracking-wider text-white/45 mb-4">{c.h}</h6>
               {c.links.map(([l, to]) => (
-                <Link key={l} to={to} onClick={() => window.scrollTo(0, 0)} className="block py-1.5 text-ink2 hover:text-white text-sm">{l}</Link>
+                <Link key={l} to={to} onClick={() => window.scrollTo(0, 0)} className="block py-1.5 text-white/70 hover:text-ink text-sm">{l}</Link>
               ))}
             </div>
           ))}
 
           <div className="md:col-span-2">
-            <h6 className="font-mono text-[11px] uppercase tracking-wider text-ink3 mb-4">Get in touch</h6>
-            <button onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })} data-testid="footer-book-demo" className="flex items-center gap-1.5 py-1.5 text-ink2 hover:text-signal text-sm group">
+            <h6 className="font-mono text-[11px] uppercase tracking-wider text-white/45 mb-4">Get in touch</h6>
+            <button onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })} data-testid="footer-book-demo" className="flex items-center gap-1.5 py-1.5 text-white/70 hover:text-signal text-sm group">
               Book a Demo <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
-            <a href="mailto:sales@snowkap.com" className="block py-1.5 text-ink2 hover:text-white text-sm">sales@snowkap.com</a>
-            <a href="mailto:support@snowkap.com" className="block py-1.5 text-ink2 hover:text-white text-sm">support@snowkap.com</a>
-            <a href="tel:+912240079343" className="block py-1.5 text-ink2 hover:text-white text-sm">+91 22 4007 9343</a>
-            <a href={SIGNIN_URL} target="_blank" rel="noreferrer" data-testid="footer-sign-in" className="block py-1.5 text-ink2 hover:text-white text-sm">Sign In</a>
-            <Link to="/admin/login" className="block py-1.5 text-ink3 hover:text-ink2 text-xs mt-2">Admin</Link>
+            <a href="mailto:sales@snowkap.com" className="block py-1.5 text-white/70 hover:text-ink text-sm">sales@snowkap.com</a>
+            <a href="mailto:support@snowkap.com" className="block py-1.5 text-white/70 hover:text-ink text-sm">support@snowkap.com</a>
+            <a href="tel:+912240079343" className="block py-1.5 text-white/70 hover:text-ink text-sm">+91 22 4007 9343</a>
+            <a href={SIGNIN_URL} target="_blank" rel="noreferrer" data-testid="footer-sign-in" className="block py-1.5 text-white/70 hover:text-ink text-sm">Sign In</a>
+            <Link to="/admin/login" className="block py-1.5 text-white/45 hover:text-white/70 text-xs mt-2">Admin</Link>
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row justify-between gap-4 text-sm text-ink3">
+        <div className="pt-8 flex flex-col md:flex-row justify-between gap-4 text-sm text-white/45">
           <span className="font-mono text-xs">© 2026 Snowkap · India · GCC · SE Asia · Europe</span>
           <span className="font-mono text-xs">Vision — remove 1 billion tons of CO₂e.</span>
         </div>

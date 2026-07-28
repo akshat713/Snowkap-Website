@@ -20,7 +20,7 @@ export default function ResourceDetail() {
     <Layout>
       <article className="pt-40 pb-24 min-h-[70vh]">
         <div className="max-w-3xl mx-auto px-6 md:px-10">
-          <Link to="/resources" className="inline-flex items-center gap-2 text-ink2 hover:text-white text-sm mb-10">
+          <Link to="/resources" className="inline-flex items-center gap-2 text-ink2 hover:text-ink text-sm mb-10">
             <ArrowLeft className="w-4 h-4" /> All resources
           </Link>
           {notFound ? (
@@ -30,7 +30,7 @@ export default function ResourceDetail() {
               <div className="font-mono text-[11px] uppercase tracking-wider text-signal mb-5">{r.category} · {r.date_label} {r.read_time ? `· ${r.read_time}` : ""}</div>
               <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] mb-8">{r.title}</h1>
               {r.image && (
-                <div className="mb-8 border border-white/10 overflow-hidden">
+                <div className="mb-8 border border-ink/10 overflow-hidden">
                   <img src={r.image} alt={r.title} className="w-full object-cover max-h-[420px]" />
                 </div>
               )}
@@ -44,7 +44,7 @@ export default function ResourceDetail() {
                 </a>
               )}
 
-              <div className="mt-14 border border-white/10 bg-surface/50 p-8">
+              <div className="mt-14 border border-ink/10 bg-surface/50 p-8">
                 <h3 className="font-display text-2xl font-bold mb-3">Bring this to your supply chain.</h3>
                 <p className="text-ink2 mb-6">Talk to an advisor about what this means for your sector and region.</p>
                 <button onClick={() => setLeadModal({ kind: "advisor", title: "Talk to an Advisor", reference: r.title })} className="bg-signal text-bg px-6 py-3 font-bold hover:bg-signal-hover transition-colors">

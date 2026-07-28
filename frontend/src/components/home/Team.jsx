@@ -48,7 +48,7 @@ export default function Team({ full = false }) {
               to="/about"
               onClick={() => window.scrollTo(0, 0)}
               data-testid="team-about-link"
-              className="group inline-flex items-center gap-2 mt-16 border border-white/25 hover:border-signal hover:text-signal px-6 py-3.5 font-semibold transition-colors"
+              className="group inline-flex items-center gap-2 mt-16 border border-ink/25 hover:border-signal hover:text-signal px-6 py-3.5 font-semibold transition-colors"
             >
               Meet the full team
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

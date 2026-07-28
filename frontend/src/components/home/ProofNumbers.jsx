@@ -9,7 +9,7 @@ export default function ProofNumbers() {
   const inView = useInView(ref, { once: true, amount: 0.4 });
 
   return (
-    <section className="py-24 md:py-36 border-t border-white/10 relative overflow-hidden" data-testid="proof-section">
+    <section className="py-24 md:py-36 border-t border-ink/10 relative overflow-hidden" data-testid="proof-section">
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 opacity-100">
         <OutlineMarquee text="VERIFIED · NOT PROMISED · " />
       </div>
@@ -19,13 +19,13 @@ export default function ProofNumbers() {
         </div>
         <h2 className="font-display text-4xl md:text-6xl font-bold mb-16">The numbers behind the claim.</h2>
 
-        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
+        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-ink/10 border border-ink/10">
           {PROOF.map((p, i) => (
             <div key={i} className="bg-bg p-6 md:p-8">
               <div className="font-mono font-semibold text-5xl md:text-6xl tracking-tighter text-signal mb-4">
                 {inView ? <NumberFlow value={p.value} /> : 0}{p.suffix}
               </div>
-              <div className="text-white font-medium text-sm md:text-base leading-snug mb-2">{p.label}</div>
+              <div className="text-ink font-medium text-sm md:text-base leading-snug mb-2">{p.label}</div>
               <div className="text-ink3 text-xs leading-relaxed">{p.sub}</div>
             </div>
           ))}

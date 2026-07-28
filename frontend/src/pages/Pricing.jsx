@@ -22,7 +22,7 @@ export default function Pricing() {
   }, [hash]);
   return (
     <Layout>
-      <section className="pt-40 pb-16 border-b border-white/10 grid-lines">
+      <section className="pt-40 pb-16 border-b border-ink/10 grid-lines">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5">Pricing</div>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tighter max-w-4xl leading-[0.95]">
@@ -37,10 +37,10 @@ export default function Pricing() {
 
       <ProgrammeBuilder />
 
-      <section className="py-20 md:py-32 border-t border-white/10">
+      <section className="py-20 md:py-32 border-t border-ink/10">
         <div className="max-w-3xl mx-auto px-6 md:px-10">
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-12">Before you talk to us</h2>
-          <div className="divide-y divide-white/10 border-y border-white/10">
+          <div className="divide-y divide-ink/10 border-y border-ink/10">
             {FAQ.map((f, i) => (
               <Reveal key={i} i={i}>
                 <div className="py-7">

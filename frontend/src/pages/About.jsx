@@ -42,16 +42,16 @@ export default function About() {
               </p>
             </Reveal>
             <Reveal i={2}>
-              <p className="text-white font-semibold leading-relaxed mt-6 max-w-xl">
+              <p className="text-ink font-semibold leading-relaxed mt-6 max-w-xl">
                 That's where Snowkap comes in. We turn climate complexity into business clarity.
               </p>
             </Reveal>
           </div>
           <Reveal>
-            <div className="relative rounded-full overflow-hidden border border-white/15 aspect-square max-w-[480px] mx-auto">
+            <div className="relative rounded-full overflow-hidden border border-ink/15 aspect-square max-w-[480px] mx-auto">
               <img src={IMAGES.forest} alt="Forest through the Snowkap lens" loading="lazy" className="w-full h-full object-cover opacity-80" />
               <div className="absolute inset-0 bg-gradient-to-t from-bg/70 to-transparent" />
-              <div className="absolute bottom-10 left-0 right-0 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-white/80">
+              <div className="absolute bottom-10 left-0 right-0 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-ink/80">
                 Clarity is our climate strategy
               </div>
             </div>
@@ -75,7 +75,7 @@ export default function About() {
       <Team full />
 
       {/* credentials */}
-      <section className="py-24 md:py-32 bg-surface border-y border-white/10" data-testid="about-credentials">
+      <section className="py-24 md:py-32 bg-surface border-y border-ink/10" data-testid="about-credentials">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-signal" /> Bench strength
@@ -94,7 +94,7 @@ export default function About() {
           <div className="flex flex-wrap gap-3 mt-10">
             {CREDENTIALS.map((c, i) => (
               <Reveal key={c} i={i % 6}>
-                <span className="border border-white/15 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink2 hover:border-signal hover:text-white transition-colors">
+                <span className="border border-ink/15 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink2 hover:border-signal hover:text-ink transition-colors">
                   {c}
                 </span>
               </Reveal>

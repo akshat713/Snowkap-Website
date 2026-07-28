@@ -12,7 +12,7 @@ export default function Clientele() {
           title="Trusted by enterprises across six sectors."
           lede="From steel and automotive to pharma and consumer goods — Snowkap powers ESG transformation where supply chains are hardest."
         />
-        <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+        <div className="grid md:grid-cols-2 gap-px bg-ink/10 border border-ink/10">
           {CLIENT_SECTORS.map((g, gi) => (
             <Reveal key={g.sector} i={gi} className="h-full">
               <div className="bg-bg p-7 md:p-9 h-full" data-testid={`clientele-sector-${gi}`}>

@@ -57,7 +57,7 @@ export default function CbamCalculator() {
   const fmt = (n) => (n == null ? 0 : Math.round(n));
 
   return (
-    <section id="calculator" className="py-24 md:py-36 bg-surface border-t border-white/10" data-testid="cbam-section">
+    <section id="calculator" className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="cbam-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-14">
           {/* Sticky explanation */}
@@ -67,21 +67,21 @@ export default function CbamCalculator() {
               title="CBAM Exposure Calculator"
               lede="Software can send a questionnaire — but the math is what moves a CFO. Estimate your annual CBAM liability, and see what verified primary data saves you against default values."
             />
-            <div className="border border-white/10 p-6 bg-bg/50">
+            <div className="border border-ink/10 p-6 bg-bg/50">
               <div className="flex items-center gap-2 text-signal font-mono text-[11px] uppercase tracking-wider mb-3">
                 <Info className="w-4 h-4" /> How it works
               </div>
               <p className="text-ink2 text-sm leading-relaxed">
                 EU CBAM lets importers surrender certificates on verified emissions — or accept punitive
-                <b className="text-white"> default values</b>. At the Q1 2026 price of
-                <b className="text-white"> €{PRICE}/tCO₂e</b>, the gap between the two is real money, every year.
+                <b className="text-ink"> default values</b>. At the Q1 2026 price of
+                <b className="text-ink"> €{PRICE}/tCO₂e</b>, the gap between the two is real money, every year.
               </p>
             </div>
           </div>
 
           {/* Interactive panel */}
           <Reveal>
-            <div className="bg-white/5 backdrop-blur-2xl border border-white/10 p-7 md:p-9">
+            <div className="bg-ink/5 backdrop-blur-2xl border border-ink/10 p-7 md:p-9">
               {/* sector */}
               <label className="block font-mono text-[11px] uppercase tracking-wider text-ink2 mb-3">CBAM Sector</label>
               <div className="flex flex-wrap gap-2 mb-8">
@@ -90,7 +90,7 @@ export default function CbamCalculator() {
                     key={s.name}
                     onClick={() => setSector(s.name)}
                     data-testid={`cbam-sector-${s.name.replace(/[^a-z]/gi, "").toLowerCase()}`}
-                    className={`px-3.5 py-2 text-sm border transition-colors ${sector === s.name ? "bg-signal text-bg border-signal font-semibold" : "border-white/15 text-ink2 hover:border-white/40"}`}
+                    className={`px-3.5 py-2 text-sm border transition-colors ${sector === s.name ? "bg-signal text-bg border-signal font-semibold" : "border-ink/15 text-ink2 hover:border-ink/40"}`}
                   >
                     {s.name}
                   </button>
@@ -106,7 +106,7 @@ export default function CbamCalculator() {
                   min={0}
                   onChange={(e) => setTonnes(Math.max(0, Number(e.target.value)))}
                   data-testid="cbam-tonnes-input"
-                  className="w-32 bg-transparent border-b border-white/20 focus:border-signal text-right font-mono text-lg outline-none pb-1"
+                  className="w-32 bg-transparent border-b border-ink/20 focus:border-signal text-right font-mono text-lg outline-none pb-1"
                 />
               </div>
               <input
@@ -117,7 +117,7 @@ export default function CbamCalculator() {
               />
 
               {/* results */}
-              <div className="grid grid-cols-2 gap-px bg-white/10 border border-white/10 mb-6">
+              <div className="grid grid-cols-2 gap-px bg-ink/10 border border-ink/10 mb-6">
                 <div className="bg-bg p-5">
                   <div className="font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Cost on default values</div>
                   <div className="font-mono text-2xl md:text-3xl font-semibold text-terracotta">
@@ -126,7 +126,7 @@ export default function CbamCalculator() {
                 </div>
                 <div className="bg-bg p-5">
                   <div className="font-mono text-[10px] uppercase tracking-wider text-ink3 mb-2">Cost on verified data</div>
-                  <div className="font-mono text-2xl md:text-3xl font-semibold text-white">
+                  <div className="font-mono text-2xl md:text-3xl font-semibold text-ink">
                     €<NumberFlow value={fmt(result?.verified_cost)} />
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export default function CbamCalculator() {
 
               {/* email capture */}
               {sent ? (
-                <div className="text-center py-4 border border-white/10" data-testid="cbam-sent">
+                <div className="text-center py-4 border border-ink/10" data-testid="cbam-sent">
                   <p className="text-signal font-semibold">Your report is on its way.</p>
                   <p className="text-ink2 text-sm mt-1">Check your inbox for the full CBAM exposure breakdown.</p>
                 </div>
@@ -155,12 +155,12 @@ export default function CbamCalculator() {
                     <input
                       type="email" required placeholder="Work email" value={email} onChange={(e) => setEmail(e.target.value)}
                       data-testid="cbam-email"
-                      className="bg-white/5 border border-white/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors"
+                      className="bg-ink/5 border border-ink/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors"
                     />
                     <input
                       placeholder="Company (optional)" value={company} onChange={(e) => setCompany(e.target.value)}
                       data-testid="cbam-company"
-                      className="bg-white/5 border border-white/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors"
+                      className="bg-ink/5 border border-ink/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors"
                     />
                   </div>
                   <button disabled={busy} data-testid="cbam-email-submit" className="w-full bg-signal text-bg py-3.5 font-bold hover:bg-signal-hover transition-colors disabled:opacity-50">

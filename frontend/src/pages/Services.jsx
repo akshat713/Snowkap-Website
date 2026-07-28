@@ -38,17 +38,17 @@ const STATS = [
 
 function Block({ eyebrow, title, lede, items, testid, surface }) {
   return (
-    <section className={`py-24 md:py-32 ${surface ? "bg-surface border-y border-white/10" : "bg-bg"}`} data-testid={testid}>
+    <section className={`py-24 md:py-32 ${surface ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={testid}>
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">
           <span className="w-6 h-px bg-signal" /> {eyebrow}
         </div>
         <Reveal><h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight max-w-2xl leading-[1.03]">{title}</h2></Reveal>
         <Reveal i={1}><p className="text-ink2 leading-relaxed mt-5 max-w-2xl">{lede}</p></Reveal>
-        <RevealGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10 mt-12">
+        <RevealGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/10 border border-ink/10 mt-12">
           {items.map(([t, b], i) => (
             <RevealItem key={t} i={i} className="h-full">
-              <div className={`${surface ? "bg-surface" : "bg-bg"} p-8 h-full hover:bg-white/[0.03] transition-colors`}>
+              <div className={`${surface ? "bg-surface" : "bg-bg"} p-8 h-full hover:bg-ink/[0.03] transition-colors`}>
                 <h3 className="font-display text-lg font-bold mb-3">{t}</h3>
                 <p className="text-ink2 text-sm leading-relaxed">{b}</p>
               </div>
@@ -72,10 +72,10 @@ export default function Services() {
       />
 
       {/* journey strip */}
-      <section className="border-b border-white/10 bg-bg" data-testid="services-journey">
+      <section className="border-b border-ink/10 bg-bg" data-testid="services-journey">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-5">
           {JOURNEY.map((j, i) => (
-            <div key={j.step} className="py-10 md:py-12 md:px-6 border-b md:border-b-0 md:border-l border-white/10 first:border-l-0 first:pl-0">
+            <div key={j.step} className="py-10 md:py-12 md:px-6 border-b md:border-b-0 md:border-l border-ink/10 first:border-l-0 first:pl-0">
               <div className="font-mono text-signal text-xs mb-3">0{i + 1}</div>
               <div className="font-display text-xl font-bold">{j.step}</div>
               <p className="text-ink3 text-xs leading-relaxed mt-2">{j.body}</p>

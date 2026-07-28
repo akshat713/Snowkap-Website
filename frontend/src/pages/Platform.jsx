@@ -84,14 +84,14 @@ export default function Platform() {
             Book a Demo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
           <a href={SIGNIN_URL} target="_blank" rel="noreferrer" data-testid="platform-sign-in"
-            className="group border border-white/25 hover:border-white px-7 py-4 font-semibold flex items-center gap-2.5 transition-colors">
+            className="group border border-ink/25 hover:border-ink px-7 py-4 font-semibold flex items-center gap-2.5 transition-colors">
             Sign in to Snowkap <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
       </PageHero>
 
       {DEEP_MODULES.map((m, mi) => (
-        <section key={m.tag} className={`py-24 md:py-32 ${mi % 2 ? "bg-surface border-y border-white/10" : "bg-bg"}`} data-testid={`platform-module-${mi}`}>
+        <section key={m.tag} className={`py-24 md:py-32 ${mi % 2 ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={`platform-module-${mi}`}>
           <div className={`max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-14 items-center`}>
             <div className={mi % 2 ? "lg:order-2" : ""}>
               <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">
@@ -107,7 +107,7 @@ export default function Platform() {
                     <div className="flex gap-4">
                       <Check className="w-5 h-5 text-signal shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold text-white">{t}</div>
+                        <div className="font-semibold text-ink">{t}</div>
                         <p className="text-ink2 text-sm leading-relaxed mt-1">{b}</p>
                       </div>
                     </div>
@@ -116,9 +116,9 @@ export default function Platform() {
               </div>
             </div>
             <Reveal className={mi % 2 ? "lg:order-1" : ""}>
-              <div className="relative overflow-hidden border border-white/12 bg-black aspect-square max-w-[520px] mx-auto group">
+              <div className="relative overflow-hidden border border-ink/12 bg-black aspect-square max-w-[520px] mx-auto group">
                 <img src={m.img} alt={m.tag} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
-                <div className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 bg-black/50 backdrop-blur px-3 py-1.5 border border-white/10">{m.tag}</div>
+                <div className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 bg-ink/50 backdrop-blur px-3 py-1.5 border border-ink/10">{m.tag}</div>
               </div>
             </Reveal>
           </div>
@@ -141,10 +141,10 @@ export default function Platform() {
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-12 flex items-center gap-3">
             <span className="w-6 h-px bg-signal" /> How leading teams use Snowkap
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-ink/10 border border-ink/10">
             {PERSONAS.map(([t, b], i) => (
               <Reveal key={t} i={i} className="h-full">
-                <div className="bg-bg p-8 h-full hover:bg-white/[0.03] transition-colors">
+                <div className="bg-bg p-8 h-full hover:bg-ink/[0.03] transition-colors">
                   <h3 className="font-display text-xl font-bold mb-3">{t}</h3>
                   <p className="text-ink2 text-sm leading-relaxed">{b}</p>
                 </div>

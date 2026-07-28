@@ -27,7 +27,7 @@ export default function Resources() {
 
   return (
     <Layout>
-      <section className="pt-40 pb-20 border-b border-white/10 grid-lines">
+      <section className="pt-40 pb-20 border-b border-ink/10 grid-lines">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5">Resources</div>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tighter max-w-3xl">Everything we know, in one place.</h1>
@@ -37,12 +37,12 @@ export default function Resources() {
 
       <section className="py-16 md:py-24">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-          <div className="flex flex-wrap gap-2 mb-14 border-b border-white/10 pb-5">
+          <div className="flex flex-wrap gap-2 mb-14 border-b border-ink/10 pb-5">
             {TABS.map((t) => (
               <button
                 key={t.key} onClick={() => setTab(t.key)}
                 data-testid={`resources-tab-${t.key}`}
-                className={`px-5 py-2.5 text-sm font-medium border transition-colors ${tab === t.key ? "bg-signal text-bg border-signal" : "border-white/15 text-ink2 hover:border-white/40"}`}
+                className={`px-5 py-2.5 text-sm font-medium border transition-colors ${tab === t.key ? "bg-signal text-bg border-signal" : "border-ink/15 text-ink2 hover:border-ink/40"}`}
               >
                 {t.label}
               </button>
@@ -55,9 +55,9 @@ export default function Resources() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="resources-grid">
               {items.map((r, i) => (
                 <Reveal key={r.id} i={i % 3}>
-                  <div className="h-full border border-white/10 bg-surface/40 flex flex-col hover:border-signal/40 transition-colors overflow-hidden">
+                  <div className="h-full border border-ink/10 bg-surface/40 flex flex-col hover:border-signal/40 transition-colors overflow-hidden">
                     {r.image && (
-                      <div className="aspect-[16/8] overflow-hidden bg-white/[0.03] shrink-0">
+                      <div className="aspect-[16/8] overflow-hidden bg-ink/[0.03] shrink-0">
                         <img src={r.image} alt={r.title} loading="lazy" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-[filter] duration-500" />
                       </div>
                     )}

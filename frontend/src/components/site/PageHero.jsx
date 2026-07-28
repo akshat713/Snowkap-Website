@@ -3,7 +3,7 @@ import { Reveal } from "@/components/site/Reveal";
 
 export default function PageHero({ eyebrow, title, lede, children }) {
   return (
-    <section className="pt-40 pb-16 border-b border-white/10 grid-lines">
+    <section className="pt-40 pb-16 border-b border-ink/10 grid-lines">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <Reveal>
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">

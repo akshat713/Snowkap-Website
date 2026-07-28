@@ -26,9 +26,9 @@ export default function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="py-24 md:py-36 bg-surface border-t border-white/10" data-testid="newsletter-section">
+    <section id="newsletter" className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="newsletter-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-        <div className="grid lg:grid-cols-2 gap-14 items-center border border-white/10 bg-bg/50 p-8 md:p-14">
+        <div className="grid lg:grid-cols-2 gap-14 items-center border border-ink/10 bg-bg/50 p-8 md:p-14">
           <div>
             <div className="flex items-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5">
               <Radio className="w-4 h-4" /> The newsletter
@@ -38,7 +38,7 @@ export default function Newsletter() {
             </h2>
             <p className="text-ink2 leading-relaxed max-w-lg">
               Regulatory intelligence, filtered for your desk. We track what's changing across CBAM, CSRD, BRSR and
-              beyond — then translate it into what it means for <b className="text-white">your role</b>: the CFO's exposure,
+              beyond — then translate it into what it means for <b className="text-ink">your role</b>: the CFO's exposure,
               the COO's operations, the sustainability lead's roadmap. No noise. Only what moves your risk and your numbers.
             </p>
           </div>
@@ -47,7 +47,7 @@ export default function Newsletter() {
             {sent ? (
               <div className="border border-signal/40 bg-signal/10 p-10 text-center" data-testid="newsletter-success">
                 <h3 className="font-display text-2xl font-bold mb-3">You're in.</h3>
-                <p className="text-ink2">Power of Now will land in your inbox, tuned to the <b className="text-white">{role}</b> lens.</p>
+                <p className="text-ink2">Power of Now will land in your inbox, tuned to the <b className="text-ink">{role}</b> lens.</p>
               </div>
             ) : (
               <form onSubmit={submit}>
@@ -57,7 +57,7 @@ export default function Newsletter() {
                     <button
                       type="button" key={r} onClick={() => setRole(r)}
                       data-testid={`newsletter-role-${r.split(" ")[0].toLowerCase()}`}
-                      className={`px-3.5 py-2 text-sm border transition-colors ${role === r ? "bg-signal text-bg border-signal font-semibold" : "border-white/15 text-ink2 hover:border-white/40"}`}
+                      className={`px-3.5 py-2 text-sm border transition-colors ${role === r ? "bg-signal text-bg border-signal font-semibold" : "border-ink/15 text-ink2 hover:border-ink/40"}`}
                     >
                       {r}
                     </button>
@@ -65,12 +65,12 @@ export default function Newsletter() {
                 </div>
                 <div className="space-y-3">
                   <input placeholder="Full name" value={form.name} onChange={change("name")} data-testid="newsletter-name"
-                    className="w-full bg-white/5 border border-white/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors" />
+                    className="w-full bg-ink/5 border border-ink/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors" />
                   <div className="grid sm:grid-cols-2 gap-3">
                     <input type="email" required placeholder="Work email" value={form.email} onChange={change("email")} data-testid="newsletter-email"
-                      className="w-full bg-white/5 border border-white/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors" />
+                      className="w-full bg-ink/5 border border-ink/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors" />
                     <input placeholder="Company" value={form.company} onChange={change("company")} data-testid="newsletter-company"
-                      className="w-full bg-white/5 border border-white/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors" />
+                      className="w-full bg-ink/5 border border-ink/10 focus:border-signal px-4 py-3 text-sm outline-none transition-colors" />
                   </div>
                   <button disabled={busy} data-testid="newsletter-submit" className="w-full group bg-signal text-bg py-3.5 font-bold hover:bg-signal-hover transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
                     {busy ? "Subscribing…" : "Subscribe to Power of Now"}
