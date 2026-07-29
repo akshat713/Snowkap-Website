@@ -3,8 +3,9 @@ import { ArrowUpRight } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import PageHero from "@/components/site/PageHero";
 import { Reveal } from "@/components/site/Reveal";
+import ClientLogo from "@/components/site/ClientLogo";
 import { useApp } from "@/context/AppContext";
-import { ALL_LOGOS } from "@/data/content";
+import { CLIENT_SECTORS } from "@/data/content";
 
 const CASE_STUDIES = [
   {
@@ -93,14 +94,50 @@ export default function Customers() {
         lede="Every story is real — sector, regulatory driver, suppliers activated, data coverage, and outcome. The full write-up is one short conversation away."
       />
 
-      {/* logo strip */}
-      <section className="border-b border-ink/10 py-10 overflow-hidden" data-testid="customers-logo-strip">
-        <div className="flex w-max animate-marquee items-center">
-          {[...ALL_LOGOS, ...ALL_LOGOS].map(([name, src], i) => (
-            <div key={i} className="px-9 shrink-0">
-              <img src={src} alt={name} title={name} loading="lazy" className="h-7 w-auto opacity-50 hover:opacity-100 transition-opacity" />
-            </div>
-          ))}
+      {/* A wall, not a marquee. On the home page the logos are ambient proof and
+          motion suits them; here they are the subject of the page, so a visitor
+          arrives wanting to find a specific company — and you cannot scan a
+          moving strip for a name. Equal cells also make the equal weighting
+          structural: every client gets exactly the same area, and the name is
+          spelled out rather than left to whoever can recognise a mark. */}
+      <section className="border-b border-ink/10 py-16 md:py-20 bg-surface" data-testid="customers-logo-wall">
+        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+          <div className="flex flex-wrap items-baseline justify-between gap-3 mb-9">
+            <h2 className="font-display text-2xl md:text-3xl font-bold tracking-tight">
+              Who we work with
+            </h2>
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-signal">
+              {CLIENT_SECTORS.reduce((n, s) => n + s.logos.length, 0)} enterprises · {CLIENT_SECTORS.length} sectors
+            </span>
+          </div>
+
+          {/* Hairlines are drawn by each cell's own right/bottom border rather
+              than by gaps over a tinted background. With 21 clients in 5 columns
+              the last row is one cell wide, and the background technique painted
+              the four empty slots as a solid block. */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 border-t border-l border-ink/10">
+            {CLIENT_SECTORS.flatMap((group) =>
+              group.logos.map(([name, src]) => (
+                <div
+                  key={name}
+                  className="group bg-bg hover:bg-surface/70 transition-colors border-r border-b border-ink/10 p-5 md:p-6 flex flex-col items-center justify-between gap-4 text-center"
+                  data-testid={`customer-cell-${name.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`}
+                >
+                  <div className="flex-1 flex items-center justify-center">
+                    <ClientLogo name={name} src={src} size="sm" />
+                  </div>
+                  {/* Fixed caption height: a two-line client name would
+                      otherwise make its whole grid row taller than the rest. */}
+                  <div className="min-h-[52px]">
+                    <div className="text-[13px] font-medium leading-snug text-ink">{name}</div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink3 mt-1.5 leading-snug">
+                      {group.sector}
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </section>
 

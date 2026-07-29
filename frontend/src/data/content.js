@@ -4,13 +4,17 @@ import { asset } from "@/lib/asset";
 
 export const SIGNIN_URL = "https://login.snowkap.com";
 
+// Split into figure and label rather than one uppercase string. As a single run
+// of 11px letterspaced caps the whole line carried the same weight, so the
+// numbers — the only part that is actually persuasive — had to be read to be
+// found. Separated, the figure lands first and the label explains it.
 export const TICKER = [
-  "1,100+ PRODUCT CARBON FOOTPRINTS",
-  "700+ SUPPLIERS ONBOARDED",
-  ">90% PRIMARY DATA IN ONE QUARTER",
-  "25+ FRAMEWORKS · ONE DATA ENTRY",
-  "3,800+ PROFESSIONALS TRAINED",
-  "CBAM LIVE · €75.36 / tCO₂e",
+  { figure: "1,100+", label: "Product carbon footprints" },
+  { figure: "700+", label: "Suppliers onboarded" },
+  { figure: ">90%", label: "Primary data in one quarter" },
+  { figure: "25+", label: "Frameworks, one data entry" },
+  { figure: "3,800+", label: "Professionals trained" },
+  { figure: "€75.36", label: "CBAM certificate, live" },
 ];
 
 // Framed as consequences to the business rather than as a list of pressures.
@@ -86,8 +90,17 @@ export const METRICS = [
   { value: 6, suffix: "+", label: "Industries served" },
 ];
 
-// Colour cuts, not the white ones: the page ground is now Clarity white.
-const L = (name) => asset(`/assets/logos/${name}.png`);
+// The normalised marks from scripts/normalise-logos.py, not either raw source
+// set. The raw colour cuts are opaque rectangles that render as dark tiles on a
+// white page; the raw white cuts are invisible on it. Both are also sized so
+// unevenly that a shared CSS height gives some clients several times the
+// footprint of others. Re-run that script after dropping in new artwork.
+const L = (name) => asset(`/assets/logos/mark/${name}.png`);
+
+// Both source files for Ather contain no artwork at all — the colour cut is a
+// solid black rectangle and the white cut is fully transparent — so it rendered
+// as a black bar. Until real artwork arrives it is set as a wordmark.
+export const LOGO_WORDMARKS = new Set(["Ather"]);
 export const CLIENT_SECTORS = [
   { sector: "Automotive & Transportation", logos: [["Daimler", L("daimler")], ["Schaeffler", L("schaeffler")], ["MAHLE", L("mahle")], ["Ather", L("ather")], ["NRB Bearings", L("nrb")]] },
   { sector: "Manufacturing & Industrial", logos: [["JSW Steel", L("jsw")], ["Econovus", L("econovus")], ["Forstar", L("forstar")], ["Kings Infra", L("kingsinfra")]] },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, FileText } from "lucide-react";
 import { useApp } from "@/context/AppContext";
@@ -23,7 +23,13 @@ export default function Nav() {
   const [mobile, setMobile] = useState(false);
   const { setLeadModal, tray, selectedPackage, setTrayOpen } = useApp();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const trayCount = tray.length + (selectedPackage ? 1 : 0);
+
+  // Which nav item is current. Nothing in the header said where you were, so on
+  // any inner page the navigation gave no sense of position. Prefix match so an
+  // article at /resources/<slug> still lights up Resources.
+  const isCurrent = (to) => pathname === to || pathname.startsWith(`${to}/`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,6 +37,21 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // A full-screen drawer with no Escape and no scroll lock traps you: the only
+  // way out was the close button, and the page kept scrolling underneath, so
+  // dismissing it could leave you somewhere you never chose to be.
+  useEffect(() => {
+    if (!mobile) return;
+    const onKey = (e) => { if (e.key === "Escape") setMobile(false); };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobile]);
 
   const go = (to) => {
     setMobile(false);
@@ -50,26 +71,44 @@ export default function Nav() {
             <Wordmark height={26} />
           </button>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* gap-5 until xl: six nav items plus the three right-hand controls did not
+              fit at exactly 1024, where the desktop nav first appears, and Book a
+              Demo was clipped 10px past the edge. */}
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-8">
             {NAV.map((n) => (
-              <button
+              // A Link, not a button: middle-click, cmd-click and "open in new
+              // tab" all worked on nothing before, and a nav that is not a set of
+              // anchors is invisible to a crawler.
+              <Link
                 key={n.label}
-                onClick={() => go(n.to)}
+                to={n.to}
+                onClick={() => window.scrollTo(0, 0)}
                 data-testid={`nav-${n.label.toLowerCase()}`}
-                className="font-mono text-[12px] uppercase tracking-[0.14em] text-ink2 hover:text-ink transition-colors"
+                aria-current={isCurrent(n.to) ? "page" : undefined}
+                className={`relative font-mono text-[12px] font-medium uppercase tracking-[0.14em] transition-colors py-1 ${
+                  isCurrent(n.to) ? "text-ink" : "text-ink2 hover:text-ink"
+                }`}
               >
                 {n.label}
-              </button>
+                <span
+                  className={`absolute -bottom-0.5 left-0 h-[2px] bg-signal transition-[width] duration-300 ${
+                    isCurrent(n.to) ? "w-full" : "w-0"
+                  }`}
+                  aria-hidden
+                />
+              </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 xl:gap-3">
             <button
               onClick={() => setTrayOpen(true)}
               data-testid="nav-tray-toggle"
               className="hidden sm:flex items-center gap-2 border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
             >
-              <FileText className="w-3.5 h-3.5" /> Your Programme
+              <FileText className="w-3.5 h-3.5" />
+              <span className="xl:hidden">Programme</span>
+              <span className="hidden xl:inline">Your Programme</span>
               <span
                 data-testid="nav-tray-count"
                 className={`ml-0.5 min-w-[18px] h-[18px] rounded-full bg-signal text-white text-[10px] font-sans font-bold flex items-center justify-center px-1 ${trayCount === 0 ? "hidden" : ""}`}
@@ -113,8 +152,17 @@ export default function Nav() {
             </div>
             <div className="flex flex-col">
               {NAV.map((n) => (
-                <button key={n.label} onClick={() => go(n.to)} className="font-display text-3xl py-3 text-left border-b border-ink/10">
+                <button
+                  key={n.label}
+                  onClick={() => go(n.to)}
+                  data-testid={`nav-mobile-${n.label.toLowerCase()}`}
+                  aria-current={isCurrent(n.to) ? "page" : undefined}
+                  className={`font-display text-3xl font-bold py-3 text-left border-b border-ink/10 flex items-center justify-between gap-3 ${
+                    isCurrent(n.to) ? "text-signal" : "text-ink"
+                  }`}
+                >
                   {n.label}
+                  {isCurrent(n.to) && <span className="w-2 h-2 rotate-45 bg-signal shrink-0" aria-hidden />}
                 </button>
               ))}
               <button

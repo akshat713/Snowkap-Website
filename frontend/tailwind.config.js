@@ -4,10 +4,30 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
+      // Inter in every role — one brand typeface. The display / body / label
+      // distinction is now carried by size, weight, case and tracking rather
+      // than by three separate families.
       fontFamily: {
-        display: ['"Cabinet Grotesk"', "sans-serif"],
-        body: ['"Manrope"', "sans-serif"],
-        mono: ['"JetBrains Mono"', "monospace"],
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        display: ["Inter", "system-ui", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
+        mono: ["Inter", "system-ui", "sans-serif"],
+      },
+      // Only 400 / 500 / 700 are loaded, so the scale is folded onto those three.
+      // Without this, `font-semibold` (600) and `font-extrabold` (800) would ask
+      // for weights that do not exist and the browser would synthesise them —
+      // faux-bold smears the stems and is exactly what makes self-hosted Inter
+      // look worse than the linked version it replaced.
+      fontWeight: {
+        thin: "400",
+        extralight: "400",
+        light: "400",
+        normal: "400",
+        medium: "500",
+        semibold: "500",
+        bold: "700",
+        extrabold: "700",
+        black: "700",
       },
       colors: {
         // Brand palette. The percentages are delivered structurally: `bg` is the
