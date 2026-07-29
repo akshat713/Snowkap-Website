@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import NumberFlow from "@number-flow/react";
 import { Reveal } from "@/components/site/Reveal";
+import ContourField from "@/components/site/ContourField";
 import { METRICS } from "@/data/content";
 
 function Counter({ m, i }) {
@@ -23,8 +24,12 @@ function Counter({ m, i }) {
 
 export default function Metrics() {
   return (
-    <section className="py-24 md:py-32 bg-signal" data-testid="metrics-section">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+    <section className="relative py-24 md:py-32 bg-signal overflow-hidden" data-testid="metrics-section">
+      {/* measured quantities, drawn — the field under the numbers it belongs to */}
+      <div className="absolute inset-0 opacity-70 pointer-events-none" aria-hidden data-testid="metrics-contour">
+        <ContourField rgb="255, 255, 255" lines={10} alpha={0.26} />
+      </div>
+      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-white mb-12 flex items-center gap-3">
           <span className="w-6 h-px bg-white" /> Trusted. Proven. Recognised.
         </div>

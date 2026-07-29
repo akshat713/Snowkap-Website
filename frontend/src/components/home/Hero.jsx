@@ -5,6 +5,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { maskLine } from "@/lib/motion";
 import { TICKER, IMAGES } from "@/data/content";
+import NetworkCanvas from "@/components/home/NetworkCanvas";
+import MagneticButton from "@/components/site/MagneticButton";
 
 const LINES = [
   <>Turn climate</>,
@@ -20,6 +22,11 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-bg" data-testid="hero-section">
+      {/* the supply chain, alive: nodes linking and sending verified data inward */}
+      <div className="absolute inset-0 opacity-[0.9] pointer-events-none" aria-hidden data-testid="hero-network">
+        <NetworkCanvas />
+      </div>
+
       {/* lens — circular masked imagery, the brand motif */}
       <motion.div
         style={{ y: lensY }}
@@ -27,7 +34,11 @@ export default function Hero() {
         aria-hidden
       >
         <div className="absolute inset-0 rounded-full overflow-hidden border border-ink/15">
-          <img src={IMAGES.heroLens} alt="" className="w-full h-full object-cover opacity-70" loading="eager" />
+          {/* Brand ground beneath the photograph. The lens is the largest shape on
+              the page, so a slow or failed decode would otherwise leave a hole in
+              the middle of the composition. */}
+          <div className="absolute inset-0 bg-gradient-to-br from-surface via-surface2 to-signal/25" aria-hidden />
+          <img src={IMAGES.heroLens} alt="" className="relative w-full h-full object-cover opacity-70" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/30 to-transparent" />
         </div>
         {/* rotating arc */}
@@ -79,14 +90,16 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.85 }}
           className="mt-10 flex flex-wrap items-center gap-4"
         >
-          <button
+          {/* the site's single most important action, so it gets the physics */}
+          <MagneticButton
             onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })}
             data-testid="hero-book-demo"
+            strength={0.22}
             className="group bg-signal text-white px-7 py-4 font-bold flex items-center gap-2.5 hover:bg-signal-hover transition-colors"
           >
             Book a Demo
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </MagneticButton>
           <Link
             to="/platform"
             onClick={() => window.scrollTo(0, 0)}

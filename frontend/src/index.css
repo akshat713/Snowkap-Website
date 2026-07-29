@@ -82,6 +82,17 @@ html.lenis, html.lenis body { height: auto; }
 
 .reveal-mask { overflow: hidden; display: block; padding-bottom: 0.09em; margin-bottom: -0.09em; }
 
+/* Outlined display type for the kinetic band. Paired against a solid row, the
+   two weights are what make the band read as designed rather than as a caption
+   strip. Stroke scales with the type, so it stays hairline at 7.5vw. */
+.kinetic-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.42);
+}
+@media (min-width: 768px) {
+  .kinetic-outline { -webkit-text-stroke-width: 2px; }
+}
+
 /* Keyboard focus. The previous ring was tuned for a near-black ground and is
    close to invisible on white, so it is restated in the accent with an offset
    that survives against both the white and off-white bands. */
