@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Check, Plus } from "lucide-react";
+import { Check } from "lucide-react";
 import SectionHeader from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
-import { PACKAGES, ADDONS } from "@/data/site";
+import ServiceSelector from "@/components/home/ServiceSelector";
+import { PACKAGES } from "@/data/site";
 import { useApp } from "@/context/AppContext";
 
 export default function ProgrammeBuilder() {
   const [mode, setMode] = useState("package"); // package | custom
-  const { choosePackage, selectedPackage, addItem, tray, setProposalOpen, dossier } = useApp();
-  const inTray = (name) => tray.find((t) => t.name === name);
+  const { choosePackage, selectedPackage, setProposalOpen, dossier } = useApp();
   const reco = dossier?.recommended_package && dossier.recommended_package !== selectedPackage
     ? dossier.recommended_package : null;
 
@@ -91,29 +91,7 @@ export default function ProgrammeBuilder() {
             ))}
           </div>
         ) : (
-          <div className="grid md:grid-cols-3 gap-5">
-            {Object.entries(ADDONS).map(([group, items], gi) => (
-              <Reveal key={group} i={gi}>
-                <div className="border border-ink/10 bg-surface/40 p-6 h-full">
-                  <h4 className="font-display text-lg font-semibold mb-5 pb-3 border-b border-ink/10">{group}</h4>
-                  <ul className="space-y-2">
-                    {items.map((it) => (
-                      <li key={it}>
-                        <button
-                          onClick={() => addItem(it, group)}
-                          data-testid={`addon-${it.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`}
-                          className="w-full flex items-center justify-between gap-3 text-left py-2.5 group"
-                        >
-                          <span className={`text-sm ${inTray(it) ? "text-signal" : "text-ink2 group-hover:text-ink"} transition-colors`}>{it}</span>
-                          {inTray(it) ? <Check className="w-4 h-4 text-signal shrink-0" /> : <Plus className="w-4 h-4 text-ink3 group-hover:text-signal shrink-0 transition-colors" />}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <ServiceSelector />
         )}
       </div>
     </section>

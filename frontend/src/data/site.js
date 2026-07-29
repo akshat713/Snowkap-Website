@@ -174,22 +174,51 @@ export const PACKAGES = [
   },
 ];
 
+// Every service carries a one-line blurb. A bare list of 21 titles asks the
+// reader to already know what "Double Materiality Assessment" buys them; the
+// blurb is what makes the line selectable on its own terms.
+//
+// Order within each pillar is deliberate — roughly the sequence a company meets
+// them in — and the selection grid fills left-to-right in pairs, so adjacent
+// entries read as a related pair.
 export const ADDONS = {
   Advisory: [
-    "ESG Training & Capacity Building", "Peer Benchmarking & Performance Scorecard", "Double Materiality Assessment",
-    "SBTi Target Setting & Decarbonisation Roadmap", "ESG Framework Set-Up", "Ratings Optimisation",
-    "Board & Leadership Briefings", "Stakeholder Communications & Report Design",
+    { name: "ESG Training & Capacity Building", blurb: "Sector-specific fundamentals for teams new to ESG." },
+    { name: "Peer Benchmarking & Performance Scorecard", blurb: "See exactly where you sit against sector peers." },
+    { name: "Double Materiality Assessment", blurb: "CSRD-aligned assessment of impact and financial materiality." },
+    { name: "SBTi Target Setting & Decarbonisation Roadmap", blurb: "Science-based targets linked to a costed roadmap." },
+    { name: "ESG Framework Set-Up", blurb: "CSRD, BRSR, GRI, IFRS — configured for your first filing." },
+    { name: "Ratings Optimisation", blurb: "Structured improvement plan for EcoVadis, CDP, Sustainalytics." },
+    { name: "Board & Leadership Briefings", blurb: "C-suite ESG-to-P&L alignment sessions." },
+    { name: "Stakeholder Communications & Report Design", blurb: "Investor reports and disclosures, designed to be read." },
   ],
   "ESG Platform": [
-    "GHG Inventory (Scope 1 & 2)", "Scope 3 Engine", "Product Carbon Footprint (PCF)", "Life Cycle Assessment",
-    "Supplier ESG Assessment Portal", "Multi-Framework Auto-Reporting", "CBAM Certificate Computation",
-    "Dashboards & Benchmarking Insights",
+    { name: "GHG Inventory (Scope 1 & 2)", blurb: "Automated baseline in weeks, not quarters." },
+    { name: "Scope 3 Engine", blurb: "All categories, upstream and downstream." },
+    { name: "Product Carbon Footprint (PCF)", blurb: "Per-SKU carbon, cradle-to-border." },
+    { name: "Life Cycle Assessment", blurb: "Cradle-to-gate or cradle-to-grave, methodology-backed." },
+    { name: "Supplier ESG Assessment Portal", blurb: "Centralised, AI-verified supplier evidence." },
+    { name: "Multi-Framework Auto-Reporting", blurb: "One data entry, mapped across 25+ frameworks." },
+    { name: "CBAM Certificate Computation", blurb: "Cradle-to-border footprint, ready for certificate surrender." },
+    { name: "Dashboards & Benchmarking Insights", blurb: "Leadership-ready views, live." },
   ],
   "Managed Support": [
-    "Managed Supplier Activation", "Supplier Training & Capacity Building", "Regulatory Change Monitoring",
-    "Third-Party Audit Coordination", "Report Writing & Design",
+    { name: "Managed Supplier Activation", blurb: "90-day, four-phase programme to activate non-responsive suppliers." },
+    { name: "Supplier Training & Capacity Building", blurb: "We teach your suppliers to self-serve, properly." },
+    // The prototype repeated the title here as its own description; this says
+    // what the service actually does.
+    { name: "Regulatory Change Monitoring", blurb: "A live watch on the regimes that bind you, with impact flagged." },
+    { name: "Third-Party Audit Coordination", blurb: "We sit with your auditors so your team doesn't have to." },
+    { name: "Report Writing & Design", blurb: "Stakeholder-ready, end to end." },
   ],
 };
+
+// Flat lookup, so a service name coming back from a recommendation or the tray
+// can be resolved to its pillar and blurb without walking three arrays.
+export const SERVICE_INDEX = Object.entries(ADDONS).reduce((acc, [pillar, items]) => {
+  items.forEach((s) => { acc[s.name] = { ...s, pillar }; });
+  return acc;
+}, {});
 
 export const DOSSIER_QUESTIONS = [
   { key: "sector", q: "What sector are you in?", options: ["Automotive & Transportation", "Manufacturing & Industrial", "Healthcare & Pharma", "Financial, IT & Investment", "Beverages & Consumer Goods", "Energy & Utilities"] },

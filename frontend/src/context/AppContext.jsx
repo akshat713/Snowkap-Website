@@ -41,9 +41,16 @@ export function AppProvider({ children }) {
     }
   }, [tray, selectedPackage, dossier]);
 
+  // Adding no longer flings the tray open. The tray is a 440px panel pinned to
+  // the right edge, so on the line-by-line selector it landed directly over the
+  // grid you were picking from — every second service meant dismissing a panel
+  // first. Choosing a package still opens it, because that is one deliberate,
+  // terminal action rather than one of a run.
+  //
+  // Feedback for an add comes from the button's own Added state, the count on
+  // each pillar, the header badge, and the running summary bar.
   const addItem = useCallback((name, type) => {
     setTray((prev) => (prev.find((i) => i.name === name) ? prev : [...prev, { name, type }]));
-    setTrayOpen(true);
   }, []);
 
   const removeItem = useCallback((name) => {
