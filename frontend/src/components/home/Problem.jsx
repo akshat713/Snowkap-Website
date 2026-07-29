@@ -1,55 +1,73 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import React from "react";
+import { ArrowUpRight } from "lucide-react";
 import SectionHeader from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
+import ProblemGraphic from "@/components/home/ProblemGraphic";
+import { useApp } from "@/context/AppContext";
 import { PROBLEMS } from "@/data/content";
 
+// Takes the framing of the "What Snowkap is" block: a sticky left column
+// carrying the argument while the right column's cards stack past it. It suits
+// this section better than the flat list it replaces, because these five items
+// are cumulative — each one compounds the last, and the sticky header is what
+// keeps the claim they compound toward on screen while you read them.
 export default function Problem() {
-  const listRef = useRef(null);
-  // Full by the time the last row clears the fold, not when the list bottom
-  // reaches the viewport bottom — otherwise the rail is still half empty when
-  // there is nothing left to read.
-  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 85%", "end 55%"] });
-  const railScale = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), {
-    stiffness: 90,
-    damping: 26,
-    restDelta: 0.001,
-  });
+  const { setLeadModal } = useApp();
 
   return (
     <section className="py-24 md:py-36 bg-bg" data-testid="problem-section">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-        <SectionHeader
-          eyebrow="The structural problem"
-          title="ESG is now a business access requirement. The infrastructure isn't."
-          lede="Capital, contracts, and markets now screen on verified ESG data. The problem is not a lack of ambition — it is a lack of infrastructure."
-        />
-        {/* Scroll rail: the accent line tracks how far through the list you are.
-            It gives a long text block a sense of progress, and it is driven by
-            scroll position rather than time, so it never runs ahead of reading. */}
-        <div ref={listRef} className="relative border-t border-ink/10">
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-ink/10 hidden md:block" aria-hidden />
-          <motion.div
-            style={{ scaleY: railScale }}
-            className="absolute left-0 top-0 bottom-0 w-px bg-signal origin-top hidden md:block"
-            aria-hidden
-            data-testid="problem-rail"
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
+        <div className="lg:sticky lg:top-28 h-fit">
+          <SectionHeader
+            eyebrow="The structural problem"
+            title="ESG stopped being a report. It became a condition of trade."
+            lede="Capital, contracts and customs now screen on verified supplier data. The gap is not ambition — it is that the data sits outside the businesses being asked for it."
           />
+          <button
+            onClick={() => setLeadModal({ kind: "demo", title: "Talk to an Advisor" })}
+            data-testid="problem-advisor-link"
+            className="group inline-flex items-center gap-2 border border-ink/25 hover:border-signal hover:text-signal px-6 py-3.5 font-semibold transition-colors"
+          >
+            Talk through your exposure
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-8">
           {PROBLEMS.map((p, i) => (
-            <Reveal key={p.n} i={i}>
-              <div className="group grid grid-cols-[64px_1fr] md:grid-cols-[120px_1fr_1.2fr] gap-6 md:gap-10 py-9 md:py-12 border-b border-ink/10 hover:bg-ink/[0.025] transition-colors px-2 md:px-4">
-                <span className="font-mono text-signal text-sm md:text-base pt-1.5">{p.n}</span>
-                <h3 className="font-display text-2xl md:text-4xl font-bold tracking-tight group-hover:translate-x-1 transition-transform">
-                  {p.title}
-                </h3>
-                <p className="col-span-2 md:col-span-1 text-ink2 leading-relaxed md:pt-1.5">{p.body}</p>
+            // Staggered sticky offsets, so the cards shingle as they pass rather
+            // than landing on top of one another.
+            <div key={p.n} className="lg:sticky" style={{ top: `${104 + i * 22}px` }}>
+              <div
+                className="group lift bg-bg border border-ink/10 hover:border-signal/40"
+                data-testid={`problem-card-${i}`}
+              >
+                <div className="relative aspect-[16/7] overflow-hidden bg-surface border-b border-ink/10">
+                  <div className="absolute inset-0 p-6 md:p-8">
+                    <ProblemGraphic kind={p.graphic} />
+                  </div>
+                  <span className="absolute bottom-4 left-6 font-mono text-signal text-sm">{p.n}</span>
+                </div>
+                <div className="p-8 md:p-10">
+                  <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-4 leading-[1.15]">
+                    {p.title}
+                  </h3>
+                  <p className="text-ink2 leading-relaxed max-w-lg">{p.body}</p>
+                </div>
               </div>
-            </Reveal>
+            </div>
           ))}
         </div>
-        <Reveal i={2}>
-          <p className="mt-14 font-display text-2xl md:text-3xl font-bold max-w-2xl">
-            The only risk is <span className="text-signal">standing still.</span>
+      </div>
+
+      {/* Outside the grid on purpose. As a sibling of the sticky cards this sat
+          underneath the topmost one and was sliced in half — the sticky card wins
+          the overlap. Out here it has the row to itself. */}
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 mt-16 md:mt-24">
+        <Reveal>
+          <p className="font-display text-2xl md:text-4xl font-bold max-w-3xl">
+            Five problems, one root cause:{" "}
+            <span className="text-signal">the data isn't yours to collect.</span>
           </p>
         </Reveal>
       </div>

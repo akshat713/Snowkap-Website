@@ -1,6 +1,5 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { maskLine } from "@/lib/motion";
@@ -9,9 +8,9 @@ import NetworkCanvas from "@/components/home/NetworkCanvas";
 import MagneticButton from "@/components/site/MagneticButton";
 
 const LINES = [
-  <>Turn climate</>,
-  <>complexity into</>,
-  <>business <span className="text-signal">clarity.</span></>,
+  <>Supply chains do not</>,
+  <>stop at your border.</>,
+  <><span className="text-signal">Neither do we.</span></>,
 ];
 
 export default function Hero() {
@@ -80,8 +79,9 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="mt-8 text-ink2 text-base md:text-lg leading-relaxed max-w-xl"
         >
-          Expert advisory, an AI-powered ESG platform, and embedded managed support — converting
-          ESG complexity into measurable business performance across 25+ frameworks.
+          An AI-powered ESG platform, expert advisory, and a team embedded across Asia, the
+          Gulf and beyond — turning hard-to-reach suppliers into verified, audit-ready data
+          against every framework that matters: CBAM, CSRD, BRSR, SGX and more.
         </motion.p>
 
         <motion.div
@@ -90,25 +90,26 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.85 }}
           className="mt-10 flex flex-wrap items-center gap-4"
         >
-          {/* the site's single most important action, so it gets the physics */}
+          {/* the site's single most important action, so it gets the physics.
+              Leads into the sector explorer rather than a demo form: the pitch is
+              that we have already mapped your sector, so prove it before asking. */}
           <MagneticButton
-            onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })}
-            data-testid="hero-book-demo"
+            onClick={() => document.getElementById("sectors")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            data-testid="hero-find-sector"
             strength={0.22}
             className="group bg-signal text-white px-7 py-4 font-bold flex items-center gap-2.5 hover:bg-signal-hover transition-colors"
           >
-            Book a Demo
+            Find Your Sector
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </MagneticButton>
-          <Link
-            to="/platform"
-            onClick={() => window.scrollTo(0, 0)}
-            data-testid="hero-explore-platform"
+          <button
+            onClick={() => setLeadModal({ kind: "demo", title: "Talk to an Advisor" })}
+            data-testid="hero-talk-advisor"
             className="group border border-ink/25 hover:border-ink px-7 py-4 font-semibold flex items-center gap-2.5 transition-colors"
           >
-            Explore the Platform
+            Talk to an Advisor
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </Link>
+          </button>
         </motion.div>
       </div>
 
