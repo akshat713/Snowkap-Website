@@ -11,17 +11,39 @@ export const HERO_TICKER = [
 
 export const REGIONS = [
   { code: "EU", name: "European Union", note: "CBAM certificate €75.36/tCO₂e · CSRD in force", status: "P1 — Germany & Austria entry", tone: "primary" },
-  { code: "IN", name: "India", note: "BRSR Core assurance · CCTS binding targets", status: "Proven at scale", tone: "primary" },
+  { code: "IN", name: "India", note: "BRSR Core assurance · CCTS readiness & MRV data", status: "Proven at scale", tone: "primary" },
   { code: "UK", name: "United Kingdom", note: "UK CBAM effective Jan 2027", status: "Expanding", tone: "muted" },
   { code: "SG", name: "Singapore & SEA", note: "SGX/ISSB mandatory reporting · Vietnam ETS live", status: "Expanding", tone: "muted" },
   { code: "GCC", name: "Gulf Region", note: "UAE Climate Law · Qatar, Saudi disclosure regimes", status: "Expanding", tone: "muted" },
 ];
 
 export const FORCES = [
-  { n: "01", title: "Supply Chain Data Demands", body: "Buyers and OEMs now require verified data from Tier 1–3 suppliers before they'll sign — wherever those suppliers sit." },
-  { n: "02", title: "Multi-Framework Burden", body: "CBAM and CSRD in the EU, BRSR and CCTS in India, SGX/ISSB in Singapore, UK CBAM from 2027, UAE Climate Law — 25+ overlapping standards." },
-  { n: "03", title: "Fragmented Data", body: "Most ESG teams still run on spreadsheets across five to twelve disconnected sources — where audit exposure starts." },
-  { n: "04", title: "Capital & Market Access", body: "Institutional investors and premium tenders now screen on ESG ratings and disclosure quality. A missing score closes doors." },
+  { n: "01", icon: "supply", title: "Supply Chain Data Demands", body: "Buyers and OEMs now require verified data from Tier 1–3 suppliers before they'll sign, wherever those suppliers sit." },
+  { n: "02", icon: "layers", title: "Multi-Framework Compliance Burden", body: "CBAM and CSRD in the EU, BRSR and CCTS in India, SGX/ISSB in Singapore, UK CBAM from 2027, UAE Climate Law, 25+ overlapping standards." },
+  { n: "03", icon: "fragments", title: "Fragmented Data", body: "Most ESG teams still run on spreadsheets across five to twelve disconnected sources where audit exposure lies." },
+  { n: "04", icon: "capital", title: "Capital Market Access", body: "Institutional investors and premium tenders now screen on ESG ratings and disclosure quality. A missing or weak score takes you out of the running before the conversation starts — closing off both contracts and capital." },
+];
+
+// The differentiator: what a self-serve portal achieves against what a team on
+// the ground achieves. Paired so each metric reads as a direct comparison.
+export const ACTIVATION_PROOF = [
+  { label: "Supplier response rate — self-serve software", value: "~28%", fill: 28, tone: "muted" },
+  { label: "Supplier response rate — Snowkap Managed Activation", value: "70%+", fill: 72, tone: "primary" },
+  { label: "Days to first verified data point — self-serve", value: "45+ days", fill: 52, tone: "muted" },
+  { label: "Days to first verified data point — Snowkap", value: "7 days", fill: 15, tone: "primary" },
+];
+
+export const ACTIVATION_ROI = {
+  figure: "7.6×",
+  caption: "ROI at €80K ACV",
+  body: "€612K saved per year at 10,000 tonnes, using verified primary data instead of default values — at the live CBAM certificate price of €75.36/tCO₂ (Q1 2026). The same model — verified data beats default assumptions — applies wherever a carbon price or penalty regime does.",
+};
+
+export const ACTIVATION_EDGE = [
+  { title: "On-the-ground presence", body: "Teams embedded in the manufacturing regions that feed global supply chains — not a portal link and an inbox." },
+  { title: "Regional & regulatory nuance", body: "Deep understanding of local compliance cultures and operational realities across every region we serve." },
+  { title: "Proven at scale", body: "700+ suppliers already onboarded and engaged — the infrastructure exists before your engagement starts." },
+  { title: "One data entry, every framework", body: "CBAM, CSRD, BRSR, GRI, IFRS, EUDR and more — populated automatically from a single source of truth." },
 ];
 
 export const PILLARS = [
@@ -45,13 +67,70 @@ export const PILLARS = [
   },
 ];
 
+// `bullets` drives the sector snapshot card: the three specific pressures that
+// sector walks in with, rather than a one-line summary. They are what makes
+// "we've already mapped your sector" a demonstrable claim instead of a slogan.
 export const SECTORS = [
-  { id: "automotive", name: "Automotive & Transportation", note: "OEMs are cascading verified Scope 3 requirements down Tier 1–3 suppliers.", image: "https://images.pexels.com/photos/6572534/pexels-photo-6572534.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900" },
-  { id: "manufacturing", name: "Manufacturing & Industrial", note: "Energy-intensive operations feeding global OEM supply chains.", image: "https://images.pexels.com/photos/32503741/pexels-photo-32503741.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900" },
-  { id: "healthcare", name: "Healthcare & Pharma", note: "Complex global sourcing and cold-chain logistics emissions.", image: "https://images.pexels.com/photos/10726228/pexels-photo-10726228.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900" },
-  { id: "financial", name: "Financial, IT & Investment", note: "Financed emissions (Scope 3, Category 15) across portfolios.", image: "https://images.pexels.com/photos/7433840/pexels-photo-7433840.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900" },
-  { id: "beverages", name: "Beverages & Consumer Goods", note: "Upstream agricultural and packaging emissions dominate the footprint.", image: "https://images.pexels.com/photos/18602382/pexels-photo-18602382.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900" },
-  { id: "energy", name: "Energy & Utilities", note: "Direct emissions intensity under multiple, overlapping carbon-pricing regimes.", image: "https://images.pexels.com/photos/18602382/pexels-photo-18602382.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900" },
+  {
+    id: "automotive", name: "Automotive & Transportation",
+    note: "OEMs are cascading verified Scope 3 requirements down Tier 1–3 suppliers.",
+    bullets: [
+      "OEM ESG data requests cascading down the supply chain",
+      "CBAM exposure on imported steel & aluminium components",
+      "Product Carbon Footprint demanded per component",
+    ],
+    image: "https://images.pexels.com/photos/6572534/pexels-photo-6572534.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900",
+  },
+  {
+    id: "manufacturing", name: "Manufacturing & Industrial",
+    note: "Energy-intensive operations feeding global OEM supply chains.",
+    bullets: [
+      "Direct CBAM exposure on steel, aluminium, cement and fertiliser",
+      "Energy and process emissions under multiple carbon-pricing regimes",
+      "Customer audits reaching into Tier 2 and Tier 3",
+    ],
+    image: "https://images.pexels.com/photos/32503741/pexels-photo-32503741.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900",
+  },
+  {
+    id: "healthcare", name: "Healthcare & Pharma",
+    note: "Complex global sourcing and cold-chain logistics emissions.",
+    bullets: [
+      "Cold-chain logistics emissions across long international routes",
+      "API and excipient sourcing spread over many small suppliers",
+      "EU market access tied to CSRD-grade disclosure",
+    ],
+    image: "https://images.pexels.com/photos/10726228/pexels-photo-10726228.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900",
+  },
+  {
+    id: "financial", name: "Financial, IT & Investment",
+    note: "Financed emissions (Scope 3, Category 15) across portfolios.",
+    bullets: [
+      "Financed emissions across portfolio companies that don't yet measure",
+      "IFRS S1/S2 and SGX/ISSB disclosure on a fixed timeline",
+      "LP and regulator scrutiny of methodology, not just headline numbers",
+    ],
+    image: "https://images.pexels.com/photos/7433840/pexels-photo-7433840.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900",
+  },
+  {
+    id: "beverages", name: "Beverages & Consumer Goods",
+    note: "Upstream agricultural and packaging emissions dominate the footprint.",
+    bullets: [
+      "Agricultural inputs from thousands of smallholder suppliers",
+      "Packaging and EUDR deforestation traceability requirements",
+      "Retailer scorecards gating shelf space",
+    ],
+    image: "https://images.pexels.com/photos/18602382/pexels-photo-18602382.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900",
+  },
+  {
+    id: "energy", name: "Energy & Utilities",
+    note: "Direct emissions intensity under multiple, overlapping carbon-pricing regimes.",
+    bullets: [
+      "High direct emissions intensity under overlapping carbon pricing",
+      "CCTS binding targets in India and EU ETS linkage",
+      "Transition-plan disclosure demanded by lenders and insurers",
+    ],
+    image: "https://images.pexels.com/photos/18602382/pexels-photo-18602382.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=900",
+  },
 ];
 
 export const PROOF = [

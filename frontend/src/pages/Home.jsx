@@ -4,6 +4,9 @@ import Hero from "@/components/home/Hero";
 import LogoMarquee from "@/components/home/LogoMarquee";
 import Dossier from "@/components/home/Dossier";
 import Problem from "@/components/home/Problem";
+import ManagedActivation from "@/components/home/ManagedActivation";
+import SectorExplorer from "@/components/home/SectorExplorer";
+import RegulatoryReality from "@/components/home/RegulatoryReality";
 import Pillars from "@/components/home/Pillars";
 import PlatformShowcase from "@/components/home/PlatformShowcase";
 import KineticBand from "@/components/site/KineticBand";
@@ -22,12 +25,20 @@ export default function Home() {
     <Layout>
       <Hero />
       <LogoMarquee />
+      {/* Problem → differentiator → what we are. State the gap, show that closing
+          it is a people problem software can't touch, then introduce the three
+          capabilities as the answer. Reversing any pair loses the argument. */}
       <Problem />
+      <ManagedActivation />
       <Pillars />
       <PlatformShowcase />
       {/* Dark band between two light sections — the page has run white for a long
           stretch by here, and the contrast is what stops the scroll. */}
       <KineticBand />
+      {/* Specific before universal: your sector's pressures, then the regimes
+          every region is imposing. The hero's primary CTA lands on #sectors. */}
+      <SectorExplorer />
+      <RegulatoryReality />
       {/* Sits below the product and services blocks: by this point the visitor
           knows what's on offer, so routing them to their slice of it lands. */}
       <Dossier />

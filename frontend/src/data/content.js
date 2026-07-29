@@ -13,12 +13,41 @@ export const TICKER = [
   "CBAM LIVE · €75.36 / tCO₂e",
 ];
 
+// Framed as consequences to the business rather than as a list of pressures.
+// FORCES in site.js already enumerates the regulatory pressures beside the
+// sector snapshot, so restating them here would say the same thing twice on one
+// page. What each of these costs you is the part that isn't said elsewhere.
 export const PROBLEMS = [
-  { n: "01", title: "Supply chain blindness", body: "Up to 90% of emissions sit with suppliers who never respond. Global OEMs now require verified Tier 1–2 data — blindness costs deals, not just ratings." },
-  { n: "02", title: "Fragmented data", body: "70% of ESG teams still run 5–12 disconnected sources on spreadsheets. Inconsistent formats, manual errors, audit exposure." },
-  { n: "03", title: "Framework overload", body: "CSRD, BRSR, GRI, IFRS S1/S2, EUDR, CBAM — 25+ overlapping standards with conflicting timelines and duplicated effort." },
-  { n: "04", title: "No bridge to P&L", body: "Carbon data exists, but nobody connects it to EBITDA, cash flow, or valuation. Low MAC-curve adoption. No ROI clarity." },
-  { n: "05", title: "The expertise gap", body: "ESG teams are under 1% of the workforce. Suppliers lack training and tools. Big-4 fees don't scale to the mid-market." },
+  {
+    n: "01",
+    title: "Your footprint sits with people you don't employ",
+    body: "Up to 90% of a manufacturer's emissions sit upstream, with suppliers in regions where you have no presence. A portal link and an inbox do not reach them — and what you cannot measure, you cannot sell against.",
+    graphic: "reach",
+  },
+  {
+    n: "02",
+    title: "Default values are priced at the border",
+    body: "Where primary data is missing, regulators assume the worst case. Under CBAM that assumption is billed per tonne at €75.36/tCO₂e — so a data gap stops being a reporting problem and becomes a line item.",
+    graphic: "default",
+  },
+  {
+    n: "03",
+    title: "Every market wants the same data, in its own shape",
+    body: "CBAM and CSRD in the EU, BRSR and CCTS in India, SGX/ISSB in Singapore, UK CBAM from 2027, UAE Climate Law. One underlying dataset, and 25+ different ways of being asked for it.",
+    graphic: "frameworks",
+  },
+  {
+    n: "04",
+    title: "Audit exposure hides in the spreadsheet",
+    body: "Around 70% of ESG teams still reconcile 5–12 disconnected sources by hand. Inconsistent formats, broken units and manual edits are precisely what external assurance is designed to find.",
+    graphic: "fragments",
+  },
+  {
+    n: "05",
+    title: "Contracts and capital screen on it first",
+    body: "OEM tenders and institutional investors check disclosure quality before a conversation starts. A missing or weak score takes you out of the running without anyone telling you why.",
+    graphic: "gate",
+  },
 ];
 
 export const PILLARS3 = [
