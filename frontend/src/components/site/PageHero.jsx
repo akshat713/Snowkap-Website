@@ -1,5 +1,6 @@
 import React from "react";
 import { Reveal } from "@/components/site/Reveal";
+import { MaskBlock } from "@/components/site/MaskReveal";
 
 export default function PageHero({ eyebrow, title, lede, children }) {
   return (
@@ -10,9 +11,15 @@ export default function PageHero({ eyebrow, title, lede, children }) {
             <span className="w-6 h-px bg-signal" /> {eyebrow}
           </div>
         </Reveal>
-        <Reveal i={1}>
-          <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tighter max-w-4xl leading-[0.95]">{title}</h1>
-        </Reveal>
+        {/* Page titles carry markup (a coloured clause), so they rise as one
+            block rather than word by word — same treatment as the homepage
+            headings, applied everywhere a page opens. */}
+        <MaskBlock
+          delay={0.08}
+          className="font-display text-5xl md:text-7xl font-extrabold tracking-tighter max-w-4xl leading-[0.95]"
+        >
+          {title}
+        </MaskBlock>
         {lede && (
           <Reveal i={2}>
             <p className="text-ink2 text-lg mt-6 max-w-2xl leading-relaxed">{lede}</p>

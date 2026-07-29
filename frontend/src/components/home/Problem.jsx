@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import SectionHeader from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
 import { PROBLEMS } from "@/data/content";
 
 export default function Problem() {
+  const listRef = useRef(null);
+  // Full by the time the last row clears the fold, not when the list bottom
+  // reaches the viewport bottom — otherwise the rail is still half empty when
+  // there is nothing left to read.
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 85%", "end 55%"] });
+  const railScale = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), {
+    stiffness: 90,
+    damping: 26,
+    restDelta: 0.001,
+  });
+
   return (
     <section className="py-24 md:py-36 bg-bg" data-testid="problem-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
@@ -12,7 +24,17 @@ export default function Problem() {
           title="ESG is now a business access requirement. The infrastructure isn't."
           lede="Capital, contracts, and markets now screen on verified ESG data. The problem is not a lack of ambition — it is a lack of infrastructure."
         />
-        <div className="border-t border-ink/10">
+        {/* Scroll rail: the accent line tracks how far through the list you are.
+            It gives a long text block a sense of progress, and it is driven by
+            scroll position rather than time, so it never runs ahead of reading. */}
+        <div ref={listRef} className="relative border-t border-ink/10">
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-ink/10 hidden md:block" aria-hidden />
+          <motion.div
+            style={{ scaleY: railScale }}
+            className="absolute left-0 top-0 bottom-0 w-px bg-signal origin-top hidden md:block"
+            aria-hidden
+            data-testid="problem-rail"
+          />
           {PROBLEMS.map((p, i) => (
             <Reveal key={p.n} i={i}>
               <div className="group grid grid-cols-[64px_1fr] md:grid-cols-[120px_1fr_1.2fr] gap-6 md:gap-10 py-9 md:py-12 border-b border-ink/10 hover:bg-ink/[0.025] transition-colors px-2 md:px-4">
