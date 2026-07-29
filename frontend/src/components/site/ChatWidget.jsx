@@ -52,6 +52,11 @@ export default function ChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ session_id: sessionId.current, message: msg }),
       });
+      // Without these two checks a non-2xx or bodyless response threw on
+      // .getReader() and surfaced as the generic "Connection lost", which hid
+      // the actual cause — most often that no backend is reachable at all.
+      if (!res.ok) throw new Error(`chat endpoint returned ${res.status}`);
+      if (!res.body) throw new Error("chat endpoint returned no stream");
       const reader = res.body.getReader();
       const dec = new TextDecoder();
       let buf = "";
@@ -83,10 +88,18 @@ export default function ChatWidget() {
           } catch { /* partial frame */ }
         }
       }
-    } catch {
+    } catch (err) {
+      // Say which it is. A visitor who is told "try again" on a build with no
+      // backend will try again forever; one given an address can act.
+      const offline = err instanceof TypeError; // fetch itself never reached a server
       setMessages((m) => {
         const copy = [...m];
-        copy[copy.length - 1] = { role: "assistant", content: "Connection lost. Please try again." };
+        copy[copy.length - 1] = {
+          role: "assistant",
+          content: offline
+            ? "I can't reach the Snowkap assistant from here — it isn't running on this deployment yet. In the meantime, sales@snowkap.com reaches the team directly, or use Book a Demo below."
+            : "Something went wrong answering that. Please try again, or email sales@snowkap.com.",
+        };
         return copy;
       });
     } finally {
@@ -168,6 +181,8 @@ export default function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about ESG, CBAM, Scope 3…"
                 data-testid="chat-input"
+                maxLength={600}
+                aria-label="Ask Snowkap AI about ESG, CBAM or Scope 3"
                 className="flex-1 bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-ink3"
               />
               <button type="submit" disabled={busy || !input.trim()} data-testid="chat-send" aria-label="Send"
