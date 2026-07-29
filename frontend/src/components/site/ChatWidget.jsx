@@ -19,6 +19,11 @@ function getSessionId() {
   return sid;
 }
 
+// Auto-open bookkeeping. Per browser tab, so a visitor who reads several pages
+// isn't greeted on each one, and a visitor who closes it is left alone.
+const AUTO_OPEN_AFTER_MS = 10_000;
+const AUTO_OPEN_FLAG = "sk_chat_autoshown";
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -27,6 +32,34 @@ export default function ChatWidget() {
   const scrollRef = useRef(null);
   const sessionId = useRef(getSessionId());
   const { setLeadModal } = useApp();
+
+  // Offer the assistant once, ten seconds in — long enough that it reads as an
+  // offer to someone who stayed rather than an interruption on arrival.
+  useEffect(() => {
+    let shown = false;
+    try { shown = sessionStorage.getItem(AUTO_OPEN_FLAG) === "1"; } catch { /* storage blocked */ }
+    if (shown) return;
+
+    const t = setTimeout(() => {
+      // Don't talk over a modal, the programme tray, or a tab nobody is looking
+      // at — in any of those cases the greeting would land badly or unseen.
+      const busyElsewhere = document.querySelector(
+        '[data-testid="programme-tray"], [data-testid="lead-modal"], [data-testid="proposal-modal"]'
+      );
+      if (document.hidden || busyElsewhere) return;
+      try { sessionStorage.setItem(AUTO_OPEN_FLAG, "1"); } catch { /* storage blocked */ }
+      setOpen(true);
+    }, AUTO_OPEN_AFTER_MS);
+
+    return () => clearTimeout(t);
+  }, []);
+
+  // Opening it by hand also spends the one automatic offer, so it can't reappear
+  // over someone who has already dealt with it.
+  const openChat = () => {
+    try { sessionStorage.setItem(AUTO_OPEN_FLAG, "1"); } catch { /* storage blocked */ }
+    setOpen(true);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -195,7 +228,7 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       <motion.button
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => (open ? setOpen(false) : openChat())}
         whileTap={{ scale: 0.95 }}
         data-testid="chat-widget-open"
         aria-label="Ask Snowkap AI"
