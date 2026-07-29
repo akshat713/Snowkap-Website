@@ -10,15 +10,14 @@
 // to CBAM. Each carries the reason it is being suggested, because a
 // recommendation the reader can't evaluate is just noise.
 
-import { ADDONS } from "@/data/site";
+import { SERVICE_INDEX } from "@/data/site";
 
 /**
  * The pillar a service belongs to, so anything added from a recommendation is
  * filed under Advisory / ESG Platform / Managed Support like every other item
  * rather than under a label describing how it got there.
  */
-export const pillarOf = (name) =>
-  Object.keys(ADDONS).find((group) => ADDONS[group].includes(name)) || "Recommended";
+export const pillarOf = (name) => SERVICE_INDEX[name]?.pillar || "Recommended";
 
 /* ------------------------------------------------------------------ *
  * 1. Service-to-service pairings

@@ -6,9 +6,13 @@ import { useApp } from "@/context/AppContext";
 import Wordmark from "@/components/site/Wordmark";
 import { SIGNIN_URL } from "@/data/content";
 
+// Pricing sits third, directly after the two "what it is" pages and before the
+// proof pages — the point at which a reader who is convinced starts looking for
+// what it costs. It was previously reachable only from in-page links.
 const NAV = [
   { label: "Platform", to: "/platform" },
   { label: "Services", to: "/services" },
+  { label: "Pricing", to: "/pricing" },
   { label: "Customers", to: "/customers" },
   { label: "Resources", to: "/resources" },
   { label: "About", to: "/about" },

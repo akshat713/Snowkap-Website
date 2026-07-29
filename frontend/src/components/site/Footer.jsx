@@ -32,8 +32,12 @@ export default function Footer() {
   return (
     <footer className="bg-ink text-white/80 border-t border-ink pt-20 pb-10" data-testid="site-footer">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-white/12">
-          <div className="md:col-span-4">
+        {/* The 12-column layout waits for lg. At the md breakpoint a 12-col grid
+            leaves each col-span-2 about 108px wide, which is narrower than
+            "Book a Demo" or an email field can render — the footer was pushing
+            25px of horizontal scroll onto every page between 768px and lg. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-white/12">
+          <div className="sm:col-span-2 lg:col-span-4">
             <Wordmark variant="light" height={30} />
             <p className="text-white/70 max-w-sm leading-relaxed mt-5">
               We turn climate complexity into business clarity. Expert advisory, an AI-powered ESG platform,
@@ -46,14 +50,14 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Work email"
-                className="bg-transparent px-4 py-3 flex-1 text-sm outline-none placeholder:text-white/45"
+                className="bg-transparent px-4 py-3 flex-1 min-w-0 text-sm outline-none placeholder:text-white/45"
               />
               <button data-testid="footer-newsletter-submit" className="bg-signal text-white px-5 font-bold text-sm">Join</button>
             </form>
           </div>
 
           {COLS.map((c) => (
-            <div key={c.h} className="md:col-span-2">
+            <div key={c.h} className="lg:col-span-2">
               <h6 className="font-mono text-[11px] uppercase tracking-wider text-white/45 mb-4">{c.h}</h6>
               {c.links.map(([l, to]) => (
                 <Link key={l} to={to} onClick={() => window.scrollTo(0, 0)} className="block py-1.5 text-white/70 hover:text-ink text-sm">{l}</Link>
@@ -61,7 +65,7 @@ export default function Footer() {
             </div>
           ))}
 
-          <div className="md:col-span-2">
+          <div className="lg:col-span-2">
             <h6 className="font-mono text-[11px] uppercase tracking-wider text-white/45 mb-4">Get in touch</h6>
             <button onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })} data-testid="footer-book-demo" className="flex items-center gap-1.5 py-1.5 text-white/70 hover:text-signal text-sm group">
               Book a Demo <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
