@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { MessageCircle, X, Send, Sparkles, CalendarPlus } from "lucide-react";
 import { API } from "@/lib/api";
+import { answerLocally } from "@/lib/assistant";
 import { useApp } from "@/context/AppContext";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SUGGESTIONS = [
   "What does the Snowkap platform do?",
@@ -29,9 +32,17 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [followUps, setFollowUps] = useState([]);
   const scrollRef = useRef(null);
+  const typeTimer = useRef(null);
+  // null = not tried yet, false = tried and unreachable. Once it has failed we
+  // stop paying a network timeout on every subsequent message.
+  const backendUp = useRef(null);
   const sessionId = useRef(getSessionId());
+  const reduceMotion = useReducedMotion();
   const { setLeadModal } = useApp();
+
+  useEffect(() => () => clearTimeout(typeTimer.current), []);
 
   // Offer the assistant once, ten seconds in — long enough that it reads as an
   // offer to someone who stayed rather than an interruption on arrival.
@@ -61,24 +72,70 @@ export default function ChatWidget() {
     setOpen(true);
   };
 
+  // Transcript history lives server-side; with no backend there is nothing to
+  // fetch, and asking anyway just logs a failed request on every open.
   useEffect(() => {
-    if (!open) return;
+    if (!open || !BACKEND_URL || backendUp.current === false) return;
     fetch(`${API}/chat/history/${sessionId.current}`)
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : null))
       .then((h) => { if (Array.isArray(h) && h.length) setMessages(h); })
-      .catch(() => {});
+      .catch(() => { backendUp.current = false; });
   }, [open]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, busy]);
 
+  // Reveal a local answer a few characters at a time. Not decoration: the panel
+  // is built around a streaming response, and an answer that appears instantly
+  // and complete reads as a canned popup rather than a reply.
+  const typeOut = (full) =>
+    new Promise((resolve) => {
+      if (reduceMotion) {
+        setMessages((m) => {
+          const copy = [...m];
+          copy[copy.length - 1] = { role: "assistant", content: full };
+          return copy;
+        });
+        return resolve();
+      }
+      let i = 0;
+      const tick = () => {
+        i = Math.min(full.length, i + 3);
+        setMessages((m) => {
+          const copy = [...m];
+          copy[copy.length - 1] = { role: "assistant", content: full.slice(0, i) };
+          return copy;
+        });
+        if (i < full.length) typeTimer.current = setTimeout(tick, 12);
+        else resolve();
+      };
+      tick();
+    });
+
   const send = async (text) => {
     const msg = (text ?? input).trim();
     if (!msg || busy) return;
     setInput("");
     setBusy(true);
+    setFollowUps([]);
     setMessages((m) => [...m, { role: "user", content: msg }, { role: "assistant", content: "" }]);
+
+    // Answer from the bundled knowledge base when there is no backend to ask.
+    // The site is on static hosting, so this is the normal path, not the error
+    // path — the previous build apologised and gave an email address instead.
+    const answerFromSite = async () => {
+      const { text: reply, suggestions } = answerLocally(msg);
+      await typeOut(reply);
+      setFollowUps(suggestions);
+    };
+
+    if (!BACKEND_URL || backendUp.current === false) {
+      await answerFromSite();
+      setBusy(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${API}/chat/stream`, {
         method: "POST",
@@ -90,6 +147,8 @@ export default function ChatWidget() {
       // the actual cause — most often that no backend is reachable at all.
       if (!res.ok) throw new Error(`chat endpoint returned ${res.status}`);
       if (!res.body) throw new Error("chat endpoint returned no stream");
+      backendUp.current = true;
+      setFollowUps([]);
       const reader = res.body.getReader();
       const dec = new TextDecoder();
       let buf = "";
@@ -121,20 +180,12 @@ export default function ChatWidget() {
           } catch { /* partial frame */ }
         }
       }
-    } catch (err) {
-      // Say which it is. A visitor who is told "try again" on a build with no
-      // backend will try again forever; one given an address can act.
-      const offline = err instanceof TypeError; // fetch itself never reached a server
-      setMessages((m) => {
-        const copy = [...m];
-        copy[copy.length - 1] = {
-          role: "assistant",
-          content: offline
-            ? "I can't reach the Snowkap assistant from here — it isn't running on this deployment yet. In the meantime, sales@snowkap.com reaches the team directly, or use Book a Demo below."
-            : "Something went wrong answering that. Please try again, or email sales@snowkap.com.",
-        };
-        return copy;
-      });
+    } catch {
+      // The backend is unreachable or errored. Answer from the bundled knowledge
+      // base rather than apologising, and remember the failure so the rest of the
+      // conversation skips straight to it.
+      backendUp.current = false;
+      await answerFromSite();
     } finally {
       setBusy(false);
     }
@@ -185,7 +236,8 @@ export default function ChatWidget() {
                 </div>
               )}
               {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                  data-testid={`chat-msg-${m.role}`}>
                   <div className={`max-w-[85%] px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
                     m.role === "user" ? "bg-signal text-white" : "bg-ink/5 border border-ink/10 text-ink2"
                   }`}>
@@ -193,6 +245,31 @@ export default function ChatWidget() {
                   </div>
                 </div>
               ))}
+
+              {/* Follow-ups from whatever just answered. A retrieval assistant is
+                  only as good as the visitor's next question is guessable, so
+                  offering the two or three it can definitely answer is doing more
+                  work here than it would beside a free-form model. */}
+              {!busy && followUps.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.28 }}
+                  className="pt-1 space-y-2"
+                  data-testid="chat-followups"
+                >
+                  {followUps.map((s, i) => (
+                    <button
+                      key={s}
+                      onClick={() => send(s)}
+                      data-testid={`chat-followup-${i}`}
+                      className="block w-full text-left border border-ink/15 hover:border-signal px-3.5 py-2.5 text-[13px] text-ink2 hover:text-ink transition-colors"
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
             </div>
 
             <div className="flex items-center gap-2 border-t border-ink/10 px-3 pt-2.5 bg-bg">
