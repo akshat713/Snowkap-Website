@@ -113,14 +113,30 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* proof ticker */}
-      <div className="relative border-t border-ink/10 py-4 overflow-hidden" data-testid="hero-ticker">
-        <div className="flex w-max animate-marquee gap-0">
+      {/* Proof bar. Three changes from the 11px caps in the lightest ink it
+          replaces: the figure is set large and bold so it reads at a glance, the
+          label sits under it in full sentence case instead of tracked-out caps,
+          and the whole band moves onto the off-white surface so it separates
+          from the hero rather than floating in it. */}
+      <div
+        className="relative border-t border-ink/10 bg-surface py-5 md:py-6 overflow-hidden"
+        data-testid="hero-ticker"
+      >
+        <div className="absolute inset-y-0 left-0 w-12 md:w-24 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-12 md:w-24 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none" />
+        <div className="flex w-max animate-marquee items-center hover:[animation-play-state:paused]">
           {[...TICKER, ...TICKER].map((t, i) => (
-            <span key={i} className="flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 px-6 whitespace-nowrap">
-              <span className="w-1.5 h-1.5 rounded-full bg-signal inline-block" />
-              {t}
-            </span>
+            <div key={i} className="flex items-center shrink-0">
+              <div className="px-7 md:px-9 whitespace-nowrap">
+                <div className="font-mono text-[19px] md:text-[22px] font-bold text-ink leading-none tracking-tight">
+                  {t.figure}
+                </div>
+                <div className="text-[12px] md:text-[13px] font-medium text-ink2 mt-1.5 leading-none">
+                  {t.label}
+                </div>
+              </div>
+              <span className="w-1.5 h-1.5 rotate-45 bg-signal shrink-0" aria-hidden />
+            </div>
           ))}
         </div>
       </div>
