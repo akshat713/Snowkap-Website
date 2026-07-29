@@ -80,3 +80,20 @@ memory/test_credentials.md
 
 # Mobile development
 android-sdk/
+
+# ---------------------------------------------------------------------------
+# Secrets
+# ---------------------------------------------------------------------------
+# backend/.env holds MONGO_URL, JWT_SECRET, ADMIN_PASSWORD and the EMERGENT_*
+# API keys. It must never be committed — hosting platforms inject these as
+# environment variables, and python-dotenv leaves already-set vars alone, so no
+# file is needed in production. See backend/.env.example for the shape.
+backend/.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# frontend/.env is deliberately NOT ignored: it carries only REACT_APP_* values,
+# which are compiled into the public bundle by design, and the Pages build reads
+# it. Never put a secret there — anything REACT_APP_* is world-readable.
