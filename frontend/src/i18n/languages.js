@@ -7,22 +7,25 @@
 // string lets the provider translate the rendered DOM, so a component needs no
 // knowledge that translation exists.
 //
-// Coverage comes in two layers. This file is the chrome and the top-of-funnel
-// copy — navigation, buttons, section headings, labels, footer — hand-written, so
-// the site is usefully translated the moment it ships. The second layer is
-// src/i18n/generated/<lang>.json, produced by scripts/translate-strings.mjs from
-// src/i18n/strings.json (every text fragment the site renders) and merged over
-// this one. Run that script with an ANTHROPIC_API_KEY to get full coverage; until
-// then anything not listed here stays in English, which reads as a partially
-// translated site rather than a broken one.
+// Coverage comes in two layers. This file is the chrome and the headlines —
+// navigation, buttons, section headings, labels, footer — where the wording is a
+// brand decision. The second layer is src/i18n/generated/<lang>.json: every one
+// of the ~500 text fragments the site renders, catalogued in strings.json and
+// translated in full. This file always wins over the generated one, so a machine
+// pass can never overwrite the brand's own wording.
+//
+// ONLY LANGUAGES WITH BOTH LAYERS COMPLETE ARE OFFERED. A switcher that flips
+// half the page and leaves the body copy in English is worse than no switcher at
+// all — it reads as broken rather than as multilingual. French, Spanish and
+// Chinese have their chrome authored (see PARTIAL_DICT below) but no generated
+// dictionary, so they are deliberately absent from the list until one exists.
+// To enable one: run `yarn translate <code>` with an ANTHROPIC_API_KEY, move its
+// dictionary from PARTIAL_DICT into BASE_DICT, and add it here.
 
 export const LANGUAGES = [
   { code: "en", label: "English", native: "English", dir: "ltr" },
   { code: "de", label: "German", native: "Deutsch", dir: "ltr" },
-  { code: "fr", label: "French", native: "Français", dir: "ltr" },
-  { code: "es", label: "Spanish", native: "Español", dir: "ltr" },
   { code: "hi", label: "Hindi", native: "हिन्दी", dir: "ltr" },
-  { code: "zh", label: "Chinese", native: "中文", dir: "ltr" },
   { code: "ar", label: "Arabic", native: "العربية", dir: "rtl" },
 ];
 
@@ -32,12 +35,13 @@ export const langMeta = (code) => LANGUAGES.find((l) => l.code === code) || LANG
 // The offer bar's own copy, which obviously cannot come from the dictionary it is
 // offering to install.
 export const BANNER = {
-  de: { ask: "Diese Seite auf Deutsch ansehen?", yes: "Auf Deutsch wechseln", no: "Auf Englisch bleiben", note: "Maschinell unterstützte Übersetzung" },
+  de: { ask: "Diese Seite auf Deutsch ansehen?", yes: "Auf Deutsch wechseln", no: "Auf Englisch bleiben", note: "Vollständig übersetzt" },
+  hi: { ask: "इस साइट को हिन्दी में देखें?", yes: "हिन्दी में बदलें", no: "अंग्रेज़ी में रहें", note: "पूर्ण अनुवाद उपलब्ध" },
+  ar: { ask: "هل تريد عرض هذا الموقع بالعربية؟", yes: "التبديل إلى العربية", no: "البقاء بالإنجليزية", note: "مُترجَم بالكامل" },
+  // Kept for when these languages are enabled — see the note above LANGUAGES.
   fr: { ask: "Afficher ce site en français ?", yes: "Passer en français", no: "Rester en anglais", note: "Traduction assistée par machine" },
   es: { ask: "¿Ver este sitio en español?", yes: "Cambiar a español", no: "Seguir en inglés", note: "Traducción asistida por máquina" },
-  hi: { ask: "इस साइट को हिन्दी में देखें?", yes: "हिन्दी में बदलें", no: "अंग्रेज़ी में रहें", note: "मशीन-सहायता प्राप्त अनुवाद" },
   zh: { ask: "以中文浏览本网站？", yes: "切换到中文", no: "保持英文", note: "机器辅助翻译" },
-  ar: { ask: "هل تريد عرض هذا الموقع بالعربية؟", yes: "التبديل إلى العربية", no: "البقاء بالإنجليزية", note: "ترجمة بمساعدة الآلة" },
 };
 
 // ---------------------------------------------------------------------------
@@ -403,4 +407,9 @@ const ar = {
   "Assurance": "التحقق",
 };
 
-export const BASE_DICT = { de, fr, es, hi, zh, ar };
+// Offered to visitors: chrome authored here, body copy in generated/<code>.json.
+export const BASE_DICT = { de, hi, ar };
+
+// Authored chrome with no generated dictionary yet, so not offered — see the note
+// above LANGUAGES for how to promote one.
+export const PARTIAL_DICT = { fr, es, zh };
