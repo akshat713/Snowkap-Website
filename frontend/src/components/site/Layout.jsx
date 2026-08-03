@@ -8,6 +8,7 @@ import ChatWidget from "@/components/site/ChatWidget";
 import ScrollProgress from "@/components/site/ScrollProgress";
 import { LeadModal, ProposalModal } from "@/components/site/Modals";
 import { NoiseOverlay } from "@/components/site/Overlays";
+import LanguageBanner from "@/components/site/LanguageBanner";
 
 export default function Layout({ children }) {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ export default function Layout({ children }) {
       <LeadModal />
       <ProposalModal />
       <ChatWidget />
+      <LanguageBanner />
     </div>
   );
 }

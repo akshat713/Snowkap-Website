@@ -9,12 +9,27 @@ export const HERO_TICKER = [
   { label: "SIX SECTORS · FIVE REGIONS", value: "ONE PLATFORM" },
 ];
 
+// Five regions. `flag` is the country whose flag stands for the column — the
+// Gulf covers several regimes, so the UAE stands in for it. The frameworks are
+// the point of the block: five different regimes, largely the same underlying
+// supplier data, which is why one platform can serve all of them.
 export const REGIONS = [
-  { code: "EU", name: "European Union", note: "CBAM certificate €75.36/tCO₂e · CSRD in force", status: "P1 — Germany & Austria entry", tone: "primary" },
-  { code: "IN", name: "India", note: "BRSR Core assurance · CCTS readiness & MRV data", status: "Proven at scale", tone: "primary" },
-  { code: "UK", name: "United Kingdom", note: "UK CBAM effective Jan 2027", status: "Expanding", tone: "muted" },
-  { code: "SG", name: "Singapore & SEA", note: "SGX/ISSB mandatory reporting · Vietnam ETS live", status: "Expanding", tone: "muted" },
-  { code: "GCC", name: "Gulf Region", note: "UAE Climate Law · Qatar, Saudi disclosure regimes", status: "Expanding", tone: "muted" },
+  { code: "EU", name: "European Union", flag: "EU", note: "CBAM certificates payable at €75.36/tCO₂e, with CSRD reporting already in force.", frameworks: ["CBAM", "CSRD", "EUDR"] },
+  { code: "IN", name: "India", flag: "IN", note: "BRSR Core assurance for listed entities, plus CCTS readiness and MRV data.", frameworks: ["BRSR Core", "CCTS", "SEBI"] },
+  { code: "UK", name: "United Kingdom", flag: "UK", note: "UK CBAM takes effect January 2027 — importers need supplier data before then.", frameworks: ["UK CBAM", "SECR", "TCFD"] },
+  { code: "SG", name: "Singapore & SEA", flag: "SG", note: "SGX climate reporting on ISSB lines, with Vietnam's ETS already live.", frameworks: ["SGX / ISSB", "Vietnam ETS"] },
+  { code: "GCC", name: "Gulf Region", flag: "GCC", note: "UAE Climate Law in force, with Qatar and Saudi disclosure regimes following.", frameworks: ["UAE Climate Law", "Qatar & Saudi"] },
+];
+
+// When each regime actually bites. Rendered as a rail beside the regions table
+// so the reader sees that this is a schedule, not a menu — the dates arrive
+// whether or not the data is ready.
+export const REGULATORY_TIMELINE = [
+  { year: 2025, flag: "SG", label: "SGX climate reporting mandatory on ISSB lines" },
+  { year: 2025, flag: "GCC", label: "UAE Climate Law enters into force" },
+  { year: 2026, flag: "EU", label: "CBAM definitive regime — certificates payable on embedded emissions" },
+  { year: 2026, flag: "IN", label: "CCTS compliance cycle begins; BRSR Core assurance widens" },
+  { year: 2027, flag: "UK", label: "UK CBAM effective from January" },
 ];
 
 export const FORCES = [
@@ -25,13 +40,41 @@ export const FORCES = [
 ];
 
 // The differentiator: what a self-serve portal achieves against what a team on
-// the ground achieves. Paired so each metric reads as a direct comparison.
-export const ACTIVATION_PROOF = [
-  { label: "Supplier response rate — self-serve software", value: "~28%", fill: 28, tone: "muted" },
-  { label: "Supplier response rate — Snowkap Managed Activation", value: "70%+", fill: 72, tone: "primary" },
-  { label: "Days to first verified data point — self-serve", value: "45+ days", fill: 52, tone: "muted" },
-  { label: "Days to first verified data point — Snowkap", value: "7 days", fill: 15, tone: "primary" },
+// the ground achieves. Two metrics, each a like-for-like pair, switched by a tab
+// so the reader compares one dimension at a time instead of scanning four bars.
+//
+// `dots` is out of 100 and drives the response-rate matrix. `days` drives the
+// speed gauge and is scaled against `scale` rather than against each other,
+// because on that metric lower is better and a self-scaled pair would draw the
+// worse number as the longer, more emphatic bar.
+export const ACTIVATION_COMPARE = [
+  {
+    id: "response",
+    tab: "Supplier response rate",
+    unit: "of every 100 suppliers contacted",
+    rows: [
+      { label: "Self-serve software portal", value: "~28%", dots: 28 },
+      { label: "Snowkap Managed Activation", value: "70%+", dots: 70, primary: true },
+    ],
+    note: "A portal can send the questionnaire. Someone has to sit with a Tier-2 supplier in Tiruppur and walk them through it.",
+  },
+  {
+    id: "speed",
+    tab: "Time to first verified data",
+    unit: "days from kick-off",
+    scale: 60,
+    rows: [
+      { label: "Self-serve software portal", value: "45+ days", days: 45 },
+      { label: "Snowkap Managed Activation", value: "7 days", days: 7, primary: true },
+    ],
+    note: "Teams already embedded in the manufacturing regions start collecting on day one — there is no ramp to fund first.",
+  },
 ];
+
+// Flat form for the assistant's retrieval index, which wants sentences.
+export const ACTIVATION_PROOF = ACTIVATION_COMPARE.flatMap((m) =>
+  m.rows.map((r) => ({ label: `${m.tab} — ${r.label}`, value: r.value }))
+);
 
 export const ACTIVATION_ROI = {
   figure: "7.6×",
@@ -40,10 +83,10 @@ export const ACTIVATION_ROI = {
 };
 
 export const ACTIVATION_EDGE = [
-  { title: "On-the-ground presence", body: "Teams embedded in the manufacturing regions that feed global supply chains — not a portal link and an inbox." },
-  { title: "Regional & regulatory nuance", body: "Deep understanding of local compliance cultures and operational realities across every region we serve." },
-  { title: "Proven at scale", body: "700+ suppliers already onboarded and engaged — the infrastructure exists before your engagement starts." },
-  { title: "One data entry, every framework", body: "CBAM, CSRD, BRSR, GRI, IFRS, EUDR and more — populated automatically from a single source of truth." },
+  { icon: "presence", stat: "5 regions", title: "On-the-ground presence", body: "Teams embedded in the manufacturing regions that feed global supply chains — not a portal link and an inbox." },
+  { icon: "nuance", stat: "25+ regimes", title: "Regional & regulatory nuance", body: "Deep understanding of local compliance cultures and operational realities across every region we serve." },
+  { icon: "scale", stat: "700+ suppliers", title: "Proven at scale", body: "Already onboarded and engaged — the activation infrastructure exists before your engagement starts." },
+  { icon: "single", stat: "1 data entry", title: "Every framework, once", body: "CBAM, CSRD, BRSR, GRI, IFRS, EUDR and more — populated automatically from a single source of truth." },
 ];
 
 export const PILLARS = [

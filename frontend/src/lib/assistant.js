@@ -229,7 +229,7 @@ function buildCorpus() {
     add(
       `region-${r.code}`,
       r.name,
-      `${r.note}. Status: ${r.status}.`,
+      `${r.note} Frameworks in play: ${r.frameworks.join(", ")}.`,
       `region regulation regime ${r.code} compliance`,
       ["Which frameworks does Snowkap support?"]
     )
@@ -385,10 +385,108 @@ const DEFAULT_FOLLOWUPS = [
  * Answer a visitor message from the site's own content.
  * @returns {{text: string, suggestions: string[], kind: "refusal"|"answer"|"unknown"}}
  */
-export function answerLocally(message) {
+// Conversation, not retrieval. "hi" and "thanks" carry no topic terms at all, so
+// they used to fall through the score threshold and get answered with "I don't
+// have that on hand" — the single worst thing the assistant said, because it was
+// usually the first thing a visitor saw.
+const SMALLTALK = [
+  {
+    test: /^(hi|hey|hello|yo|hiya|good (morning|afternoon|evening)|greetings)\b/i,
+    reply:
+      "Hello. I'm Snowkap's assistant — I can walk you through the platform, our advisory and " +
+      "managed support, any of the 21 services and how they're packaged, the frameworks we report " +
+      "against, or what the regulations coming at your region actually require.\n\n" +
+      "What are you trying to work out?",
+    follow: ["What does the Snowkap platform do?", "How does CBAM affect my business?", "How does pricing work?"],
+  },
+  {
+    test: /^(thanks|thank you|thx|cheers|ta|great|perfect|nice|got it|understood|ok|okay)\b/i,
+    reply: "Any time. Anything else you want to dig into?",
+    follow: ["How does pricing work?", "What does onboarding look like?"],
+  },
+  {
+    test: /(who are you|what are you|are you (a )?(bot|human|real|ai)|your name)/i,
+    reply:
+      "I'm Snowkap AI, the assistant on this site. I answer from Snowkap's own material — what we " +
+      "do, how the platform works, what the services cost to run, and what the regulations in each " +
+      "region require. I'm not a salesperson: if you want a person, Book a Demo just below this " +
+      "chat gets you one within a business day.",
+    follow: ["What does the Snowkap platform do?", "Which frameworks does Snowkap support?"],
+  },
+  {
+    test: /(what can you (do|help)|how can you help|what do you know|help me)/i,
+    reply:
+      "Four things, mostly. One: what the platform does — carbon accounting, Scope 3, supplier " +
+      "engagement, multi-framework reporting. Two: what a Snowkap engagement looks like in practice, " +
+      "including managed supplier activation. Three: the regulations — CBAM, CSRD, BRSR, CCTS, " +
+      "SGX/ISSB — and which ones bite in your region and when. Four: pricing and how the packages " +
+      "work.\n\nStart anywhere; I'll get specific.",
+    follow: ["How do you handle Scope 3 data?", "Which frameworks does Snowkap support?", "How does pricing work?"],
+  },
+  {
+    test: /^(bye|goodbye|see you|that.s all|nothing else)\b/i,
+    reply:
+      "Good luck with it. If you want the team to pick this up, Book a Demo is below, or " +
+      "sales@snowkap.com reaches them directly.",
+    follow: [],
+  },
+];
+
+// Region names as a visitor writes them, mapped onto the REGIONS codes, so a
+// dossier answer of "European Union" can be turned into the right passage.
+const REGION_ALIASES = {
+  "european union": "EU", eu: "EU", europe: "EU", germany: "EU", austria: "EU",
+  india: "IN", "united kingdom": "UK", uk: "UK", britain: "UK",
+  "singapore & sea": "SG", singapore: "SG", sea: "SG", vietnam: "SG",
+  "gulf region": "GCC", gulf: "GCC", uae: "GCC", dubai: "GCC", qatar: "GCC", saudi: "GCC",
+};
+
+/**
+ * One line of tailoring, when the site already knows who it is talking to.
+ *
+ * This is the whole personalisation budget of the offline path: enough that an
+ * answer reads as addressed to the reader, not so much that every reply gets a
+ * paragraph of boilerplate about their sector appended to it.
+ */
+function tailor(ctx, kind) {
+  if (!ctx || kind !== "answer") return null;
+  const sector = ctx.sector && SECTOR_PLAYBOOK[ctx.sector] ? ctx.sector : null;
+  const code = ctx.region ? REGION_ALIASES[String(ctx.region).toLowerCase()] : null;
+  const region = code ? REGIONS.find((r) => r.code === code) : null;
+  if (!sector && !region) return null;
+
+  const bits = [];
+  if (sector) {
+    const play = SECTOR_PLAYBOOK[sector];
+    bits.push(`In ${sector}, we'd normally open with ${play.services.slice(0, 2).join(" and ")}.`);
+  }
+  if (region) bits.push(`For ${region.name}: ${region.note}`);
+  return `For your case — ${bits.join(" ")}`;
+}
+
+/**
+ * Answer from the knowledge base compiled into the bundle.
+ *
+ * @param message  what the visitor typed
+ * @param ctx      optional {sector, region} from the dossier, used to tailor
+ */
+export function answerLocally(message, ctx = null) {
   const q = String(message || "").trim();
   if (!q) return { text: REFUSAL, suggestions: DEFAULT_FOLLOWUPS, kind: "refusal" };
   if (BLOCKED.test(q)) return { text: REFUSAL, suggestions: DEFAULT_FOLLOWUPS, kind: "refusal" };
+
+  // Checked before the index, and only against short inputs: "thanks, but how
+  // does CBAM work" is a question, not a pleasantry, and should be ranked.
+  if (q.length <= 64) {
+    const small = SMALLTALK.find((s) => s.test.test(q));
+    if (small) {
+      return {
+        text: small.reply,
+        suggestions: small.follow.filter((s) => norm(s) !== norm(q)).slice(0, 3),
+        kind: "smalltalk",
+      };
+    }
+  }
 
   // The panel invites "or drop your email in the chat", so an address has to be
   // acknowledged. Without this it fell through to "I don't have that on hand",
@@ -440,6 +538,9 @@ export function answerLocally(message) {
   if (second && second.score > best.score * 0.62 && second.doc.id !== best.doc.id) {
     text += `\n\nAlso relevant — ${second.doc.title}: ${second.doc.body}`;
   }
+
+  const extra = tailor(ctx, "answer");
+  if (extra) text += `\n\n${extra}`;
 
   const suggestions = (best.doc.follow.length ? best.doc.follow : DEFAULT_FOLLOWUPS)
     .filter((s) => norm(s) !== norm(q))

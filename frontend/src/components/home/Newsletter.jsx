@@ -26,7 +26,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="newsletter-section">
+    <section id="newsletter" className="py-20 md:py-24 bg-surface border-t border-ink/10" data-testid="newsletter-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-14 items-center border border-ink/10 bg-bg/50 p-8 md:p-14">
           <div>

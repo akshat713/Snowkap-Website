@@ -15,7 +15,7 @@ export default function Problem() {
   const { setLeadModal } = useApp();
 
   return (
-    <section className="py-24 md:py-36 bg-bg" data-testid="problem-section">
+    <section className="py-20 md:py-24 bg-bg" data-testid="problem-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
         <div className="lg:sticky lg:top-28 h-fit">
           <SectionHeader
@@ -33,7 +33,7 @@ export default function Problem() {
           </button>
         </div>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
           {PROBLEMS.map((p, i) => (
             // Staggered sticky offsets, so the cards shingle as they pass rather
             // than landing on top of one another.
@@ -42,13 +42,13 @@ export default function Problem() {
                 className="group lift bg-bg border border-ink/10 hover:border-signal/40"
                 data-testid={`problem-card-${i}`}
               >
-                <div className="relative aspect-[16/7] overflow-hidden bg-surface border-b border-ink/10">
+                <div className="relative aspect-[16/6] overflow-hidden bg-surface border-b border-ink/10">
                   <div className="absolute inset-0 p-6 md:p-8">
                     <ProblemGraphic kind={p.graphic} />
                   </div>
                   <span className="absolute bottom-4 left-6 font-mono text-signal text-sm">{p.n}</span>
                 </div>
-                <div className="p-8 md:p-10">
+                <div className="p-7 md:p-8">
                   <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-4 leading-[1.15]">
                     {p.title}
                   </h3>
@@ -63,7 +63,7 @@ export default function Problem() {
       {/* Outside the grid on purpose. As a sibling of the sticky cards this sat
           underneath the topmost one and was sliced in half — the sticky card wins
           the overlap. Out here it has the row to itself. */}
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 mt-16 md:mt-24">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 mt-12 md:mt-16">
         <Reveal>
           <p className="font-display text-2xl md:text-4xl font-bold max-w-3xl">
             Five problems, one root cause:{" "}

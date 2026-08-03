@@ -9,7 +9,7 @@ export default function PlatformShowcase() {
   const scrollBy = (dir) => trackRef.current?.scrollBy({ left: dir * 420, behavior: "smooth" });
 
   return (
-    <section className="py-24 md:py-36 bg-bg" data-testid="platform-showcase">
+    <section className="py-20 md:py-24 bg-bg" data-testid="platform-showcase">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="flex items-end justify-between gap-6 flex-wrap">
           <SectionHeader

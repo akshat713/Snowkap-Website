@@ -6,7 +6,7 @@ import { FAQS } from "@/data/content";
 
 export default function Faq() {
   return (
-    <section className="py-24 md:py-36 bg-bg" data-testid="faq-section">
+    <section className="py-20 md:py-24 bg-bg" data-testid="faq-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[0.8fr_1.2fr] gap-14">
         <div className="lg:sticky lg:top-28 h-fit">
           <SectionHeader

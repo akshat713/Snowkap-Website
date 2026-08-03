@@ -4,6 +4,7 @@ import { MessageCircle, X, Send, Sparkles, CalendarPlus } from "lucide-react";
 import { API } from "@/lib/api";
 import { answerLocally } from "@/lib/assistant";
 import { useApp } from "@/context/AppContext";
+import { useLanguage } from "@/i18n/TranslationProvider";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -25,6 +26,7 @@ function getSessionId() {
 // Auto-open bookkeeping. Per browser tab, so a visitor who reads several pages
 // isn't greeted on each one, and a visitor who closes it is left alone.
 const AUTO_OPEN_AFTER_MS = 10_000;
+const AUTO_OPEN_RETRY_MS = 20_000;
 const AUTO_OPEN_FLAG = "sk_chat_autoshown";
 
 export default function ChatWidget() {
@@ -40,7 +42,27 @@ export default function ChatWidget() {
   const backendUp = useRef(null);
   const sessionId = useRef(getSessionId());
   const reduceMotion = useReducedMotion();
-  const { setLeadModal } = useApp();
+  const { setLeadModal, dossier, selectedPackage, tray } = useApp();
+  const { lang } = useLanguage();
+
+  // What the site already knows about this visitor, sent with every message so
+  // the model can answer for their case rather than in general — "how does CBAM
+  // affect us" from someone who told the dossier they are Automotive in the EU
+  // should come back about steel and aluminium components. Read fresh from a ref
+  // at send time so it always reflects the latest dossier answers.
+  const context = useRef(null);
+  context.current = {
+    path: window.location.pathname + window.location.hash,
+    sector: dossier?.sector || null,
+    region: dossier?.region || null,
+    stage: dossier?.stage || null,
+    package: selectedPackage || dossier?.recommended_package || null,
+    services: tray.map((t) => t.name).slice(0, 12),
+    // A visitor reading the site in German should not get an English answer back.
+    // The offline path can't do this — its corpus is the site's English copy — so
+    // it stays in English there, which is why the model path is worth having.
+    lang,
+  };
 
   useEffect(() => () => clearTimeout(typeTimer.current), []);
 
@@ -51,18 +73,43 @@ export default function ChatWidget() {
     try { shown = sessionStorage.getItem(AUTO_OPEN_FLAG) === "1"; } catch { /* storage blocked */ }
     if (shown) return;
 
-    const t = setTimeout(() => {
-      // Don't talk over a modal, the programme tray, or a tab nobody is looking
-      // at — in any of those cases the greeting would land badly or unseen.
-      const busyElsewhere = document.querySelector(
+    let timer = null;
+    let attempts = 0;
+
+    // A 400px panel pinned bottom-right lands on top of whatever the reader is
+    // doing. Modals and the tray were already respected; the dossier and the
+    // programme builder were not, and the panel covered the very buttons those
+    // sections exist to offer. If the reader is inside one, wait — and if they
+    // are still there on the retry, leave them alone. The launcher is not subtle.
+    const engaged = () => {
+      if (document.hidden) return true;
+      if (document.querySelector(
         '[data-testid="programme-tray"], [data-testid="lead-modal"], [data-testid="proposal-modal"]'
+      )) return true;
+      const zones = document.querySelectorAll(
+        '[data-testid="dossier-section"], [data-testid="service-selector"]'
       );
-      if (document.hidden || busyElsewhere) return;
+      for (const z of zones) {
+        const r = z.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) return true;
+      }
+      return false;
+    };
+
+    const attempt = () => {
+      attempts += 1;
+      if (engaged()) {
+        // Retried once, then dropped — the flag stays unset so a later page view
+        // in the same tab can still make the offer.
+        if (attempts < 3) timer = setTimeout(attempt, AUTO_OPEN_RETRY_MS);
+        return;
+      }
       try { sessionStorage.setItem(AUTO_OPEN_FLAG, "1"); } catch { /* storage blocked */ }
       setOpen(true);
-    }, AUTO_OPEN_AFTER_MS);
+    };
 
-    return () => clearTimeout(t);
+    timer = setTimeout(attempt, AUTO_OPEN_AFTER_MS);
+    return () => clearTimeout(timer);
   }, []);
 
   // Opening it by hand also spends the one automatic offer, so it can't reappear
@@ -125,7 +172,7 @@ export default function ChatWidget() {
     // The site is on static hosting, so this is the normal path, not the error
     // path — the previous build apologised and gave an email address instead.
     const answerFromSite = async () => {
-      const { text: reply, suggestions } = answerLocally(msg);
+      const { text: reply, suggestions } = answerLocally(msg, context.current);
       await typeOut(reply);
       setFollowUps(suggestions);
     };
@@ -140,7 +187,7 @@ export default function ChatWidget() {
       const res = await fetch(`${API}/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId.current, message: msg }),
+        body: JSON.stringify({ session_id: sessionId.current, message: msg, context: context.current }),
       });
       // Without these two checks a non-2xx or bodyless response threw on
       // .getReader() and surfaced as the generic "Connection lost", which hid
@@ -152,6 +199,8 @@ export default function ChatWidget() {
       const reader = res.body.getReader();
       const dec = new TextDecoder();
       let buf = "";
+      let streamed = 0;
+      let failed = false;
       for (;;) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -165,24 +214,35 @@ export default function ChatWidget() {
           try {
             const j = JSON.parse(payload);
             if (j.delta) {
+              streamed += j.delta.length;
               setMessages((m) => {
                 const copy = [...m];
                 copy[copy.length - 1] = { role: "assistant", content: copy[copy.length - 1].content + j.delta };
                 return copy;
               });
             } else if (j.error) {
-              setMessages((m) => {
-                const copy = [...m];
-                copy[copy.length - 1] = { role: "assistant", content: j.error };
-                return copy;
-              });
+              // The server could not reach the model. It sends this only when
+              // nothing has been shown yet, so the bundled knowledge base can
+              // still answer — which beats printing "unavailable" at someone.
+              failed = true;
             }
           } catch { /* partial frame */ }
         }
       }
+      if (failed || streamed === 0) {
+        // The backend is up but the model call did not produce anything. Answer
+        // locally for this message, and do not mark the backend down — a
+        // transient model error should not cost the visitor every later answer.
+        await answerFromSite();
+      } else {
+        // Follow-ups come from the local index either way: the curated question
+        // sets are the same ones the model's answer will have covered, and
+        // asking for them over the wire would cost a second round trip.
+        setFollowUps(answerLocally(msg).suggestions || []);
+      }
     } catch {
-      // The backend is unreachable or errored. Answer from the bundled knowledge
-      // base rather than apologising, and remember the failure so the rest of the
+      // The backend is unreachable. Answer from the bundled knowledge base rather
+      // than apologising, and remember the failure so the rest of the
       // conversation skips straight to it.
       backendUp.current = false;
       await answerFromSite();

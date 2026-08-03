@@ -2,12 +2,14 @@ import React from "react";
 import { Reveal } from "./Reveal";
 import MaskReveal, { MaskBlock } from "./MaskReveal";
 
-export default function SectionHeader({ eyebrow, title, lede, align = "left", light = false }) {
-  const titleClass = `font-display font-bold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl ${
-    light ? "text-bg" : "text-ink"
-  }`;
+// `tight` trades the generous section rhythm for a compact one. Sections that
+// have to read inside a single viewport frame use it; the wide-open ones don't.
+export default function SectionHeader({ eyebrow, title, lede, align = "left", light = false, tight = false }) {
+  const titleClass = `font-display font-bold tracking-tight leading-[1.05] ${
+    tight ? "text-3xl md:text-4xl lg:text-5xl" : "text-4xl md:text-5xl lg:text-6xl"
+  } ${light ? "text-bg" : "text-ink"}`;
   return (
-    <div className={`mb-14 md:mb-20 ${align === "center" ? "text-center mx-auto" : ""} max-w-3xl`}>
+    <div className={`${tight ? "mb-8 md:mb-10" : "mb-14 md:mb-20"} ${align === "center" ? "text-center mx-auto" : ""} max-w-3xl`}>
       {eyebrow && (
         <Reveal>
           <div className={`font-mono text-[12px] uppercase tracking-[0.2em] mb-4 flex items-center gap-3 ${align === "center" ? "justify-center" : ""} text-signal`}>
@@ -32,7 +34,7 @@ export default function SectionHeader({ eyebrow, title, lede, align = "left", li
       )}
       {lede && (
         <Reveal i={2}>
-          <p className={`mt-6 text-base md:text-lg leading-relaxed ${light ? "text-bg/70" : "text-ink2"}`}>{lede}</p>
+          <p className={`${tight ? "mt-4 text-[15px] md:text-base" : "mt-6 text-base md:text-lg"} leading-relaxed ${light ? "text-bg/70" : "text-ink2"}`}>{lede}</p>
         </Reveal>
       )}
     </div>

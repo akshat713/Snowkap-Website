@@ -24,7 +24,7 @@ function Counter({ m, i }) {
 
 export default function Metrics() {
   return (
-    <section className="relative py-24 md:py-32 bg-signal overflow-hidden" data-testid="metrics-section">
+    <section className="relative py-20 md:py-24 bg-signal overflow-hidden" data-testid="metrics-section">
       {/* measured quantities, drawn — the field under the numbers it belongs to */}
       <div className="absolute inset-0 opacity-70 pointer-events-none" aria-hidden data-testid="metrics-contour">
         <ContourField rgb="255, 255, 255" lines={10} alpha={0.26} />

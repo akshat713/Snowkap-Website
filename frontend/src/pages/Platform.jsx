@@ -91,7 +91,7 @@ export default function Platform() {
       </PageHero>
 
       {DEEP_MODULES.map((m, mi) => (
-        <section key={m.tag} className={`py-24 md:py-32 ${mi % 2 ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={`platform-module-${mi}`}>
+        <section key={m.tag} className={`py-20 md:py-24 ${mi % 2 ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={`platform-module-${mi}`}>
           <div className={`max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-14 items-center`}>
             <div className={mi % 2 ? "lg:order-2" : ""}>
               <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">
@@ -136,7 +136,7 @@ export default function Platform() {
         </div>
       </section>
 
-      <section className="py-24 md:py-32 bg-bg" data-testid="platform-personas">
+      <section className="py-20 md:py-24 bg-bg" data-testid="platform-personas">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-12 flex items-center gap-3">
             <span className="w-6 h-px bg-signal" /> How leading teams use Snowkap

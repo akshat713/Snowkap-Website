@@ -5,7 +5,7 @@ import { TESTIMONIALS, STANDARDS } from "@/data/site";
 
 export function Testimonials() {
   return (
-    <section className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="testimonials-section">
+    <section className="py-20 md:py-24 bg-surface border-t border-ink/10" data-testid="testimonials-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader eyebrow="Customer voices" title="Trusted by the people who decide." />
         <div className="grid md:grid-cols-3 gap-5">
@@ -32,7 +32,7 @@ export function Testimonials() {
 
 export function Standards() {
   return (
-    <section className="py-24 md:py-36 border-t border-ink/10" data-testid="standards-section">
+    <section className="py-20 md:py-24 border-t border-ink/10" data-testid="standards-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
           eyebrow="Global standards & security"
