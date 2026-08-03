@@ -26,7 +26,7 @@ export default function About() {
       />
 
       {/* narrative */}
-      <section className="py-24 md:py-32 bg-bg" data-testid="about-narrative">
+      <section className="py-20 md:py-24 bg-bg" data-testid="about-narrative">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-14 items-center">
           <div>
             <Reveal>
@@ -75,7 +75,7 @@ export default function About() {
       <Team full />
 
       {/* credentials */}
-      <section className="py-24 md:py-32 bg-surface border-y border-ink/10" data-testid="about-credentials">
+      <section className="py-20 md:py-24 bg-surface border-y border-ink/10" data-testid="about-credentials">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-signal" /> Bench strength

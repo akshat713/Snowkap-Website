@@ -7,7 +7,7 @@ import { PILLARS } from "@/data/site";
 
 export default function ThreePillars() {
   return (
-    <section id="pillars" className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="pillars-section">
+    <section id="pillars" className="py-20 md:py-24 bg-surface border-t border-ink/10" data-testid="pillars-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
           eyebrow="How we solve it"

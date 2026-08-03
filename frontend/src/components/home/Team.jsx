@@ -23,22 +23,23 @@ function Person({ p, i, testid }) {
 
 export default function Team({ full = false }) {
   return (
-    <section className="py-24 md:py-36 bg-bg" data-testid="team-section">
+    <section className="py-20 md:py-24 bg-bg" data-testid="team-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
+          tight
           eyebrow="The people"
           title="The expertise behind the lens."
           lede="Sustainability and technology veterans — backed by an advisory board that has run boardrooms, banks, and global manufacturers."
         />
-        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-10">Core team</div>
-        <RevealGroup className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-x-6 gap-y-12">
+        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mb-8">Core team</div>
+        <RevealGroup className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-x-6 gap-y-10">
           {TEAM.map((p, i) => <Person key={p.name} p={p} i={i} testid={`team-member-${i}`} />)}
         </RevealGroup>
 
-        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mt-20 mb-10 flex items-center gap-3">
+        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink3 mt-14 mb-8 flex items-center gap-3">
           <span className="w-6 h-px bg-signal" /> Advisory board
         </div>
-        <RevealGroup className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 max-w-3xl">
+        <RevealGroup className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10 max-w-3xl">
           {ADVISORS.map((p, i) => <Person key={p.name} p={p} i={i} testid={`advisor-${i}`} />)}
         </RevealGroup>
 
@@ -48,7 +49,7 @@ export default function Team({ full = false }) {
               to="/about"
               onClick={() => window.scrollTo(0, 0)}
               data-testid="team-about-link"
-              className="group inline-flex items-center gap-2 mt-16 border border-ink/25 hover:border-signal hover:text-signal px-6 py-3.5 font-semibold transition-colors"
+              className="group inline-flex items-center gap-2 mt-12 border border-ink/25 hover:border-signal hover:text-signal px-6 py-3.5 font-semibold transition-colors"
             >
               Meet the full team
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

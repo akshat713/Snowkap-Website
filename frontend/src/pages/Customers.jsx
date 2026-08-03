@@ -42,7 +42,7 @@ const CASE_STUDIES = [
 
 function CaseStudy({ s, i }) {
   return (
-    <section className={`py-24 md:py-32 ${i % 2 ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={`case-study-${i}`}>
+    <section className={`py-20 md:py-24 ${i % 2 ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={`case-study-${i}`}>
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
         <div className="lg:sticky lg:top-28 h-fit">
           <div className="flex items-baseline gap-4 mb-6">
@@ -143,7 +143,7 @@ export default function Customers() {
 
       {CASE_STUDIES.map((s, i) => <CaseStudy key={s.client} s={s} i={i} />)}
 
-      <section className="py-24 md:py-32 bg-bg text-center border-t border-ink/10" data-testid="customers-cta">
+      <section className="py-20 md:py-24 bg-bg text-center border-t border-ink/10" data-testid="customers-cta">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
           <div className="font-mono text-[12px] uppercase tracking-[0.24em] text-signal mb-6">Your turn</div>
           <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-tighter leading-[0.98]">

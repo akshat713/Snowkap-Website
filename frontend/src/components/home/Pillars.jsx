@@ -6,7 +6,7 @@ import { PILLARS3 } from "@/data/content";
 
 export default function Pillars() {
   return (
-    <section id="pillars" className="py-24 md:py-36 bg-surface border-y border-ink/10" data-testid="pillars-section">
+    <section id="pillars" className="py-20 md:py-24 bg-surface border-y border-ink/10" data-testid="pillars-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
         <div className="lg:sticky lg:top-28 h-fit">
           <SectionHeader
@@ -25,12 +25,12 @@ export default function Pillars() {
           </Link>
         </div>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
           {PILLARS3.map((p, i) => (
             <div key={p.n} className="lg:sticky" style={{ top: `${104 + i * 28}px` }}>
               <div className="group lift bg-bg border border-ink/10 hover:border-signal/40" data-testid={`pillar-card-${i}`}>
                 {p.image && (
-                  <div className="relative aspect-[16/7] overflow-hidden bg-surface2">
+                  <div className="relative aspect-[16/6] overflow-hidden bg-surface2">
                     <img
                       src={p.image}
                       alt=""
@@ -42,13 +42,13 @@ export default function Pillars() {
                     <span className="absolute bottom-4 left-6 font-mono text-white text-sm">{p.n}</span>
                   </div>
                 )}
-                <div className="p-8 md:p-10">
-                <div className="flex items-baseline justify-between mb-6">
+                <div className="p-7 md:p-8">
+                <div className="flex items-baseline justify-between mb-5">
                   {!p.image && <span className="font-mono text-signal text-sm">{p.n}</span>}
                   <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink3 ml-auto">{p.tag}</span>
                 </div>
-                <h3 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">{p.title}</h3>
-                <p className="text-ink2 leading-relaxed mb-7 max-w-lg">{p.desc}</p>
+                <h3 className="font-display text-2xl md:text-4xl font-bold tracking-tight mb-3">{p.title}</h3>
+                <p className="text-ink2 leading-relaxed mb-6 max-w-lg">{p.desc}</p>
                 <ul className="space-y-2.5">
                   {p.items.map((it) => (
                     <li key={it} className="flex items-center gap-3 text-sm text-ink2">

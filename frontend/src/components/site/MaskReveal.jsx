@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useLanguage } from "@/i18n/TranslationProvider";
 
 // Headline reveal: each word rises out from behind its own edge, staggered.
 // The clipping is what makes it read as typeset rather than faded in — the
@@ -21,12 +22,18 @@ const rise = {
 
 export default function MaskReveal({ children, as = "span", delay = 0, className = "" }) {
   const reduce = useReducedMotion();
-  const words = String(children).split(" ");
+  // Translated before splitting, not after. Once this has split a sentence into
+  // one element per word there is no sentence left in the DOM for the
+  // translation pass to match, and word-by-word substitution would produce
+  // English word order in another language.
+  const { t } = useLanguage();
+  const source = t(children);
+  const words = String(source).split(" ");
   const Tag = motion[as] || motion.span;
 
   if (reduce) {
     const Plain = as;
-    return <Plain className={className}>{children}</Plain>;
+    return <Plain className={className}>{source}</Plain>;
   }
 
   return (

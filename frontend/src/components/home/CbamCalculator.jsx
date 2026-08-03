@@ -57,7 +57,7 @@ export default function CbamCalculator() {
   const fmt = (n) => (n == null ? 0 : Math.round(n));
 
   return (
-    <section id="calculator" className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="cbam-section">
+    <section id="calculator" className="py-20 md:py-24 bg-surface border-t border-ink/10" data-testid="cbam-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-14">
           {/* Sticky explanation */}

@@ -13,7 +13,7 @@ export default function ProgrammeBuilder() {
     ? dossier.recommended_package : null;
 
   return (
-    <section id="programme" className="py-24 md:py-36 border-t border-ink/10" data-testid="programme-section">
+    <section id="programme" className="py-20 md:py-24 border-t border-ink/10" data-testid="programme-section">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <SectionHeader
           eyebrow="Your programme"

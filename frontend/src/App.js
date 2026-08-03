@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/site/SmoothScroll";
 import SeoManager from "@/components/site/SeoManager";
 import { AppProvider } from "@/context/AppContext";
 import { AuthProvider } from "@/context/AuthContext";
+import TranslationProvider from "@/i18n/TranslationProvider";
 import Home from "@/pages/Home";
 import Platform from "@/pages/Platform";
 import Services from "@/pages/Services";
@@ -23,6 +24,9 @@ function App() {
   return (
     <AuthProvider>
       <AppProvider>
+        {/* Outside the router: the language choice outlives navigation, and the
+            DOM pass is global rather than per-route. */}
+        <TranslationProvider>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <SeoManager />
           <SmoothScroll>
@@ -42,6 +46,7 @@ function App() {
             </Routes>
           </SmoothScroll>
         </BrowserRouter>
+        </TranslationProvider>
         <Toaster
           theme="dark"
           position="bottom-right"

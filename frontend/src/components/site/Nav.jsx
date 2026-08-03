@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, FileText } from "lucide-react";
+import LanguageSwitcher from "@/components/site/LanguageSwitcher";
 import { useApp } from "@/context/AppContext";
 import Wordmark from "@/components/site/Wordmark";
 import { SIGNIN_URL } from "@/data/content";
@@ -85,7 +86,7 @@ export default function Nav() {
                 onClick={() => window.scrollTo(0, 0)}
                 data-testid={`nav-${n.label.toLowerCase()}`}
                 aria-current={isCurrent(n.to) ? "page" : undefined}
-                className={`relative font-mono text-[12px] font-medium uppercase tracking-[0.14em] transition-colors py-1 ${
+                className={`relative whitespace-nowrap font-mono text-[12px] font-medium uppercase tracking-[0.14em] transition-colors py-1 ${
                   isCurrent(n.to) ? "text-ink" : "text-ink2 hover:text-ink"
                 }`}
               >
@@ -104,7 +105,7 @@ export default function Nav() {
             <button
               onClick={() => setTrayOpen(true)}
               data-testid="nav-tray-toggle"
-              className="hidden sm:flex items-center gap-2 border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
+              className="hidden sm:flex items-center gap-2 whitespace-nowrap border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span className="xl:hidden">Programme</span>
@@ -121,17 +122,25 @@ export default function Nav() {
               target="_blank"
               rel="noreferrer"
               data-testid="nav-sign-in"
-              className="hidden sm:flex items-center gap-1.5 border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
+              className="hidden sm:flex items-center gap-1.5 whitespace-nowrap border border-ink/20 hover:border-signal hover:text-signal px-4 py-2 text-[12px] font-mono uppercase tracking-wider transition-colors"
             >
               Sign In <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
             <button
               onClick={() => setLeadModal({ kind: "demo", title: "Book a Demo" })}
               data-testid="nav-book-demo"
-              className="hidden md:inline-flex bg-signal text-white px-4 py-2.5 text-[13px] font-bold hover:bg-signal-hover transition-colors"
+              className="hidden md:inline-flex whitespace-nowrap bg-signal text-white px-4 py-2.5 text-[13px] font-bold hover:bg-signal-hover transition-colors"
             >
               Book a Demo
             </button>
+            {/* xl and up only. Below that the header has six nav items and three
+                controls already, and the last time something was added here the
+                Book a Demo button clipped past the edge at 1024. The footer
+                carries the same switcher at every width, and the mobile drawer
+                has its own row. */}
+            <div className="hidden xl:block">
+              <LanguageSwitcher compact />
+            </div>
             <button className="lg:hidden p-1.5" onClick={() => setMobile(true)} data-testid="nav-mobile-open" aria-label="Open menu">
               <Menu className="w-6 h-6" />
             </button>
@@ -178,6 +187,10 @@ export default function Nav() {
               <a href={SIGNIN_URL} target="_blank" rel="noreferrer" className="font-display text-3xl py-3 text-left border-b border-ink/10 flex items-center gap-2">
                 Sign In <ArrowUpRight className="w-6 h-6 text-signal" />
               </a>
+            </div>
+            <div className="mt-6 flex items-center gap-3" data-no-translate>
+              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink3">Language</span>
+              <LanguageSwitcher />
             </div>
             <button
               onClick={() => { setMobile(false); setLeadModal({ kind: "demo", title: "Book a Demo" }); }}

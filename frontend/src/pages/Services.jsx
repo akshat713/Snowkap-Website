@@ -38,7 +38,7 @@ const STATS = [
 
 function Block({ eyebrow, title, lede, items, testid, surface }) {
   return (
-    <section className={`py-24 md:py-32 ${surface ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={testid}>
+    <section className={`py-20 md:py-24 ${surface ? "bg-surface border-y border-ink/10" : "bg-bg"}`} data-testid={testid}>
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-signal mb-5 flex items-center gap-3">
           <span className="w-6 h-px bg-signal" /> {eyebrow}
@@ -85,7 +85,7 @@ export default function Services() {
       </section>
 
       <Block
-        eyebrow="Pillar 01 · Advisory"
+        eyebrow="Advisory"
         title="Expert-led ESG strategy, from entry to enterprise."
         lede="Low ESG ratings don't just impact reputation — they restrict capital access, slow sales, and expose you to regulatory risk. Our advisory portfolio fixes that."
         items={ADVISORY}
@@ -93,7 +93,7 @@ export default function Services() {
       />
 
       <Block
-        eyebrow="Pillar 03 · Managed Support"
+        eyebrow="Managed Support"
         title="Embedded. Scalable. People-led."
         lede="Dedicated specialists across supplier engagement, compliance coordination, and audit readiness — scaling with your network without scaling your headcount. 700+ suppliers onboarded, engagement starts day one."
         items={MANAGED}

@@ -12,7 +12,7 @@ export default function ResourcesPreview() {
   if (!items.length) return null;
 
   return (
-    <section className="py-24 md:py-36 bg-surface border-t border-ink/10" data-testid="resources-preview">
+    <section className="py-20 md:py-24 bg-surface border-t border-ink/10" data-testid="resources-preview">
       <div className="max-w-[1320px] mx-auto px-6 md:px-10">
         <div className="flex items-end justify-between flex-wrap gap-6">
           <SectionHeader eyebrow="Stay ahead" title="Latest intelligence." />

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import Wordmark from "@/components/site/Wordmark";
+import LanguageSwitcher from "@/components/site/LanguageSwitcher";
 import { SIGNIN_URL } from "@/data/content";
 import api from "@/lib/api";
 import { toast } from "sonner";
@@ -78,9 +79,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row justify-between gap-4 text-sm text-white/45">
+        <div className="pt-8 flex flex-col md:flex-row md:items-center justify-between gap-4 text-sm text-white/45">
           <span className="font-mono text-xs">© 2026 Snowkap · India · GCC · SE Asia · Europe</span>
-          <span className="font-mono text-xs">Vision — remove 1 billion tons of CO₂e.</span>
+          <span className="font-mono text-xs md:ml-auto md:mr-6">Vision — remove 1 billion tons of CO₂e.</span>
+          {/* The switcher's canonical home: reachable at every width, including
+              the 1024–1279 band where the header cannot spare the room. */}
+          <LanguageSwitcher onDark />
         </div>
       </div>
     </footer>

@@ -9,7 +9,7 @@ export default function ProofNumbers() {
   const inView = useInView(ref, { once: true, amount: 0.4 });
 
   return (
-    <section className="py-24 md:py-36 border-t border-ink/10 relative overflow-hidden" data-testid="proof-section">
+    <section className="py-20 md:py-24 border-t border-ink/10 relative overflow-hidden" data-testid="proof-section">
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 opacity-100">
         <OutlineMarquee text="VERIFIED · NOT PROMISED · " />
       </div>

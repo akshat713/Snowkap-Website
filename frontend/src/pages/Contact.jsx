@@ -39,7 +39,7 @@ export default function Contact() {
         title={<>Ready to take control of your <span className="text-signal">ESG and carbon data?</span></>}
         lede="Book a personalised demo or connect with our team — simplify emissions reporting, automate ESG compliance, and surface risks before they escalate."
       />
-      <section className="py-24 md:py-32 bg-bg" data-testid="contact-section">
+      <section className="py-20 md:py-24 bg-bg" data-testid="contact-section">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-14">
           <div>
             {INFO.map(({ icon: Icon, label, value, href, note }) => (
