@@ -72,10 +72,13 @@ export default function Nav() {
             <Wordmark height={26} />
           </button>
 
-          {/* gap-5 until xl: six nav items plus the three right-hand controls did not
-              fit at exactly 1024, where the desktop nav first appears, and Book a
-              Demo was clipped 10px past the edge. */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-8">
+          {/* The desktop nav starts at xl, not lg. Six items plus three controls
+              only just fitted 1024 in English; in German — PLATTFORM,
+              LEISTUNGEN, RESSOURCEN, ÜBER UNS — the row ran 23px past the edge
+              and clipped Book a Demo. Rather than shrink type until every
+              language happens to fit, 1024–1279 now gets the drawer, which holds
+              everything at any label length. */}
+          <nav className="hidden xl:flex items-center gap-6 xl:gap-8">
             {NAV.map((n) => (
               // A Link, not a button: middle-click, cmd-click and "open in new
               // tab" all worked on nothing before, and a nav that is not a set of
@@ -141,7 +144,7 @@ export default function Nav() {
             <div className="hidden xl:block">
               <LanguageSwitcher compact />
             </div>
-            <button className="lg:hidden p-1.5" onClick={() => setMobile(true)} data-testid="nav-mobile-open" aria-label="Open menu">
+            <button className="xl:hidden p-1.5" onClick={() => setMobile(true)} data-testid="nav-mobile-open" aria-label="Open menu">
               <Menu className="w-6 h-6" />
             </button>
           </div>
@@ -153,7 +156,7 @@ export default function Nav() {
           <motion.div
             initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[600] bg-bg p-6 flex flex-col lg:hidden"
+            className="fixed inset-0 z-[600] bg-bg p-6 flex flex-col xl:hidden overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-10">
               <Wordmark height={28} />

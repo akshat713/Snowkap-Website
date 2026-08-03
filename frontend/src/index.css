@@ -111,6 +111,35 @@ body {
   font-feature-settings: "kern" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  /* The site is translated, and German builds words English never does —
+     "Lieferkettennachhaltigkeit" is a single token 26 characters long. Without
+     this it refuses to break, pushes its own column wider than the viewport, and
+     the whole page gains a horizontal scrollbar on a phone. `hyphens: auto`
+     breaks at the right places rather than mid-syllable, and it only works
+     because the provider sets a real `lang` on <html>. */
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Never hyphenate the things that carry meaning in their exact shape: framework
+   acronyms, figures, and the tabular labels the layout aligns on. */
+.font-mono,
+[data-no-translate],
+code, pre, kbd {
+  hyphens: none;
+}
+
+/* An `fr` track is really `minmax(auto, Nfr)`, and that `auto` floor is the
+   item's min-content width — the longest word it contains. English never hit it;
+   German does, and one compound in the Problem section pushed the whole page
+   59px wider than the viewport at 1024 and 24px at 390. `overflow-wrap` does not
+   help, because it does not change min-content sizing. Zeroing the minimum on
+   every grid and flex child does, and it is what these layouts assumed all along.
+   Scoped to the two-column content grids rather than applied globally, so nothing
+   that genuinely relies on an intrinsic minimum — the logo marquee, the platform
+   carousel, the sticky rails — is affected. */
+[class*="grid-cols-["] > * {
+  min-width: 0;
 }
 
 /* One typeface in three roles. The label role keeps its own identity

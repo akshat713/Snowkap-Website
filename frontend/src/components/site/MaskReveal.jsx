@@ -48,9 +48,20 @@ export default function MaskReveal({ children, as = "span", delay = 0, className
         // CSS drops trailing whitespace at the end of an inline-block, so a space
         // placed within the mask collapses and the words render flush together.
         <React.Fragment key={`${word}-${i}`}>
-          {/* inline-block pair: the outer clips, the inner travels */}
-          <span className="inline-block overflow-hidden align-bottom pb-[0.14em] -mb-[0.14em]">
-            <motion.span className="inline-block" variants={rise} custom={delay + i * 0.045}>
+          {/* inline-block pair: the outer clips, the inner travels.
+              max-w-full plus overflow-wrap:anywhere because a word box has to
+              fit a whole word, and German builds words that do not fit — the
+              display-size "Handelsvoraussetzung" measured 390px inside a 366px
+              column and pushed the page 24px wider than a phone viewport. With
+              these it hyphenates inside its own mask (body sets hyphens:auto,
+              and the provider sets a real lang for it to hyphenate against) and
+              the reveal still rises as one block, just two lines tall. */}
+          <span className="inline-block max-w-full overflow-hidden align-bottom pb-[0.14em] -mb-[0.14em] [overflow-wrap:anywhere]">
+            <motion.span
+              className="inline-block max-w-full [overflow-wrap:anywhere]"
+              variants={rise}
+              custom={delay + i * 0.045}
+            >
               {word}
             </motion.span>
           </span>
