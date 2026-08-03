@@ -1,0 +1,28 @@
+name = "snowkap-chat"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+# The system prompt is imported from shared/chat-system-prompt.md so this worker
+# and backend/server.py cannot drift apart. Wrangler needs to be told to treat it
+# as text rather than trying to parse it.
+rules = [
+  { type = "Text", globs = ["**/*.md"], fallthrough = true },
+]
+
+[vars]
+# Origins allowed to call this worker. The published site plus local dev. Not a
+# wildcard: the widget's requests are preflighted, and "*" on a credential-adjacent
+# endpoint is how you end up paying for someone else's chatbot.
+CORS_ORIGINS = "https://akshat713.github.io,http://localhost:3000"
+
+# Haiku 4.5 is the cheap tier and the right shape for this job — short answers,
+# latency-sensitive, grounded in a system prompt rather than in reasoning. Raise it
+# only if answer quality demands it; the difference is at least 5x.
+CHAT_MODEL = "claude-haiku-4-5"
+
+# ANTHROPIC_API_KEY is deliberately NOT here. [vars] is plaintext and committed.
+# Set it as an encrypted secret instead:
+#
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#
+# See edge/README.md.
