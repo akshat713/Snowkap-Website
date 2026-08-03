@@ -1,0 +1,15 @@
+{
+  "name": "snowkap-chat-edge",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Cloudflare Worker holding the Anthropic key for Ask Snowkap AI",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret": "wrangler secret put ANTHROPIC_API_KEY",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.20.0"
+  }
+}

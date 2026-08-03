@@ -6,7 +6,19 @@ import { answerLocally } from "@/lib/assistant";
 import { useApp } from "@/context/AppContext";
 import { useLanguage } from "@/i18n/TranslationProvider";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// The assistant gets its own origin, because it is the only part of the API that
+// can be served by something as small as edge/. The rest — leads, the newsletter,
+// proposals, the dossier count, the resource library — needs the full FastAPI
+// backend and its database. Pointing REACT_APP_BACKEND_URL at the chat worker to
+// make the assistant work would 404 every form on the site, silently, since they
+// all post fire-and-forget.
+//
+// Set REACT_APP_CHAT_URL to the worker and leave REACT_APP_BACKEND_URL alone.
+// Unset, it falls back to the backend, which is correct when one deployment serves
+// both.
+const CHAT_ORIGIN = process.env.REACT_APP_CHAT_URL || process.env.REACT_APP_BACKEND_URL;
+const CHAT_API = CHAT_ORIGIN ? `${CHAT_ORIGIN}/api` : API;
+const BACKEND_URL = CHAT_ORIGIN;
 
 const SUGGESTIONS = [
   "What does the Snowkap platform do?",
@@ -123,7 +135,7 @@ export default function ChatWidget() {
   // fetch, and asking anyway just logs a failed request on every open.
   useEffect(() => {
     if (!open || !BACKEND_URL || backendUp.current === false) return;
-    fetch(`${API}/chat/history/${sessionId.current}`)
+    fetch(`${CHAT_API}/chat/history/${sessionId.current}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((h) => { if (Array.isArray(h) && h.length) setMessages(h); })
       .catch(() => { backendUp.current = false; });
@@ -184,7 +196,7 @@ export default function ChatWidget() {
     }
 
     try {
-      const res = await fetch(`${API}/chat/stream`, {
+      const res = await fetch(`${CHAT_API}/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ session_id: sessionId.current, message: msg, context: context.current }),
